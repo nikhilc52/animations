@@ -16,12 +16,10 @@ sf_data <- data |>
   mutate(date = as.Date(date_time,"%d-%m-%Y")) |> 
   mutate(year = as.numeric(format(date,"%Y")))
 
-#animation <- 
-  
-sf_data |> 
+animation <- sf_data |> 
   ggplot() +
   geom_sf(data=world)+
-  #geom_sf(data=sf_data, aes(size=magnitude, color=sig))+
+  geom_sf(data=sf_data, aes(size=magnitude, color=sig))+
   theme_minimal()+
   labs(title="Earthquakes Since 1995", 
        subtitle="Year: {next_state}",
@@ -32,9 +30,8 @@ sf_data |>
   ylab('')+
   theme(plot.title = element_text(size = 22, hjust =0.5, face = "bold"), 
         plot.subtitle = element_text(size = 10, hjust =0.5, face = "bold"))+
-  stat_density2d(data=data, aes(x=longitude, y=latitude), alpha=0.1, geom="polygon")
-  
-#+transition_states(year)
+  #stat_density2d(data=data, aes(x=longitude, y=latitude), alpha=0.1, geom="polygon")+
+  transition_states(year)
 
 animate(animation, fps=5, duration=5.8, height = 7,
         width = 9, units = "in", res = 200)

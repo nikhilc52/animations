@@ -2,7 +2,7 @@ library(plotly)
 library(dplyr)
 library(htmltools)
 
-gulls <- read_csv("gulls.csv")
+gulls <- read.csv("gulls.csv")
 
 gulls <- gulls |> 
   group_by(day, bird_name) |> 
@@ -63,7 +63,7 @@ globe <- gulls |>
                  "Altitude: ", gulls$altitude, "<br>",
                  "Direction: ", gulls$direction, "<br>",
                  "Speed: ", gulls$speed_2d, "<br>",
-                 "Day/Time: ", gulls$date_time, "<br>",),
+                 "Day/Time: ", gulls$date_time, "<br>"),
     frame = ~day,
     hoverinfo = "text"
   ) |> 
@@ -72,7 +72,12 @@ globe <- gulls |>
     y = sin(degrees2radians(lon)) * cos(degrees2radians(lat)),
     z = sin(degrees2radians(lat)),
     surfacecolor = matrix(NA, nrow = nlat, ncol = nlon),
-    showscale = FALSE, hoverinfo = "skip"
+    showscale = FALSE, hoverinfo = "skip",
+    contours = list(
+      x = list(highlight = FALSE), 
+      y = list(highlight = FALSE), 
+      z = list(highlight = FALSE)
+    )
   ) |> 
   layout(
     showlegend = FALSE,
@@ -84,7 +89,5 @@ globe <- gulls |>
     ),
     title="Gulls Migrating South for Winter"
   )
-
-globe
 
 browsable(globe)
