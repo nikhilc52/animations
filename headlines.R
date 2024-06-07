@@ -3,6 +3,7 @@ library(dplyr)
 library(gganimate)
 library(ggwordcloud)
 library(stopwords)
+library(tokenizers)
 
 headlines <- read_csv("headlines.csv")
 
@@ -18,8 +19,8 @@ nyt_headlines <- nyt_headlines |>
 nyt_headlines <- nyt_headlines |> 
   group_by(Year) |> 
   summarize(
-    Headlines = paste(Headline, collapse = " "), 
-    Words = unlist(strsplit(Headlines, split = " "))
+    Headlines = paste(Headline, collapse = " "),
+    Words = unlist(tokenize_words(Headlines, stopwords = stopwords("en")))
   )
 
 nyt_headlines <- nyt_headlines[-2]
@@ -28,17 +29,17 @@ word_count <- nyt_headlines |>
   group_by(Words, Year) |> 
   summarize(
     count = n()
-  ) |> 
-  filter(!(tolower(Words) %in% stopwords(language="en", source="snowball")))
+  ) 
 
 word_count <- word_count |> 
   filter(!(tolower(Words) %in% c("new", "york", "times", "nyt"))) |> 
-  filter(!tolower(Words) %in% c("min", "read", "review", "editorial", "now",
+  filter(!(tolower(Words) %in% c("min", "read", "review", "editorial", "now",
                                 "comments", "getty", "images", "theater",
-                                "movie", "slide", "show", "television", "books")) |> 
+                                "movie", "slide", "show", "television", "books",
+                                "op","ed"))) |> 
   filter(!grepl("[^A-Za-z0-9 ]", Words)) |> 
-  filter(!(Words == "")) |> 
-  filter(count > 10) |> 
+  filter(!(Words == "")) |>
+  filter(nchar(Words) > 1) |>  
   group_by(Year) |> 
   arrange(desc(count)) |> 
   slice_head(n = 10)
