@@ -1,7 +1,7 @@
 # Table of contents
 
-* [Introduction](README.md)
+* [Introduction to animation](README.md)
 
 ## Basic Animations
 
-* [Animated Line Graph](basic-animations/animated-line-graph.md)
+* [Animated Line Graphs](basic-animations/animated-line-graphs.md)
