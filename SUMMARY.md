@@ -1,3 +1,7 @@
 # Table of contents
 
-* [Test1](README.md)
+* [Introduction](README.md)
+
+## Basic Animations
+
+* [Animated Line Graph](basic-animations/animated-line-graph.md)
