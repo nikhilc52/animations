@@ -2,6 +2,8 @@
 description: >-
   Line graphs can be very useful indicators of data. Animating them draws your
   viewer in and grabs their attention.
+cover: ../.gitbook/assets/final (2).gif
+coverY: 0
 ---
 
 # Animated Line Graphs
@@ -10,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 In a few minutes, we'll make this graph:
 
-<figure><img src="../.gitbook/assets/final (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
@@ -28,7 +30,7 @@ Now that we have the libraries, we can get the dataset. So that we can easily vi
 txhousing_data <- txhousing
 ```
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
 
 We want to have a single number for sales and listings for each month and year. Luckily, the dataset already comes with a `date` column that specifies both the month and the year, so we can just group based on `date` and sum the sales and listings for every city to get a total.
 
@@ -45,7 +47,7 @@ txhousing_data <- txhousing_data |>
 
 Let's look at the data now.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption><p>The first five rows of the updated txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption><p>The first five rows of the updated txhousing_data dataframe.</p></figcaption></figure>
 
 Now that the data is in the right format, we're ready to plot. We'll start by first generating a static line graph, with the date on the x-axis and sales/listings on the y-axis (in two separate lines).
 
@@ -55,7 +57,7 @@ ggplot(txhousing_data)+
   geom_line(aes(x=date, y=listings, color="Listings"))
 ```
 
-<figure><img src="../.gitbook/assets/rough1.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 This doesn't look too pretty, so let's add a theme, some nicer colors, and fix the labels.
 
@@ -75,7 +77,7 @@ ggplot(txhousing_data)+
         plot.subtitle = ggtext::element_markdown(size = 15, hjust =0.5, face = "bold")) #requires the ggtext package is installed
 ```
 
-<figure><img src="../.gitbook/assets/rough2.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough2 (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 We're almost there. To convert this into an animation we have to add `transition_reveal(date)` to the end of our code. `transition_reveal` is somewhat self-explainatory:  we want to reveal more and more of the line as animation goes on. Here, `date` is what is actually moving the animation. Essentially, we're telling the computer to reveal more and more of each line as the `date` increases.
 
@@ -103,7 +105,7 @@ The animation is now in place, but the text is cut off and the resolution isn't 
 animation <- ggplot(txhousing_data)+ #added the pipe into 'animation'
   geom_line(aes(x=date, y=sales, color="Sales"))+
   geom_line(aes(x=date, y=listings, color="Listings"))+
-#continues from above code snippet
+  #continues from above code snippet
 ```
 
 ```r

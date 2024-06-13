@@ -7,6 +7,7 @@
 * [Animated Line Graphs](basic-animations/animated-line-graphs.md)
 * [Animated Scatter Plots](basic-animations/animated-scatter-plots.md)
 * [Animated Word Clouds](basic-animations/animated-word-clouds.md)
+* [Animated Maps](basic-animations/animated-maps.md)
 
 ## Advanced Animations
 
@@ -17,3 +18,5 @@
 
 * [animated-line-graph.R](appendix/animated-line-graph.r.md)
 * [animated-scatter-plot.R](appendix/animated-scatter-plot.r.md)
+* [animated-word-cloud.R](appendix/animated-word-cloud.r.md)
+* [animated-maps.R](appendix/animated-maps.r.md)

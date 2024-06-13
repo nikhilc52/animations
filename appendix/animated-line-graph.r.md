@@ -4,9 +4,9 @@ description: Code used to make the graph found within "Animated Line Graphs"
 
 # animated-line-graph.R
 
-<figure><img src="../.gitbook/assets/final (2).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (2) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
-```
+```r
 library(ggplot2)
 library(dplyr)
 library(gganimate)

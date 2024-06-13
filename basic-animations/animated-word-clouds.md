@@ -2,6 +2,8 @@
 description: >-
   Word clouds can help viewers easily identify data points. Animating can help
   to show trends over time.
+cover: ../.gitbook/assets/final (4).gif
+coverY: 0
 ---
 
 # Animated Word Clouds
@@ -10,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 We're trying to make this graph:
 
-<figure><img src="../.gitbook/assets/final (4).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final.gif" alt="" width="563"><figcaption></figcaption></figure>
 
 Let's start off like always, loading the libraries we'll be using to make the word cloud. Note that we've now added `ggwordcloud` to our imports.
 
@@ -27,7 +29,7 @@ With our libraries in place, we get the dataset in the same way we've been doing
 txhousing_data <- txhousing
 ```
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
 
 Now that we have our data, we need to format it to make a suitable word cloud. We'll take the `volume` column, which is the number of house sales multiplied by their price (i.e. how much money was spent), and use it as an indicator for size.&#x20;
 
@@ -46,7 +48,7 @@ txhousing_data <- txhousing_data |>
 
 Our data now looks like this:
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 Perfect! We have the top five for every month. Let's get started on our word cloud.
 
@@ -99,3 +101,7 @@ animate(animation, fps=3, duration=35, end_pause=9, height = 8,
 ```
 
 That's it! You've successfully made an animated word cloud.
+
+{% hint style="info" %}
+[Click here to view the raw file used to make this animation.](../appendix/animated-word-cloud.r.md)
+{% endhint %}
