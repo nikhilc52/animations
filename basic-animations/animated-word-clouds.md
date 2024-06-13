@@ -1,7 +1,7 @@
 ---
 description: >-
-  Word clouds can help viewers easily data points. Animation can help show this
-  data over time.
+  Word clouds can help viewers easily identify data points. Animating can help
+  to show trends over time.
 ---
 
 # Animated Word Clouds
