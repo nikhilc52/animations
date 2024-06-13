@@ -109,5 +109,5 @@ animate(animation, fps=30, duration=60, end_pause=150, height = 7,
 Note that the increase in FPS is just to make the animation a bit smoother. Anything more than 10 fps should be good to see a smooth animation. Congrats! You've just made an animated scatter plot.
 
 {% hint style="info" %}
-Click here to view the raw file used to make this animation.
+[Click here to view the raw file used to make this animation.](../appendix/animated-scatter-plot.r.md)
 {% endhint %}
