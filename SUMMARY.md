@@ -13,6 +13,7 @@
 
 * [Animated Bubble Plots](advanced-animations/animated-bubble-plots.md)
 * [Animated Scatter Plots](advanced-animations/animated-scatter-plots.md)
+* [Animated Heat Maps](advanced-animations/animated-heat-maps.md)
 
 ## Appendix
 
@@ -24,3 +25,4 @@
 * [Advanced Animations](appendix/advanced-animations/README.md)
   * [animated-bubble-plot.R](appendix/advanced-animations/animated-bubble-plot.r.md)
   * [animated-scatter-plot.R](appendix/advanced-animations/animated-scatter-plot.r.md)
+  * [animated-heat-map.R](appendix/advanced-animations/animated-heat-map.r.md)

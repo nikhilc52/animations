@@ -57,7 +57,7 @@ ggplot(txhousing_data)+
   geom_line(aes(x=date, y=listings, color="Listings"))
 ```
 
-<figure><img src="../.gitbook/assets/rough1 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 This doesn't look too pretty, so let's add a theme, some nicer colors, and fix the labels.
 
@@ -77,7 +77,7 @@ ggplot(txhousing_data)+
         plot.subtitle = ggtext::element_markdown(size = 15, hjust =0.5, face = "bold")) #requires the ggtext package is installed
 ```
 
-<figure><img src="../.gitbook/assets/rough2 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough2 (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 We're almost there. To convert this into an animation we have to add `transition_reveal(date)` to the end of our code. `transition_reveal` is somewhat self-explainatory:  we want to reveal more and more of the line as animation goes on. Here, `date` is what is actually moving the animation. Essentially, we're telling the computer to reveal more and more of each line as the `date` increases.
 
