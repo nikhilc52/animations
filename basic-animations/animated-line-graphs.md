@@ -2,7 +2,7 @@
 description: >-
   Line graphs can be very useful indicators of data. Animating them draws your
   viewer in and grabs their attention.
-cover: ../.gitbook/assets/final (2).gif
+cover: ../.gitbook/assets/final (2) (1).gif
 coverY: 0
 ---
 
@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 In a few minutes, we'll make this graph:
 
-<figure><img src="../.gitbook/assets/final (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
@@ -57,7 +57,7 @@ ggplot(txhousing_data)+
   geom_line(aes(x=date, y=listings, color="Listings"))
 ```
 
-<figure><img src="../.gitbook/assets/rough1 (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 This doesn't look too pretty, so let's add a theme, some nicer colors, and fix the labels.
 
@@ -77,7 +77,7 @@ ggplot(txhousing_data)+
         plot.subtitle = ggtext::element_markdown(size = 15, hjust =0.5, face = "bold")) #requires the ggtext package is installed
 ```
 
-<figure><img src="../.gitbook/assets/rough2 (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough2 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 We're almost there. To convert this into an animation we have to add `transition_reveal(date)` to the end of our code. `transition_reveal` is somewhat self-explainatory:  we want to reveal more and more of the line as animation goes on. Here, `date` is what is actually moving the animation. Essentially, we're telling the computer to reveal more and more of each line as the `date` increases.
 
@@ -97,7 +97,7 @@ We're almost there. To convert this into an animation we have to add `transition
   transition_reveal(date) #new line added
 </code></pre>
 
-<figure><img src="../.gitbook/assets/rough3.gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough3 (1).gif" alt=""><figcaption></figcaption></figure>
 
 The animation is now in place, but the text is cut off and the resolution isn't ideal. To fix this we put our animation into an object using the pipe operation (`<-`)  and then call `animate()` on that object, with some self-explainatory parameters.
 

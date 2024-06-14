@@ -2,7 +2,7 @@
 description: >-
   Scatter plots are useful for conveying information about a number of points.
   By animating, we can add a new dimension to the graph.
-cover: ../.gitbook/assets/final (3).gif
+cover: ../.gitbook/assets/final (3) (1).gif
 coverY: 0
 ---
 
@@ -32,7 +32,7 @@ txhousing_data <- txhousing
 
 For this plot, we need to have a data point (dot) for each city for all time frames. This point needs to have both the median sale price and the sales. Lucky for us, the dataset is already in this format:
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can go straight to plotting. The syntax is very similar to the line graph, but note that we now use `geom_point` instead of `geom_line`. We're also going to add a new parameter: group. All this does is tell R that we'd like each point to represent one city
 
@@ -41,7 +41,7 @@ ggplot(txhousing_data)+
   geom_point(aes(x=sales, y=median))
 ```
 
-<figure><img src="../.gitbook/assets/rough1 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 That's a lot of data, but for now, let's just focus on the general patterns. There's somewhat of a logarithmic curve to the data, so we'll apply a logarithmic scale to the x-axis. Let's also get rid of the scientific notation on the y-axis by adding commas.
 
@@ -52,7 +52,7 @@ ggplot(txhousing_data)+
   scale_y_continuous(label=scales::comma) #requires 'scales' package is installed
 ```
 
-<figure><img src="../.gitbook/assets/rough2 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough2 (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Once we've done that, we can make the graph look a bit nicer before we get into the animation stages. `<br>` is added for spacing.
 
@@ -74,7 +74,7 @@ ggplot(txhousing_data)+
 
 We're now ready to animate. The graph might look like a mess right now, but remember that each point corresponds to a city and a month. Our goal for this animation is to show all the points for a given month, cycling through the months.&#x20;
 
-This can easily be accomplished with `transition_time`, which does exactly this: cycle through a time parameter, showing the data at each point in time. Our time parameter in this case is date, so we call `transition_time(date)`.
+This can easily be accomplished with `transition_time`, which does exactly this: cycle through a time parameter, showing the data at each point in time (smoothing through transition periods). Our time parameter in this case is date, so we call `transition_time(date)`.
 
 There's one more thing we have to do before we plot, which is adding a `group` parameter to the `geom_point` call. This step is very important (and often forgotten) - we're essentially telling R that we'd like to have the points grouped based on an aesthetic. In this case, we want each point to represent a city, so we use `group=city`:
 

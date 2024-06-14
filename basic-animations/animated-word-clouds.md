@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 We're trying to make this graph:
 
-<figure><img src="../.gitbook/assets/final.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (3).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 Let's start off like always, loading the libraries we'll be using to make the word cloud. Note that we've now added `ggwordcloud` to our imports.
 

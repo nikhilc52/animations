@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 Our goal is to reproduce this plot:
 
-<figure><img src="../.gitbook/assets/final (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 Like always, we start by importing libraries. This time, there's two new ones.
 
@@ -34,7 +34,7 @@ This line is farily complicated. The `maps::map()` call uses the maps package to
 
 `maps::map()` returns a map object, which must be turned into an `sf` if we want to plot it within `ggplot`. To do this we call `st_as_sf()` to turn the map (`st` : spacial type) into an `sf` (simple features). This object is then stored in the variable `usa`.
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 Going back to the basics, we read txhousing into a new data frame for viewing.
 
@@ -51,7 +51,7 @@ cities <- data.frame(unique(txhousing_data$city)) #df of unique cities
 names(cities)[names(cities) == 'unique.txhousing_data.city.'] <- 'city' #rename column name for simplcity
 ```
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Essentially, we're taking all the unique city names and making them a dataframe, then renaming the column name to save some typing later on.
 
@@ -97,7 +97,7 @@ ggplot()+
   geom_sf(data=sf_txhousing_data, aes(size=sales, color=median))
 ```
 
-<figure><img src="../.gitbook/assets/rough1.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 We're almost done. Let's clean up this chart a little by fixing the scales and adding titles.
 
@@ -117,7 +117,7 @@ ggplot()+
         plot.subtitle = ggtext::element_markdown(size = 15, hjust =0.5, face = "bold")) #requires the 'ggtext' package is installed
 ```
 
-<figure><img src="../.gitbook/assets/rough2.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough2 (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Having all of America here isn't really necessary as all our data is within Texas, so we can cut off the coordinates of our graph with a self-explaimatory `coord_sf` call.
 
@@ -127,7 +127,7 @@ Having all of America here isn't really necessary as all our data is within Texa
 
 Here, the X (longitude) goes from -107 to -90 (or 107 W to 90 W) and Y (latitude) goes from 25 to 37 (or 25 N to 37 N).&#x20;
 
-Finally, we can add `transition_time(date)` as usual, to tell R that each frame we see are cycling/seeing data points from different points of time, as specified by the `date`. We'll also add the same `{as.integer(frame_time)}` as before, to update the viewer on the current data their seeing.
+Finally, we can add `transition_time(date)` as usual, to tell R that each frame we see are cycling/seeing data points from different points of time, as specified by the `date` (and smoothing the in-between areas). We'll also add the same `{as.integer(frame_time)}` as before, to update the viewer on the current data their seeing.
 
 ```r
 ggplot()+

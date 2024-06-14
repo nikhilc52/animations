@@ -20,3 +20,4 @@
 * [animated-scatter-plot.R](appendix/animated-scatter-plot.r.md)
 * [animated-word-cloud.R](appendix/animated-word-cloud.r.md)
 * [animated-maps.R](appendix/animated-maps.r.md)
+* [animated-bubble-plot.R](appendix/animated-bubble-plot.r.md)
