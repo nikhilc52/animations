@@ -16,8 +16,11 @@
 
 ## Appendix
 
-* [animated-line-graph.R](appendix/animated-line-graph.r.md)
-* [animated-scatter-plot.R](appendix/animated-scatter-plot.r.md)
-* [animated-word-cloud.R](appendix/animated-word-cloud.r.md)
-* [animated-maps.R](appendix/animated-maps.r.md)
-* [animated-bubble-plot.R](appendix/animated-bubble-plot.r.md)
+* [Basic Animations](appendix/basic-animations/README.md)
+  * [animated-line-graph.R](appendix/basic-animations/animated-line-graph.r.md)
+  * [animated-scatter-plot.R](appendix/basic-animations/animated-scatter-plot.r.md)
+  * [animated-word-cloud.R](appendix/basic-animations/animated-word-cloud.r.md)
+  * [animated-maps.R](appendix/basic-animations/animated-maps.r.md)
+* [Advanced Animations](appendix/advanced-animations/README.md)
+  * [animated-bubble-plot.R](appendix/advanced-animations/animated-bubble-plot.r.md)
+  * [animated-scatter-plot.R](appendix/advanced-animations/animated-scatter-plot.r.md)

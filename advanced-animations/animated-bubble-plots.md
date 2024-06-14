@@ -6,7 +6,9 @@ While making something as smooth and interactive as Rosling's is beyond the scop
 
 The final product will look something like this:
 
-<figure><img src="../.gitbook/assets/final.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+
+***
 
 Let's load in our libraries.
 
@@ -23,7 +25,7 @@ The dataset that Rosling uses can actually be found within an R library: `gapmin
 gapminder_data <- gapminder
 ```
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 Our data is already cleaned for us, so we can get started plotting. First, let's make a simple static graph. Looking ahead, we know that we are going to want each point to represent a country, so we can assign `group=country` to our plot (even though it technically doesn't do anything right now).
 
@@ -35,7 +37,7 @@ ggplot(gapminder_data)+
              shape=21, alpha=0.7)
 ```
 
-<figure><img src="../.gitbook/assets/rough1.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 This looks a little messy, but remember that each frame is only going to show the points available for that time, so the graph will get cleaned up. Speaking of cleaning up, we can make our graph look a little nicer before we get to animating. Let's fix some of the axes, scales, the title, and the legend.
 
@@ -58,7 +60,7 @@ ggplot(gapminder_data)+
         plot.subtitle = ggtext::element_markdown(size = 15, hjust =0.5, face = "bold"))
 ```
 
-<figure><img src="../.gitbook/assets/rough2.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough2 (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 This looks much better and we're now ready to animate. We'll use `transition_time` to cycle through the data, meaning that each frame will show only the points available for that point in time. Since time is continous, R will automatically smoothly transition points between stages of data.&#x20;
 
@@ -107,7 +109,7 @@ Let's say we wanted to label the United States.
 
 Essentially, we're putting a text at the X and Y value of every country, but only having that text actually filled if the country is the United States.
 
-<figure><img src="../.gitbook/assets/rough3.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough3 (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 Another extension we can do is making the plot interactive. We can do this through the `plotly` library, which can read a `ggplot` and "convert" it to an interactive.
 
@@ -146,8 +148,8 @@ ggplotly(animation)
 
 And we get a nice interactive, with hoverable data points, exportable as an HTML.
 
-<figure><img src="../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3).png" alt="" width="563"><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-[Click here to view the raw file used to make this animation.](../appendix/animated-bubble-plot.r.md)
+[Click here to view the raw file used to make this animation.](../appendix/advanced-animations/animated-bubble-plot.r.md)
 {% endhint %}

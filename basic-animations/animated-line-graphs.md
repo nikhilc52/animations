@@ -30,7 +30,7 @@ Now that we have the libraries, we can get the dataset. So that we can easily vi
 txhousing_data <- txhousing
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
 
 We want to have a single number for sales and listings for each month and year. Luckily, the dataset already comes with a `date` column that specifies both the month and the year, so we can just group based on `date` and sum the sales and listings for every city to get a total.
 
@@ -97,7 +97,7 @@ We're almost there. To convert this into an animation we have to add `transition
   transition_reveal(date) #new line added
 </code></pre>
 
-<figure><img src="../.gitbook/assets/rough3 (1).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough3 (2).gif" alt=""><figcaption></figcaption></figure>
 
 The animation is now in place, but the text is cut off and the resolution isn't ideal. To fix this we put our animation into an object using the pipe operation (`<-`)  and then call `animate()` on that object, with some self-explainatory parameters.
 
@@ -131,5 +131,5 @@ Essentially, we're giving the animation its own specifications for animating, so
 That's it! You've now successfully made an animated line chart.&#x20;
 
 {% hint style="info" %}
-[Click here to view the raw file used to make this animation.](../appendix/animated-line-graph.r.md)
+[Click here to view the raw file used to make this animation.](../appendix/basic-animations/animated-line-graph.r.md)
 {% endhint %}

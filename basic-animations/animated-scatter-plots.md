@@ -113,5 +113,5 @@ Note that the increase in FPS is just to make the animation a bit smoother. Anyt
 Congrats! You've just made an animated scatter plot.
 
 {% hint style="info" %}
-[Click here to view the raw file used to make this animation.](../appendix/animated-scatter-plot.r.md)
+[Click here to view the raw file used to make this animation.](../appendix/basic-animations/animated-scatter-plot.r.md)
 {% endhint %}
