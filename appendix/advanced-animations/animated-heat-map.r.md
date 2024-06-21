@@ -1,3 +1,7 @@
+---
+description: Code used to make the graph found within "Animated Heat Maps"
+---
+
 # animated-heat-map.R
 
 <figure><img src="../../.gitbook/assets/final (13).gif" alt=""><figcaption></figcaption></figure>
