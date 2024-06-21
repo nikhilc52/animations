@@ -13,12 +13,11 @@ read_hourly_data <- function(hour) {
     filter(!onground) |> 
     filter(!is.na(lat)) |> 
     filter(!is.na(lon)) |> 
-    filter(lon < -65 & lon > -135) |> 
-    filter(lat > 23 & lat < 50) |> 
-    st_as_sf(coords = c('lon','lat')) |> 
-    st_set_crs(4326) |> 
-    group_by(icao24) |> #time
-    arrange(desc(icao24)) |> 
+    filter(!is.na(velocity)) |> 
+    #filter(lon < -65 & lon > -135) |> 
+    #filter(lat > 23 & lat < 50) |> 
+    group_by(icao24) |> 
+    arrange(desc(icao24)) |>
     slice_head(n=1)
 }
 
@@ -31,11 +30,23 @@ system.time(for(x in 1:23){
 hourly_flights_AAL <- hourly_flights |> 
   filter(startsWith(callsign, "AAL"))
 
-usa <- st_as_sf(maps::map("state", fill=TRUE))
+hourly_flights_AAL_line <- hourly_flights_AAL |> 
+  mutate(lon2 = lon - velocity*cos((90-heading) * pi/180)/100) |> 
+  mutate(lat2 = lat - velocity*sin((90-heading) * pi/180)/100) |> 
+  mutate(geom = sprintf("LINESTRING(%f %f, %f %f)", lon, lat, lon2, lat2)) |> 
+  st_as_sf(wkt = "geom") |> 
+  st_set_crs(4326)
+
+hourly_flights_AAL_point <- hourly_flights_AAL |> 
+  st_as_sf(coords=c("lon","lat")) |> 
+  st_set_crs(4326)
+
+usa <- st_as_sf(maps::map("state", fill=TRUE, plot=FALSE))
 
 animation <- ggplot(usa) +
   geom_sf(color = "#2b2b2b", fill = "white", size=0.125)+
-  geom_sf(data=hourly_flights_AAL, size=1, alpha=0.6, aes(group = icao24))+
+  geom_sf(data=hourly_flights_AAL_point, size=1, alpha=0.6, aes(group = icao24))+
+  geom_sf(data=hourly_flights_AAL_line, size=1, alpha=0.6, aes(group = icao24))+
   theme_void()+
   labs(title="American Airlines Flights Over A 24-hour Period", 
        subtitle="{case_when(
@@ -47,6 +58,8 @@ animation <- ggplot(usa) +
        caption="Nikhil Chinchalkar for Princeton University | Open Sky Network | 2024",
        color="Significance",
        size="Magnitude")+
+  ylim(25,50)+
+  xlim(-135,-65)+
   xlab('')+
   ylab('')+
   theme(plot.title = element_text(size = 22, hjust =0.5, face = "bold"), 
@@ -55,5 +68,6 @@ animation <- ggplot(usa) +
   enter_fade(alpha = 0)+
   exit_fade(alpha = 0)
 
-animate(animation, fps=10, duration=24, end_pause = 50, height = 7,
+#10, 24, 50
+animate(animation, fps=15, duration=48, end_pause = 75, height = 7,
         width = 9, units = "in", res = 200)

@@ -20,7 +20,7 @@ shots_plot <- shots_plot |>
 
 animation <- plot_court() +
   geom_tile(data=shots_plot, aes(x=LOC_X, y=LOC_Y, fill=Count, group=interaction(LOC_Y, LOC_X)), alpha=0.8)+
-  scale_fill_gradient2(low = "white", mid="white",high = "red", trans="log2", midpoint = 6)+
+  scale_fill_gradient2(low = "lightblue", mid="white",high = "red", trans="log2", midpoint = 6)+
   coord_fixed(ratio=1)+
   theme_void()+
   labs(subtitle = "Year: {frame_time}",
