@@ -14,9 +14,9 @@ earthquakes <- earthquakes |>
   mutate(y=1.01 * sin(degrees2radians(longitude)) * cos(degrees2radians(latitude))) |> 
   mutate(z=1.01 * sin(degrees2radians(latitude)))
 
-x_size <- 500
-y_size <- 250
-raw_tif <- read_stars("land_shallow_topo_2048.tif",
+x_size <- 1440
+y_size <- 720
+raw_tif <- read_stars("surface.png",
                       RasterIO = list(nBufXSize=x_size, nBufYSize=y_size))
 
 df_tif <- as.data.frame(raw_tif)
@@ -26,17 +26,17 @@ df_tif <- df_tif |>
 
 red <- df_tif |> 
   filter(band == 1) |> 
-  mutate(red = land_shallow_topo_2048.tif)
+  mutate(red = surface.png)
 red <- red[-c(3,4)]
 
 green <- df_tif |> 
   filter(band == 2) |> 
-  mutate(green = land_shallow_topo_2048.tif)
+  mutate(green = surface.png)
 green <- green[-c(3,4)]
 
 blue <- df_tif |> 
   filter(band == 3) |> 
-  mutate(blue = land_shallow_topo_2048.tif)
+  mutate(blue = surface.png)
 blue <- blue[-c(3,4)]
 
 rgb <- left_join(left_join(red, green),blue)
@@ -78,7 +78,9 @@ lon <- seq(-180, 180, length.out = nlon)
 lat <- matrix(rep(lat, nlon), nrow = nlat)
 lon <- matrix(rep(lon, each = nlat), nrow = nlat)
 
-globe <- plot_ly(height = 600) |> 
+image <- RCurl::base64Encode(readBin("size_scale.png", "raw", file.info("size_scale.png")[1, "size"]), "txt")
+
+globe <- plot_ly(width=800,height=800) |> 
   add_sf(
     data = sf::st_as_sf(maps::map("world", plot = FALSE, fill = TRUE)),
     x = ~ 1.001 * cos(degrees2radians(x)) * cos(degrees2radians(y)),
@@ -88,19 +90,17 @@ globe <- plot_ly(height = 600) |>
     hoverinfo = "none"
   ) |>
   add_trace(
-    data=earthquakes,
     x=earthquakes$x,
     y=earthquakes$y,
     z=earthquakes$z,
     mode = "markers", type = "scatter3d",
     marker = list(color = earthquakes$magnitude, size = earthquakes$sig/100, colorscale = manual_colorscale, showscale=TRUE,
-                  colorbar=list(title=list(text="Magnitude",side="top"), thickness=10, len=0.35,orientation='h',y=0.05,
+                  colorbar=list(title=list(text="Magnitude",side="top"), thickness=10, len=0.35,orientation='h',y=0.1,
                                 tickfont=list(family="Arial"), nticks=6)),
-    text = paste("Description: ", earthquakes$title, "<br>", "Time: ", earthquakes$date_time),
+    text = paste0("Description: ", earthquakes$title, "<br>", "Time: ", earthquakes$date_time, "<br>" ,"Significance: ", earthquakes$sig),
     hoverinfo = "text"
   ) |>
   add_surface(
-    #data=rgb,
     x = cos(degrees2radians(lon)) * cos(degrees2radians(lat)),
     y = cos(degrees2radians(lat)) * sin(degrees2radians(lon)),
     z = -sin(degrees2radians(lat)),
@@ -120,17 +120,26 @@ globe <- plot_ly(height = 600) |>
     )
   ) |>
   layout(
-    title=list(text="<br><b>Earthquakes Since 1995</b>",font=list(family="Arial", size=24)),
+    title=list(text="<br><b>Earthquakes Since 1995</b>",font=list(family="Arial", size=30)),
     showlegend = FALSE,
     annotations=list(text="Nikhil Chinchalkar For Princeton University | Seismic Research Dataset | 2024",
                      showarrow=FALSE, font=list(family="Arial", size=14), y=0),
+    images=list(list(source=paste('data:image/png;base64', image, sep=','),
+                     xref="paper",
+                     yref="paper",
+                     x=0.5,
+                     y=0.1,
+                     sizex=.25,
+                     sizey=.25,
+                     xanchor="center",
+                     yanchor="center")),
     scene = list(
       xaxis = empty_axis,
       yaxis = empty_axis,
       zaxis = empty_axis,
       aspectratio = list(x = 1, y = 1, z = 1)
-      #camera = list(eye = list(x=-1, y=1, z=0.5))
     )
-  )
+  ) |> 
+  config(displayModeBar=FALSE)
 
 globe

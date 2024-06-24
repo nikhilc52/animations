@@ -5,7 +5,6 @@ library(ggwordcloud)
 library(stopwords)
 library(tokenizers)
 library(ggplot2)
-library(gifski)
 
 headlines <- read_csv("headlines.csv")
 
@@ -70,7 +69,8 @@ word_cloud <- word_count_five |>
   transition_time(Year_Month)+
   labs(subtitle = "{paste(month.name[as.numeric(format(as.Date(frame_time),\"%m\"))],
        format(as.Date(frame_time),\"%Y\"))}",
-       title = "5 Most-Used Words In NYT Headlines Each Month (2007-2022)")+
+       title = "5 Most-Used Words In NYT Headlines Each Month (2007-2022)",
+       caption="Nikhil Chinchalkar for Princeton University | New York Times | 2024")+
   theme(plot.title = ggtext::element_markdown(size=16, hjust=0.5, face="bold"),
         plot.subtitle = ggtext::element_markdown(size=20, hjust=0.5), face="bold")
 
@@ -94,12 +94,7 @@ table_axis <- function(date){
     label <- geom_text(y=12-month(date),x=2006,label=months(date), fontface="bold", color="gray")
   }
   if(month(date) == 1){
-    if(year(date) == 2007){
-      label <- c(label,geom_text(y=12, x=year(date), label=year(date), fontface="bold", color="gray"))
-    }
-    else{
-      label <- geom_text(y=12, x=year(date), label=year(date), fontface="bold", color="gray")
-    }
+    label <- c(label,geom_text(y=12, x=year(date), label=year(date), fontface="bold", color="gray"))
   }
   return(label)
 }
@@ -125,11 +120,10 @@ combined_year_log <- function(start_date){
 system.time(combined_year_log(as.Date("2007-01-01")))
 
 png_files <- sort(list.files("image_sequence", pattern = ".*png$", full.names = TRUE))
-gifski(png_files, gif_file = "animation.gif", width = 1500*1.5, height = 700*1.5, delay = 1)
+gifski::gifski(png_files, gif_file = "animation.gif", width = 1500*1.5, height = 700*1.5, delay = 1)
 mgif_word_log <- magick::image_read("animation.gif")
 
-# 4 68 20
-mgif_word_cloud <- magick::image_read(animate(word_cloud, fps = 4, duration = 48,height = 7,
+mgif_word_cloud <- magick::image_read(animate(word_cloud, fps = 4, duration = 48, height = 7,
         width = 7, units = "in", res = 150))
 
 new_gif <- magick::image_append(c(mgif_word_cloud[1], mgif_word_log[1]))
@@ -142,7 +136,8 @@ for(x in 1:30){
   new_gif <- c(new_gif, combined)
 }
 
-start <- Sys.time()
 magick::image_write(new_gif, path = "final.gif", format = "gif")
-end <- Sys.time()
 
+new_gif <- magick::image_read("final.gif")
+new_gif <- magick::image_animate(new_gif, fps = 4)
+magick::image_write(new_gif, path = "final.gif", format = "gif")

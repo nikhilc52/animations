@@ -14,8 +14,6 @@ read_hourly_data <- function(hour) {
     filter(!is.na(lat)) |> 
     filter(!is.na(lon)) |> 
     filter(!is.na(velocity)) |> 
-    #filter(lon < -65 & lon > -135) |> 
-    #filter(lat > 23 & lat < 50) |> 
     group_by(icao24) |> 
     arrange(desc(icao24)) |>
     slice_head(n=1)
@@ -49,25 +47,17 @@ animation <- ggplot(usa) +
   geom_sf(data=hourly_flights_AAL_line, size=1, alpha=0.6, aes(group = icao24))+
   theme_void()+
   labs(title="American Airlines Flights Over A 24-hour Period", 
-       subtitle="{case_when(
-       as.integer((as.numeric(format(frame_time, \"%H\")))%%24) == 0 ~ \"12:00 AM\",
-       as.integer((as.numeric(format(frame_time, \"%H\")))%%24) < 12 ~ paste0(as.integer((as.numeric(format(frame_time, \"%H\")))%%24),\":00 AM\"),
-       as.integer((as.numeric(format(frame_time, \"%H\")))%%24) == 12 ~ \"12:00 PM\",
-       TRUE ~ paste0(as.integer((as.numeric(format(frame_time, \"%H\")))%%24)%%12,\":00 PM\")
-       )} EST",
-       caption="Nikhil Chinchalkar for Princeton University | Open Sky Network | 2024",
-       color="Significance",
-       size="Magnitude")+
+       subtitle="{format(frame_time, \"%I:%M %p\")} EST",
+       caption="Nikhil Chinchalkar for Princeton University | Open Sky Network | 2024")+
   ylim(25,50)+
   xlim(-135,-65)+
   xlab('')+
   ylab('')+
-  theme(plot.title = element_text(size = 22, hjust =0.5, face = "bold"), 
-        plot.subtitle = element_text(size = 16, hjust =0.5, face = "bold"))+
+  theme(plot.title = ggtext::element_markdown(size = 22, hjust =0.5, face = "bold"), 
+        plot.subtitle = ggtext::element_markdown(size = 16, hjust =0.5, face = "bold"))+
   transition_time(time)+
   enter_fade(alpha = 0)+
   exit_fade(alpha = 0)
 
-#10, 24, 50
 animate(animation, fps=15, duration=48, end_pause = 75, height = 7,
         width = 9, units = "in", res = 200)

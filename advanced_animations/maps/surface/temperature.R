@@ -3,9 +3,6 @@ library(gganimate)
 library(ggplot2)
 library(sf)
 library(rnaturalearth)
-library(rnaturalearthdata)
-library(zoo)
-library(gifski)
 
 world <- ne_countries(scale = "medium", returnclass = "sf")
 
@@ -22,9 +19,8 @@ world_temperatures$dt <- as.Date(world_temperatures$dt)
 
 world_plot <- world_temperatures |> 
   mutate(year = as.integer(format(dt, '%Y'))) |>
-  filter(year > 1984)
-
-world_plot <- world_plot[,names(world_plot) %in% c("admin", "AverageTemperature", "year")]
+  filter(year > 1984) |> 
+  select(admin, AverageTemperature, year)
 
 average_20th <- temperatures |> 
   mutate(year = as.integer(format(dt, '%Y'))) |> 
@@ -49,16 +45,16 @@ world_plot <- world_plot |>
 
 animation <- ggplot(world_plot)+
   geom_sf(aes(fill=difference))+
+  transition_time(year, range=c(1985L,2013L))+
   scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
   theme_minimal()+
   labs(title="Difference in Surface Temperatures from 20th Century Average", 
        subtitle="Date: {frame_time}",
-       caption="Nikhil Chinchalkar for Princeton University | Berkley Earth | 2024",
        fill="Difference from 20th Century Average (C)")+
   xlab('')+
   ylab('')+
-  theme(plot.title = element_text(size = 22, hjust =0.5, face = "bold"), 
-        plot.subtitle = element_text(size = 10, hjust =0.5, face = "bold"),
+  theme(plot.title = ggtext::element_markdown(size = 21, hjust =0.5, face = "bold"), 
+        plot.subtitle = ggtext::element_markdown(size = 10, hjust =0.5, face = "bold"),
         legend.position = "bottom")+
   transition_time(year, range=c(1985L,2013L))
 
