@@ -24,7 +24,7 @@ We'll now import the data, with the `read_excel` function, since our data is in 
 covid <- readxl::read_excel("covid.xlsx") #requires 'readxl' is installed
 ```
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
 
 Since we're going to be working with dates, we need to convert the date column to Date objects.
 
@@ -44,7 +44,7 @@ world <- covid |>
 
 Essentially, we're filtering to only look at world-wide cases (rather than on a country-by-country basis), making sure the data is available, and restricting our data to 2022 or earlier, where the majority of the concentration of deaths will be. Finally, we select only the data that we need, to make our data frame easier to work with.
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 With our data frame in place, we can start to add the annotations, which is the most difficult part of making this plot. Each annotation has the text (i.e. the words that are displayed on screen) and the date (i.e. where and when the text should be displayed). The combination of this data can best be respresented by a 'dictionary'-esque dataframe.&#x20;
 
@@ -88,7 +88,7 @@ world <- bullet_effect(annotations$values, 100)
 
 We'll use the bullet\_effect function we just defined to add to our world data frame with a strength of 100, which I find is good for this specific plot. We're supplying the values of the annotation dictionary, which corresponds to a list of dates, which is exactly what we need (dates\_to\_slow).
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're now going to move on to plotting the annotations, starting with finding an appropriate Y-value for the text and lines, so that we can minimize overlaps. We can do this with another function.
 
@@ -170,7 +170,7 @@ world |>
 
 We're doing some basic setups for the plot, with the ylim defined by the number we set earlier. Note the order in which our functions are called. We're putting the line segment on the back-most layer, the geom\_line in the middle, and then the geom\_label for our annotations on top. Since we're using transition\_reveal, our functions are called for every frame.
 
-<figure><img src="../.gitbook/assets/rough1.gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1).gif" alt=""><figcaption></figcaption></figure>
 
 The major elements are in place, but our plot doesn't look to nice. We'll pretty it up and then save it.
 
