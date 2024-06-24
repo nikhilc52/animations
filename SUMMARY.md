@@ -17,6 +17,8 @@
 * [Animated Word Clouds](advanced-animations/animated-word-clouds.md)
 * [Animated Line Graphs](advanced-animations/animated-line-graphs.md)
 * [Animated Surface Maps](advanced-animations/animated-surface-maps.md)
+* [Animated 2D Point Maps](advanced-animations/animated-2d-point-maps.md)
+* [Interactive 3D Maps](advanced-animations/interactive-3d-maps.md)
 
 ## Appendix
 
@@ -32,3 +34,4 @@
   * [animated-word-cloud.R](appendix/advanced-animations/animated-word-cloud.r.md)
   * [animated-line-graph.R](appendix/advanced-animations/animated-line-graph.r.md)
   * [animated-surface-map.R](appendix/advanced-animations/animated-surface-map.r.md)
+  * [animated-2d-point-maps.R](appendix/advanced-animations/animated-2d-point-maps.r.md)
