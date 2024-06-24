@@ -2,7 +2,7 @@
 description: >-
   Word clouds can help viewers easily identify data points. Animating can help
   to show trends over time.
-cover: ../.gitbook/assets/final (4) (1).gif
+cover: ../.gitbook/assets/final (4) (1) (1).gif
 coverY: 0
 ---
 
@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 We're trying to make this graph:
 
-<figure><img src="../.gitbook/assets/final (4).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (4) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
@@ -31,13 +31,13 @@ With our libraries in place, we get the dataset in the same way we've been doing
 txhousing_data <- txhousing
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
 
 Now that we have our data, we need to format it to make a suitable word cloud. We'll take the `volume` column, which is the number of house sales multiplied by their price (i.e. how much money was spent), and use it as an indicator for size.&#x20;
 
 Our data is already formatted in this manner, but there's too many data points/cities. If we were to plot a word cloud with the data set as is, it would look like this:
 
-<figure><img src="../.gitbook/assets/rough1 (1).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1) (1) (1) (1).gif" alt=""><figcaption></figcaption></figure>
 
 There's just too much going on for the viewer to properly understand - we need to cut down how many cities we're showing per frame. Let's only show the top five cities by housing market volume, for every date. We can format our dataset to this specification by using the `slice_head` function:
 
@@ -50,7 +50,7 @@ txhousing_data <- txhousing_data |>
 
 Our data now looks like this:
 
-<figure><img src="../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Perfect! We have the top five for every month. Let's get started on our word cloud.
 
@@ -71,7 +71,7 @@ ggplot(txhousing_data)+
   transition_time(date) #transition over time
 ```
 
-<figure><img src="../.gitbook/assets/rough2.gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough2 (1).gif" alt=""><figcaption></figcaption></figure>
 
 This looks like a good start, but we're missing some key information. Let's add a descriptive title and the current year that is being displayed.
 

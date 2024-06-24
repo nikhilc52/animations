@@ -4,7 +4,7 @@ The NBA and other sports leagues are full of interesting data and trends. We can
 
 The animation we make will look like this:
 
-<figure><img src="../.gitbook/assets/file3da3bb3aed7.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (13).gif" alt=""><figcaption></figcaption></figure>
 
 The dataset is available for download [here](https://drive.google.com/file/d/1\_7YIYr4kasLzHMTQzyaQ9-lMUrK6n5Dm/view), and it is originally from [GitHub](https://github.com/DomSamangy/NBA\_Shots\_04\_24?tab=readme-ov-file).
 
@@ -149,7 +149,7 @@ Let's now get started with the data.
 shots <- read_csv("nba_shots.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Once we have all the shots, we can filter them based on location. We only want shots that are within half-court, so we'll only take those whose LOC\_Y is below 40.
 
@@ -178,7 +178,7 @@ shots_plot <- shots_plot |>
   )
 ```
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Nice. Now we're on to the plot. Let's start with a static version. Note that we call `plot_court()` first, since it creates the background which we'll plot over.
 
@@ -209,7 +209,7 @@ plot_court() +
         plot.subtitle = ggtext::element_markdown(size=14, hjust=0.5, face="bold"))
 ```
 
-<figure><img src="../.gitbook/assets/rough3.png" alt="" width="562"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough3 (1).png" alt="" width="562"><figcaption></figcaption></figure>
 
 We're now ready to animate. Again, we're going to use `transition_time` for our animation, cycling over the year of the season. The new range synatax is way of avoiding using as.integer in our subtitle. All it does is tell R that our animation is using integers (`L`) from 2004 to 2024.&#x20;
 

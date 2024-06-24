@@ -1,6 +1,10 @@
+---
+description: Code used to make the graph found within "Animated Heat Maps"
+---
+
 # animated-heat-map.R
 
-<figure><img src="../../.gitbook/assets/file3da3bb3aed7.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/final (13).gif" alt=""><figcaption></figcaption></figure>
 
 ```r
 library(tidyverse)
@@ -30,6 +34,7 @@ animation <- plot_court() +
   theme_void()+
   labs(subtitle = "Year: {frame_time}",
        title = "NBA Shots Heatmap: Switch from Mid-range to 3-pointers",
+       caption="Nikhil Chinchalkar for Princeton University | Dom Samangy | 2024",
        fill="# of Shots")+
   theme(plot.title = ggtext::element_markdown(size=16, hjust=0.5, face="bold"),
         plot.subtitle = ggtext::element_markdown(size=14, hjust=0.5, face="bold"))+
