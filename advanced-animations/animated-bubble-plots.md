@@ -6,7 +6,7 @@ While making something as smooth and interactive as Rosling's is beyond the scop
 
 The final product will look something like this:
 
-<figure><img src="../.gitbook/assets/final (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
@@ -25,7 +25,7 @@ The dataset that Rosling uses can actually be found within an R library: `gapmin
 gapminder_data <- gapminder
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Our data is already cleaned for us, so we can get started plotting. First, let's make a simple static graph. Looking ahead, we know that we are going to want each point to represent a country, so we can assign `group=country` to our plot (even though it technically doesn't do anything right now).
 
@@ -148,7 +148,7 @@ ggplotly(animation)
 
 And we get a nice interactive, with hoverable data points, exportable as an HTML.
 
-<figure><img src="../.gitbook/assets/image (3) (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 [Click here to view the raw file used to make this animation.](../appendix/advanced-animations/animated-bubble-plot.r.md)

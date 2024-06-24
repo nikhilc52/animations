@@ -15,6 +15,8 @@
 * [Animated Scatter Plots](advanced-animations/animated-scatter-plots.md)
 * [Animated Heat Maps](advanced-animations/animated-heat-maps.md)
 * [Animated Word Clouds](advanced-animations/animated-word-clouds.md)
+* [Animated Line Graphs](advanced-animations/animated-line-graphs.md)
+* [Animated Surface Maps](advanced-animations/animated-surface-maps.md)
 
 ## Appendix
 
@@ -28,3 +30,5 @@
   * [animated-scatter-plot.R](appendix/advanced-animations/animated-scatter-plot.r.md)
   * [animated-heat-map.R](appendix/advanced-animations/animated-heat-map.r.md)
   * [animated-word-cloud.R](appendix/advanced-animations/animated-word-cloud.r.md)
+  * [animated-line-graph.R](appendix/advanced-animations/animated-line-graph.r.md)
+  * [animated-surface-map.R](appendix/advanced-animations/animated-surface-map.r.md)

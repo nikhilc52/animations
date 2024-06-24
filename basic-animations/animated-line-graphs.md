@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 In a few minutes, we'll make this graph:
 
-<figure><img src="../.gitbook/assets/final (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
@@ -30,7 +30,7 @@ Now that we have the libraries, we can get the dataset. So that we can easily vi
 txhousing_data <- txhousing
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
 
 We want to have a single number for sales and listings for each month and year. Luckily, the dataset already comes with a `date` column that specifies both the month and the year, so we can just group based on `date` and sum the sales and listings for every city to get a total.
 
@@ -47,7 +47,7 @@ txhousing_data <- txhousing_data |>
 
 Let's look at the data now.
 
-<figure><img src="../.gitbook/assets/image (5) (1).png" alt=""><figcaption><p>The first five rows of the updated txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (1) (1).png" alt=""><figcaption><p>The first five rows of the updated txhousing_data dataframe.</p></figcaption></figure>
 
 Now that the data is in the right format, we're ready to plot. We'll start by first generating a static line graph, with the date on the x-axis and sales/listings on the y-axis (in two separate lines).
 

@@ -28,7 +28,7 @@ With our libraries in place, we can load in the data.
 headlines <- read_csv("headlines.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
 Next, we'll filter out non-NYT publications, to narrow our focus.
 
@@ -43,7 +43,7 @@ Before we do any more changes, we'll need to fix up the `Date` column in our dat
 nyt_headlines$Date <- as.Date(as.character(nyt_headlines$Date), format="%Y%m%d")
 ```
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Though we've narrowed our dataset down to around 500,000 rows, we still have to compress our data. Right now, there's too much variability in our data: headlines change too frequently between each day. To counter this while not losing any data, we can simply group our data by month.
 
@@ -77,7 +77,7 @@ The `unlist` function just separates this list into rows, so that each row has a
 
 Our data now looks like this (it might take a few seconds to load):
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 Now that we've tokenized, we can get rid of the Headlines column, which will speed up our work.
 
@@ -95,7 +95,7 @@ word_count <- nyt_headlines |>
   )
 ```
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 This peek in our dataset forshadows our next move, which is to filter out certain unneeded or artifically boosted words. Unneeded words include numbers or special characters, and artificially boosted words like "new", "york", and "times", for instance.
 
@@ -118,7 +118,7 @@ The first two filters take out "boosted" words, the next one is to ensure all ch
 
 Next, we group by each month in each year, order by the number of apperances of each word, and take the top five words for each group.
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 This looks great. We're now ready to make our word cloud. First we'll set the seed, which is good practice.
 
@@ -148,7 +148,7 @@ animate(word_cloud, fps = 4, duration = 48, height = 7,
 
 We have 16 years worth of data, with 12 months per year, meaning we have 192 frames to get through. To get through all the data with one frame per month, we can set the `duration` to `48` and the `fps` to `4` (since 4\*48 = 192).&#x20;
 
-<figure><img src="../.gitbook/assets/rough1.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 We're still missing some information in our chart: a title and a subtitle showing the current month and year being displayed.
 
@@ -368,7 +368,7 @@ combined_year_log(as.Date("2007-01-01"))
 
 We can call our looping function to start the process, and watch as the dates continually increase by one month in the console. This function should take about 30 seconds to run.
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're now on the home strech. Although we just rendered the image sequence as pngs, we have to do some formatting to allow magick to read it properly. We're going to convert the files to a gif, then feed that gif into magick like we did for the word cloud.
 
