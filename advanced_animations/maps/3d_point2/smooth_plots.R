@@ -19,10 +19,3 @@ plot(average_positions$average_y, type = "l", main = "Smoothing Spline", ylab = 
 lines(average_positions$y_spline, col = "red")
 plot(average_positions$average_z, type = "l", main = "Smoothing Spline", ylab = "Z", xlab = "Time")
 lines(average_positions$z_spline, col = "red")
-
-plot(average_positions$average_x, type = "l", main = "Smoothing Regular", ylab = "X", xlab = "Time")
-lines(camera_x_positions, col = "red")
-plot(average_positions$average_y, type = "l", main = "Smoothing Regular", ylab = "Y", xlab = "Time")
-lines(camera_y_positions, col = "red")
-plot(average_positions$average_z, type = "l", main = "Smoothing Regular", ylab = "Z", xlab = "Time")
-lines(camera_z_positions, col = "red")
