@@ -1,9 +1,7 @@
 library(plotly)
 library(tidyverse)
 library(dplyr)
-library(htmltools)
 library(stars)
-library(ggplot2)
 
 earthquakes <- read_csv("earthquakes.csv")
 
@@ -14,15 +12,16 @@ earthquakes <- earthquakes |>
   mutate(y=1.01 * sin(degrees2radians(longitude)) * cos(degrees2radians(latitude))) |> 
   mutate(z=1.01 * sin(degrees2radians(latitude)))
 
-x_size <- 1440
-y_size <- 720
+manual_colorscale <- list(c(0,0.2,0.4,0.6,0.8,1),
+                          c("white","#ffa590","#ff8164","#ff6242",
+                            "#fb4b1e","#c61a09")) 
+
+x_size <- 1000
+y_size <- 500
 raw_tif <- read_stars("surface.png",
                       RasterIO = list(nBufXSize=x_size, nBufYSize=y_size))
 
 df_tif <- as.data.frame(raw_tif)
-df_tif <- df_tif |>
-  mutate(x = x-180) |>
-  mutate(y = y-90)
 
 red <- df_tif |> 
   filter(band == 1) |> 
@@ -41,9 +40,14 @@ blue <- blue[-c(3,4)]
 
 rgb <- left_join(left_join(red, green),blue)
 rgb$color <- rgb(rgb$red/255,rgb$green/255,rgb$blue/255)
-rgb$color_int <- bitwShiftL(rgb$red, 16) + bitwShiftL(rgb$green, 8) + rgb$blue 
+rgb$color_int <- 256 * 256 * rgb$red + rgb$green * 256 + rgb$blue 
 
 rgb_earth <- matrix(data=rgb$color_int, nrow=y_size, ncol = x_size, byrow=TRUE)
+
+lat <- seq(-90, 90, length.out = y_size)
+lon <- seq(-180, 180, length.out = x_size)
+lat <- matrix(rep(lat, x_size), nrow = y_size)
+lon <- matrix(rep(lon, each = y_size), nrow = y_size)
 
 earth_colorscale <- distinct(data.frame(rgb$color_int, rgb$color))
 earth_colorscale <- earth_colorscale |> arrange(rgb.color_int)
@@ -59,9 +63,6 @@ earth_colorscale$breaks[1] = 0
 earth_colorscale <- earth_colorscale[,c(3,2)]
 names(earth_colorscale)[names(earth_colorscale) == 'rgb.color'] <- 'colors'
 
-manual_colorscale <- list(c(0,0.2,0.4,0.6,0.8,1),
-                          c("white","#ffa590","#ff8164","#ff6242",
-                            "#fb4b1e","#c61a09")) 
 empty_axis <- list(
   showgrid = FALSE, 
   zeroline = FALSE,
@@ -70,13 +71,6 @@ empty_axis <- list(
   spikesides = FALSE,
   title = ""
 )
-
-nlat <- y_size
-nlon <- x_size
-lat <- seq(-90, 90, length.out = nlat)
-lon <- seq(-180, 180, length.out = nlon)
-lat <- matrix(rep(lat, nlon), nrow = nlat)
-lon <- matrix(rep(lon, each = nlat), nrow = nlat)
 
 image <- RCurl::base64Encode(readBin("size_scale.png", "raw", file.info("size_scale.png")[1, "size"]), "txt")
 
@@ -95,9 +89,10 @@ globe <- plot_ly(width=800,height=800) |>
     z=earthquakes$z,
     mode = "markers", type = "scatter3d",
     marker = list(color = earthquakes$magnitude, size = earthquakes$sig/100, colorscale = manual_colorscale, showscale=TRUE,
-                  colorbar=list(title=list(text="Magnitude",side="top"), thickness=10, len=0.35,orientation='h',y=0.1,
+                  colorbar=list(title=list(text="Magnitude",side="top"), thickness=10, len=0.35, orientation='h', y=0.1,
                                 tickfont=list(family="Arial"), nticks=6)),
-    text = paste0("Description: ", earthquakes$title, "<br>", "Time: ", earthquakes$date_time, "<br>" ,"Significance: ", earthquakes$sig),
+    text = paste0("Description: ", earthquakes$title, "<br>", "Time: ", earthquakes$date_time, "<br>" ,
+                  "Magnitude: ", earthquakes$magnitude, "<br>", "Significance: ", earthquakes$sig),
     hoverinfo = "text"
   ) |>
   add_surface(
@@ -109,9 +104,9 @@ globe <- plot_ly(width=800,height=800) |>
     showscale = FALSE, 
     hoverinfo = "none",
     lightposition = list(
-      x=1,
-      y=1,
-      z=0.5
+      x=2,
+      y=2,
+      z=2
     ),
     contours = list(
       x = list(highlight = FALSE), 
