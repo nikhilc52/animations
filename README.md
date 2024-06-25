@@ -32,7 +32,7 @@ Below are some of the charts that are possible to make exlusively within the R e
 
 <div data-full-width="true">
 
-<figure><img src=".gitbook/assets/final 6.gif" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/final 5.gif" alt=""><figcaption></figcaption></figure>
 
  
 
