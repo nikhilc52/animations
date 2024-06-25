@@ -465,5 +465,5 @@ globe <- plot_ly(width=800,height=800) |>
 That's all! We've now made a cutting-edge interactive model with 3D mapping exclusively within R. If you want to have the camera move to generate a movie within the R enviornment, see the next section for how to get smooth camera movement.
 
 {% hint style="info" %}
-Click here to view the raw file used to make this animation.
+[Click here to view the raw file used to make this animation.](../appendix/advanced-animations/interactive-3d-maps.r.md)
 {% endhint %}
