@@ -1,3 +1,8 @@
+---
+cover: ../.gitbook/assets/final (2).gif
+coverY: 0
+---
+
 # Animated Heat Maps
 
 The NBA and other sports leagues are full of interesting data and trends. We can visualize how professional basketball has changed with heatmaps that track shot location.
@@ -149,7 +154,7 @@ Let's now get started with the data.
 shots <- read_csv("nba_shots.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Once we have all the shots, we can filter them based on location. We only want shots that are within half-court, so we'll only take those whose LOC\_Y is below 40.
 
@@ -178,7 +183,7 @@ shots_plot <- shots_plot |>
   )
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Nice. Now we're on to the plot. Let's start with a static version. Note that we call `plot_court()` first, since it creates the background which we'll plot over.
 

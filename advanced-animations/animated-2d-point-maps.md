@@ -1,3 +1,8 @@
+---
+cover: ../.gitbook/assets/final (6).gif
+coverY: 0
+---
+
 # Animated 2D Point Maps
 
 Looking at flight data can provide insights into the busiest times for air traffic as well as highlighting the times where the sky is empty.&#x20;
@@ -63,7 +68,7 @@ for(x in 1:23){
 
 We're printing here to track our progress, since this function will take about three minutes to run, so it's important we know exactly how far along we are on that process (and if there's an error). Once that's done, we'll get a data frame that looks like this:
 
-<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
 
 Even though we shortened our focus down to just one log every hour, the dataset is still very large: nearly 300,000 rows. To focus down even more, we can focus on just American Airlines flights, which have a call sign that starts with "AAL":
 
@@ -72,7 +77,7 @@ hourly_flights_AAL <- hourly_flights |>
   filter(startsWith(callsign, "AAL"))
 ```
 
-<figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (15) (1).png" alt=""><figcaption></figcaption></figure>
 
 There's two parts to each plane we're showing on our plot: one is the location of the aircraft itself, and the other is a tail leading out from the aircraft in the opposite direction it is heading, to show direction.
 
@@ -99,7 +104,7 @@ hourly_flights_AAL_line <- hourly_flights_AAL |>
 
 Essentially, we're just adding a longitiude and latitude pair to act as an end point for the line were making to represent the trail. The longitude and latitude are created using some trigonometry:
 
-<figure><img src="../.gitbook/assets/rough1.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1).svg" alt=""><figcaption></figcaption></figure>
 
 Since the heading is measure as the distance from the vertical line (clock-wise), we manipulate it as described in the image above to align it within our triangle. From here, its simple to see how our formula is generated. Since cosine and sine are in radians, we multiply the 90-heading by pi/180 to convert it. Then, we're dividing the result by 100 to scale it down, otherwise the tails would be too long, and subtracting it from the original lon and lat points to put our tail behind the point.
 
@@ -111,7 +116,7 @@ With all our data in place, we'll now get the data for the plot of the U.S. unde
 usa <- st_as_sf(maps::map("state", fill=TRUE, plot=FALSE)) #requires 'maps' package is installed
 ```
 
-<figure><img src="../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (16) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're now ready to plot everything. Since this plot takes some time to load, I'll just jump to the final iteration of our plot.
 

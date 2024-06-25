@@ -4,7 +4,7 @@ description: Code used to make the graph found within "Animated Word Clouds"
 
 # animated-word-cloud.R
 
-<figure><img src="../../.gitbook/assets/final (3).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/final (3) (1).gif" alt=""><figcaption></figcaption></figure>
 
 ```r
 library(tidyverse)

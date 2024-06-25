@@ -4,7 +4,7 @@ description: Code used to make the graph found within "Animated Scatter Plots"
 
 # animated-scatter-plot.R
 
-<figure><img src="../../.gitbook/assets/final (6).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/final (6) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ```r
 library(ggplot2)

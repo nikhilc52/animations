@@ -2,7 +2,7 @@
 description: >-
   Scatter plots are useful for conveying information about a number of points.
   By animating, we can add a new dimension to the graph.
-cover: ../.gitbook/assets/final (3) (1) (1).gif
+cover: ../.gitbook/assets/final (3) (1) (1) (1).gif
 coverY: 0
 ---
 
@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 At the end of this module, we'll have made this graph:
 
-<figure><img src="../.gitbook/assets/final (6).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (6) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
@@ -32,7 +32,7 @@ txhousing_data <- txhousing
 
 For this plot, we need to have a data point (dot) for each city for all time frames. This point needs to have both the median sale price and the sales. Lucky for us, the dataset is already in this format:
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can go straight to plotting. The syntax is very similar to the line graph, but note that we now use `geom_point` instead of `geom_line`. We're also going to add a new parameter: group. All this does is tell R that we'd like each point to represent one city
 

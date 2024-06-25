@@ -35,3 +35,4 @@
   * [animated-line-graph.R](appendix/advanced-animations/animated-line-graph.r.md)
   * [animated-surface-map.R](appendix/advanced-animations/animated-surface-map.r.md)
   * [animated-2d-point-maps.R](appendix/advanced-animations/animated-2d-point-maps.r.md)
+  * [interactive-3d-maps.R](appendix/advanced-animations/interactive-3d-maps.r.md)

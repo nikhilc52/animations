@@ -1,10 +1,15 @@
+---
+cover: ../.gitbook/assets/final (1).gif
+coverY: 0
+---
+
 # Animated Scatter Plots
 
 Are athletes actually getting bigger, faster, and stronger? We can look at the heights and weights of hundreds of thousands of Olympic athletes to find out.
 
 Our goal is to make this plot:
 
-<figure><img src="../.gitbook/assets/final (4).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (4) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 The dataset we'll use is available to download [here](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results?select=athlete\_events.csv).
 
@@ -25,7 +30,7 @@ Let's load in the csv.
 athletes <- read_csv("athletes.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're going to need to do some cleaning if we want to have a single height and weight for swimming event in every Olympic year. We can easily do this cleaning with a few lines.&#x20;
 
@@ -46,7 +51,7 @@ height_weight <- athletes |>
   filter(Year >= 1960)
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Perfect. We're now ready to plot. We'll start with a static one for reference, before we go into animation.
 
