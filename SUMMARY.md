@@ -19,6 +19,7 @@
 * [Animated Surface Maps](advanced-animations/animated-surface-maps.md)
 * [Animated 2D Point Maps](advanced-animations/animated-2d-point-maps.md)
 * [Interactive 3D Maps](advanced-animations/interactive-3d-maps.md)
+* [Animated 3D Maps](advanced-animations/animated-3d-maps.md)
 
 ## Appendix
 
@@ -36,3 +37,4 @@
   * [animated-surface-map.R](appendix/advanced-animations/animated-surface-map.r.md)
   * [animated-2d-point-maps.R](appendix/advanced-animations/animated-2d-point-maps.r.md)
   * [interactive-3d-maps.R](appendix/advanced-animations/interactive-3d-maps.r.md)
+  * [animated-3d-maps.R](appendix/advanced-animations/animated-3d-maps.r.md)

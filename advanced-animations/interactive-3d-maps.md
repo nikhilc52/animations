@@ -1,16 +1,17 @@
 ---
+cover: ../.gitbook/assets/demo.gif
 coverY: 0
 ---
 
 # Interactive 3D Maps
 
-In a way, having a live interactive feature for a plot is a way of generating an animation: each unique user movement counts as a mini-animation.&#x20;
+In a way, having a live interactive feature for a plot is a way of generating an animation: each unique user movement counts as a mini-animation. This section relies on the template provided by [Carson Sievert](https://github.com/plotly/plotly.R/blob/master/demo/sf-plotly-3D-globe.R).&#x20;
 
 We can push R to its limits by generating a 3D interactive globe that displays data on the world's earthquakes.&#x20;
 
 The final product is an interactive html page that is viewable [here](https://nikhilc52.github.io/animation\_links/). Below is a preview.
 
-<figure><img src="../.gitbook/assets/image.png" alt="" width="552"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (15).png" alt="" width="552"><figcaption></figcaption></figure>
 
 The data to we'll use to make this visual is available [here](https://www.kaggle.com/datasets/warcoder/earthquake-dataset).
 
@@ -31,7 +32,7 @@ Next, we'll load in the data.
 earthquakes <- read_csv("earthquakes.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Since we're going to be mapping the longitude and latitude of each earthquake to a three dimentional space, it'll be efficient and useful if we define a simple function that converts degrees to radians, so that we can more easily call trigonometric functions.
 
@@ -86,7 +87,7 @@ We'll now convert the tif to a data frame for us to use.
 df_tif <- as.data.frame(raw_tif)
 ```
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 There are three values in the band column (1, 2, 3), each representing a color (red, green, blue). To map an actual RGB value to each location, we need to combine the data so that each x and y has a corresponding red, green, and blue column with appriopriate color values. We can do this with a series of left joins, but we need to format our data first.
 
@@ -96,7 +97,7 @@ red <- df_tif |>
   mutate(red = surface.png)
 ```
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 All we're doing with this block is filtering to make a data frame to hold just the red values. We'll drop the columns we don't need anymore.
 
@@ -104,7 +105,7 @@ All we're doing with this block is filtering to make a data frame to hold just t
 red <- red[-c(3,4)]
 ```
 
-<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can repeat this process for the green and blue color bands as well.
 
@@ -126,7 +127,7 @@ Once that's done, we can join our data all together, to get our desired format.&
 rgb <- left_join(left_join(red, green),blue)
 ```
 
-<figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
 This is exactly what we need: a red, green, and blue value for each X and Y location. There's some more manipulation we have to do to finish mapping the surface correctly. This includes setting up a column with a hex value for R to interpret (in our scale), and another column with an integer that uniquely represents a color for R to interpret (in the actual surface).
 
@@ -139,7 +140,7 @@ The color column is self explainatory - we just supply the red, green, and blue 
 
 The color\_int column is a bit more complicated, but generates a unique value for any color's RGB values. We'll need this in orer to find an appropriate order to give R for the scale we'll eventually set up.
 
-<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
 The way that plotly interprets surface colors is through a matrix object. Since our data is currently in a data frame format, we need to convert it. We need to be careful here, though, since this conversion can cause a lot of errors if its wrong. The resulting matrix should essentially be a pixelated version of the original png file we supplied.
 
@@ -149,7 +150,7 @@ rgb_earth <- matrix(data=rgb$color_int, nrow=y_size, ncol = x_size, byrow=TRUE)
 
 The matrix function uses the data within the color\_int column to fill in its cells. Since the matrix should be a mirror of the image we supplied, there should be as many rows as there are y values in our image and as many columns as there are x values in our image (using the variables defined earlier). Since the data in the rgb dataframe is ordered by x values, we're filling in our data by rows (meaning we put in all the data for the first row, then the second, then the third, etc).&#x20;
 
-<figure><img src="../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
 It's a bit difficult to make sure we've done this step correctly, but one simple (and optional) way is to export the data to a csv, then apply conditional formatting to all the values with 132372 (which corresponds to the blues used to color the ocean).
 
@@ -157,7 +158,7 @@ It's a bit difficult to make sure we've done this step correctly, but one simple
 write_csv(as.data.frame(rgb_earth), "check.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
 
 After shrinking the column width to 2 in Excel, we get this plot, which confirms that we've done all the steps correctly so far. We'll now quickly set the corresponding X and Y values for plotly to interpret (as a new matrix), since our rgb\_earth matrix doesn't have them.&#x20;
 
@@ -188,7 +189,7 @@ The object on the left is what we start out with, and through some maniulation, 
 earth_colorscale <- distinct(data.frame(rgb$color_int, rgb$color))
 ```
 
-<figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
 
 Here, we're just finding all the unique color values and integers, so that we don't have to do any duplicate mapping.
 
@@ -198,7 +199,7 @@ Now, we'll arange our rgb.color\_int column in ascending order:
 earth_colorscale <- earth_colorscale |> arrange(rgb.color_int)
 ```
 
-<figure><img src="../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (11) (1).png" alt=""><figcaption></figcaption></figure>
 
 Here's the hard part. Plotly doesn't allow us to have more than around 255 colors in our scale, but we have 65,706 distinct colors in our plot. To counter this, we'll define a simple heuristic function to delete every other row from our data frame to help narrow down our dataset. From iteration to iteration this shouldn't remove too much quality: two colors that are right next to each other are fairly similar, so removing one won't make too much of a difference.
 
@@ -214,7 +215,7 @@ while(nrow(earth_colorscale) > 255){
 
 toKeep is just a list of all the even-numbered indices, which are then kept (and the odd indices deleted) in the next line. The row names being set to null just resets the row numbers in our data frame, otherwise we'd just be left with even indices.
 
-<figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (12) (1).png" alt=""><figcaption></figcaption></figure>
 
 Our color scale now looks like this.
 
@@ -224,7 +225,7 @@ With all the colors set, we now have to define the breaks. Since we want all the
 earth_colorscale$breaks <- seq(1:nrow(earth_colorscale))/nrow(earth_colorscale)
 ```
 
-<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
 
 Since plotly requires the breaks column starts with percentile 0, we're just going to manually set the first row to 0:
 
@@ -239,11 +240,11 @@ earth_colorscale <- earth_colorscale[,c(3,2)]
 names(earth_colorscale)[names(earth_colorscale) == 'rgb.color'] <- 'colors'
 ```
 
-<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
 
 It might be a bit difficult to understand what we did, but essentially, any colors that have a (integer) value within the first 1.5% of all integer values (which ranges from 0 to .015 \* 16,711,680), will correspond to the color represented by '#001122'. The next .8% of integer values will correspond to the color represented by '#010E11', and so on. Here's what the scale looks like when colored:
 
-<figure><img src="../.gitbook/assets/image (15).png" alt="" width="14"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (15) (1).png" alt="" width="14"><figcaption></figcaption></figure>
 
 Obviously, mapping down more than 65 thousand colors down to just 128 will cause some discoloration, but for the most part, our plot should be accurate.
 

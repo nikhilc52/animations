@@ -10,3 +10,48 @@ Animations are also becoming more needed as research communication and outreach 
 
 Below are some of the charts that are possible to make exlusively within the R enviornment:
 
+<div data-full-width="true">
+
+<figure><img src=".gitbook/assets/final 11.gif" alt="" width="563"><figcaption></figcaption></figure>
+
+ 
+
+<figure><img src=".gitbook/assets/final 12.gif" alt=""><figcaption></figcaption></figure>
+
+</div>
+
+<div data-full-width="true">
+
+<figure><img src=".gitbook/assets/final 7.gif" alt=""><figcaption></figcaption></figure>
+
+ 
+
+<figure><img src=".gitbook/assets/final 8.gif" alt=""><figcaption></figcaption></figure>
+
+</div>
+
+<div data-full-width="true">
+
+<figure><img src=".gitbook/assets/final 6.gif" alt=""><figcaption></figcaption></figure>
+
+ 
+
+<figure><img src=".gitbook/assets/final 9.gif" alt=""><figcaption></figcaption></figure>
+
+</div>
+
+<div data-full-width="true">
+
+<figure><img src=".gitbook/assets/final 10.gif" alt=""><figcaption></figcaption></figure>
+
+</div>
+
+<div data-full-width="true">
+
+<figure><img src=".gitbook/assets/final 13.gif" alt=""><figcaption></figcaption></figure>
+
+ 
+
+<figure><img src=".gitbook/assets/final 6 (2).gif" alt=""><figcaption></figcaption></figure>
+
+</div>

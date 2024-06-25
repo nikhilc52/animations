@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 Our goal is to reproduce this plot:
 
-<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
@@ -36,7 +36,7 @@ This line is farily complicated. The `maps::map()` call uses the maps package to
 
 `maps::map()` returns a map object, which must be turned into an `sf` if we want to plot it within `ggplot`. To do this we call `st_as_sf()` to turn the map (`st` : spacial type) into an `sf` (simple features). This object is then stored in the variable `usa`.
 
-<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Going back to the basics, we read txhousing into a new data frame for viewing.
 
@@ -53,7 +53,7 @@ cities <- data.frame(unique(txhousing_data$city)) #df of unique cities
 names(cities)[names(cities) == 'unique.txhousing_data.city.'] <- 'city' #rename column name for simplcity
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Essentially, we're taking all the unique city names and making them a dataframe, then renaming the column name to save some typing later on.
 
@@ -72,7 +72,7 @@ Let's join this data frame back with the original.
 txhousing_data <- left_join(txhousing_data, cities)
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Now that we have the latitude and longitude points for each city in our original data frame, we can convert these points to geometry in R.
 
@@ -86,7 +86,7 @@ sf_txhousing_data <- txhousing_data |>
 
 For each coordinate pair, we use the `st_as_sf` function to convert the "regular" lat and long numbers into actual geometric points. Then, to make sure alignment is proper, we set a Coordinate Reference System using st\_set\_crs, since there are a number of ways to align latitude and longtiude along a 2D plane. For most situations, 4326 (World Geodetic System) is your go-to.
 
-<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Now that we've got all our data in order, we can start to plot. We're now using `geom_sf()` to plot "simple features" using `ggplot`. We have a few specifications: the `color` of the inner circle should be the median sale price, and both the inner and outer circle should have `size`s that reflect the number of listings/sales for that city. Obviously, there are always at least as many listings as there are sales, so listings will be the outer circle and sales the inner.
 
@@ -99,7 +99,7 @@ ggplot()+
   geom_sf(data=sf_txhousing_data, aes(size=sales, color=median))
 ```
 
-<figure><img src="../.gitbook/assets/rough1 (2).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (2) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 We're almost done. Let's clean up this chart a little by fixing the scales and adding titles.
 

@@ -1,11 +1,11 @@
 ---
-cover: ../.gitbook/assets/final (1).gif
+cover: ../.gitbook/assets/final (1) (1).gif
 coverY: 0
 ---
 
 # Animated Scatter Plots
 
-Are athletes actually getting bigger, faster, and stronger? We can look at the heights and weights of hundreds of thousands of Olympic athletes to find out.
+Are athletes actually getting bigger, faster, and stronger? We can look at the heights and weights of hundreds of thousands of Olympic athletes to find out. This section is loosley inspired by this [article](https://www.randigriffin.com/2018/06/08/olympic-history-7-size.html) by Randi Griffin.
 
 Our goal is to make this plot:
 
@@ -30,7 +30,7 @@ Let's load in the csv.
 athletes <- read_csv("athletes.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're going to need to do some cleaning if we want to have a single height and weight for swimming event in every Olympic year. We can easily do this cleaning with a few lines.&#x20;
 
@@ -51,7 +51,7 @@ height_weight <- athletes |>
   filter(Year >= 1960)
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Perfect. We're now ready to plot. We'll start with a static one for reference, before we go into animation.
 
@@ -61,7 +61,7 @@ height_weight |>
   geom_point(aes(x=Height, y=Weight, color=Sex, group=Event))
 ```
 
-<figure><img src="../.gitbook/assets/rough1 (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 Let's make this look a little better.
 

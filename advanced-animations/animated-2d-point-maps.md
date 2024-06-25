@@ -11,7 +11,7 @@ In this module, we'll be making this animation:
 
 <figure><img src="../.gitbook/assets/final (18).gif" alt="" width="563"><figcaption></figcaption></figure>
 
-The data is available [here](https://opensky-network.org/datasets/states/2022-06-27/).
+The data is available [here](https://opensky-network.org/datasets/states/2022-06-27/). Download all the folders into one folder, then click on the .tar file to generate the csv for each hour.
 
 ***
 
@@ -68,7 +68,7 @@ for(x in 1:23){
 
 We're printing here to track our progress, since this function will take about three minutes to run, so it's important we know exactly how far along we are on that process (and if there's an error). Once that's done, we'll get a data frame that looks like this:
 
-<figure><img src="../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (14) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Even though we shortened our focus down to just one log every hour, the dataset is still very large: nearly 300,000 rows. To focus down even more, we can focus on just American Airlines flights, which have a call sign that starts with "AAL":
 
@@ -77,7 +77,7 @@ hourly_flights_AAL <- hourly_flights |>
   filter(startsWith(callsign, "AAL"))
 ```
 
-<figure><img src="../.gitbook/assets/image (15) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (15) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 There's two parts to each plane we're showing on our plot: one is the location of the aircraft itself, and the other is a tail leading out from the aircraft in the opposite direction it is heading, to show direction.
 

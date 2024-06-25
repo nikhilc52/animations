@@ -144,7 +144,7 @@ There's no need to try and decipher all of that, just know that it plots the bac
 plot_court()
 ```
 
-<figure><img src="../.gitbook/assets/rough1.png" alt="" width="562"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (2).png" alt="" width="562"><figcaption></figcaption></figure>
 
 I recommend that you paste this chunk of code into your workspace, run it, then minimize it by clicking the downward arrow on whatever line number the comment `####plotting the court####` is. This is so that the functions are within the R memory.
 
@@ -154,7 +154,7 @@ Let's now get started with the data.
 shots <- read_csv("nba_shots.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (6) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Once we have all the shots, we can filter them based on location. We only want shots that are within half-court, so we'll only take those whose LOC\_Y is below 40.
 
@@ -183,7 +183,7 @@ shots_plot <- shots_plot |>
   )
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Nice. Now we're on to the plot. Let's start with a static version. Note that we call `plot_court()` first, since it creates the background which we'll plot over.
 

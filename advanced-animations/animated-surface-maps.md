@@ -11,7 +11,7 @@ In this section, we'll be making this plot:
 
 <figure><img src="../.gitbook/assets/final (15).gif" alt="" width="563"><figcaption></figcaption></figure>
 
-The data is accessible [here](https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalLandTemperaturesByCountry.csv).
+The data is accessible [here](https://www.kaggle.com/datasets/berkeleyearth/climate-change-earth-surface-temperature-data?select=GlobalLandTemperaturesByCountry.csv) (GlobalLandTemperaturesByCountry.csv**)**.
 
 ***
 
@@ -39,7 +39,7 @@ We'll also read in our data.
 temperatures <- read_csv("temperatures.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 When we eventually plot, we need to join together the two datasets. Unfortunately, some of the names of countries are not equal between the two datasets, so we'll need to manually adjust those now.
 
@@ -72,7 +72,7 @@ world_plot <- world_temperatures |>
   select(admin, AverageTemperature, year)
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 In this code segment, we're just making a new column for the year of every data point, and filtering to the years 1985 and greater. Then, to make the data easier to handle, we're only selecting the three most important columns, which we'll soon use in our plot.
 
@@ -89,7 +89,7 @@ average_20th <- temperatures |>
   )
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're doing a very similar manipulation of the data here, making a new column for the year, then filtering to only include 20th century values. After that, we group by every country, then find the average surface termperature in the 20th century for that country.&#x20;
 
@@ -99,7 +99,7 @@ With this in place, we can then join average\_20th back with the world\_plot dat
 world_plot <- left_join(world_plot, average_20th, by=c("admin"="Country"))
 ```
 
-<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The data is still in need of some cleaning though. We need to have just one value for each year, not 12 (for all the months).
 
@@ -119,7 +119,7 @@ We're just filtering for actual values, then grouping by country and year, and f
 
 After that, we'll have a dataframe with each country, the year, the surface temperature for that year, and the 20th century average.
 
-<figure><img src="../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're now ready to plot.
 

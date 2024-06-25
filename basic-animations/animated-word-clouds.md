@@ -31,7 +31,7 @@ With our libraries in place, we get the dataset in the same way we've been doing
 txhousing_data <- txhousing
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
 
 Now that we have our data, we need to format it to make a suitable word cloud. We'll take the `volume` column, which is the number of house sales multiplied by their price (i.e. how much money was spent), and use it as an indicator for size.&#x20;
 
@@ -50,7 +50,7 @@ txhousing_data <- txhousing_data |>
 
 Our data now looks like this:
 
-<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Perfect! We have the top five for every month. Let's get started on our word cloud.
 

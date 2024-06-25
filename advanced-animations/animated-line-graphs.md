@@ -29,7 +29,7 @@ We'll now import the data, with the `read_excel` function, since our data is in 
 covid <- readxl::read_excel("covid.xlsx") #requires 'readxl' is installed
 ```
 
-<figure><img src="../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Since we're going to be working with dates, we need to convert the date column to Date objects.
 
@@ -49,7 +49,7 @@ world <- covid |>
 
 Essentially, we're filtering to only look at world-wide cases (rather than on a country-by-country basis), making sure the data is available, and restricting our data to 2022 or earlier, where the majority of the concentration of deaths will be. Finally, we select only the data that we need, to make our data frame easier to work with.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 With our data frame in place, we can start to add the annotations, which is the most difficult part of making this plot. Each annotation has the text (i.e. the words that are displayed on screen) and the date (i.e. where and when the text should be displayed). The combination of this data can best be respresented by a 'dictionary'-esque dataframe.&#x20;
 
@@ -69,7 +69,7 @@ annotations <- add_row(annotations, keys='FDA Authorizes Booster Shots', values=
 annotations <- add_row(annotations, keys='WHO Declares Omnicron Variant of Concern', values='2021-11-26')
 ```
 
-<figure><img src="../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 With the annotations dictionary filled, we'll now go back to our world data frame to enable our "bullet effect" that slows down the animation at certain points. It's easiest to do this with a simple function.
 
@@ -93,7 +93,7 @@ world <- bullet_effect(annotations$values, 100)
 
 We'll use the bullet\_effect function we just defined to add to our world data frame with a strength of 100, which I find is good for this specific plot. We're supplying the values of the annotation dictionary, which corresponds to a list of dates, which is exactly what we need (dates\_to\_slow).
 
-<figure><img src="../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're now going to move on to plotting the annotations, starting with finding an appropriate Y-value for the text and lines, so that we can minimize overlaps. We can do this with another function.
 
@@ -200,7 +200,7 @@ animation <- world |>
 
 Though the subtitle looks a little complicated, all it does is calculates the lowest index where the reveal time (frame\_along) is less than or equal to the reveal time in our data frame, world, and returns the date for that current time. This concept just ensures that the date is properly displayed during pauses. Take, for instance:
 
-<figure><img src="../.gitbook/assets/image (11) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (11) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 As the frame\_along goes from 32 to 132, it will reach, say, 35. The formula we used for our subtitle will find all the rows where the reveal\_time column is greater than or equal to the frame\_along (i.e. rows 33, 34, 35, ...). Then, we'll choose the lowest value of the bunch (33) and return the date that corresponds to that row (2020-02-06), which is the date we're currently slowing.&#x20;
 
