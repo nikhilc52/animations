@@ -25,7 +25,7 @@ library(tidyr) #cleaning the data
 library(lubridate) #cleaning the dates
 ```
 
-Like we did in Interactive 3D Maps, we'll define our degrees2radians function for convenience.
+Like we did in Interactive 3D Maps, we'll define our `degrees2radians` function for convenience.
 
 ```r
 degrees2radians <- function(degree) degree * pi / 180
@@ -47,7 +47,7 @@ shearwaters <- shearwaters[,names(shearwaters) %in% c("organismID", "verbatimEve
 
 <figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
-Notice how certain rows of organismID have multiple values (separated by a semi colon). We need to split those up:
+Notice how certain rows of `organismID` have multiple values (separated by a semi colon). We need to split those up:
 
 ```r
 shearwaters <- shearwaters |> 
@@ -55,7 +55,7 @@ shearwaters <- shearwaters |>
   mutate(date = as.POSIXct(verbatimEventDate))
 ```
 
-We're also making sure that R interprets the column verbatimEventDate as an actual Date.
+We're also making sure that R interprets the column `verbatimEventDate` as an actual `Date`.
 
 <figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
@@ -115,7 +115,7 @@ shearwaters_full <- full_times |>
 
 <figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
-Now that our data is all in the same place, we can work on formatting. Instead of having all the locations for each animal connected to each date, we can find the their location for the time closest to  the value in the Time column. We'll do this for each animal and for each date, and just add it to our call from above:
+Now that our data is all in the same place, we can work on formatting. Instead of having all the locations for each animal connected to each date, we can find the their location for the time closest to  the value in the `Time` column. We'll do this for each animal and for each date, and just add it to our call from above:
 
 ```r
 shearwaters_full <- full_times |>
@@ -132,7 +132,7 @@ Although we've got the right idea here, since some of the data is incomplete, we
 
 <figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
-While the code is correct, since there isn't any recorded data in the month of May, we're stuck with using data that is nearly a month too old or a month too new to represent each date. To prevent this from happening, we can modify our call to filter out differences in the Time and date column that are more than a day apart.&#x20;
+While the code is correct, since there isn't any recorded data in the month of May, we're stuck with using data that is nearly a month too old or a month too new to represent each date. To prevent this from happening, we can modify our call to filter out differences in the `Time` and date column that are more than a day apart.&#x20;
 
 ```r
 shearwaters_full <- full_times |>
@@ -159,7 +159,7 @@ shearwaters_full <- full_times |>
 
 <figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
-Finally, plotly can only animated smoothly over characters, so after we've done all the manipulation to our dates, we can convert the Time column to a character column.
+Finally, `plotly` can only animated smoothly over characters, so after we've done all the manipulation to our dates, we can convert the Time column to a character column.
 
 ```r
 shearwaters_full$Time <- as.character(shearwaters_full$Time)
@@ -217,7 +217,7 @@ camera_z_positions <- predict(spline_fit)$y
 
 Above is the code to apply the splines. The first parameter provides the data we want to look at, and the spar is the strength of the smoothing.&#x20;
 
-We're holding these positions in three separate lists, one for each dimension, and telling R we want to predict the y values for each of the corresponding variables.
+We're holding these positions in three separate lists, one for each dimension, and telling R we want to predict the Y values for each of the corresponding variables.
 
 Once that's done we can work on building some functions for plotting.
 
@@ -270,7 +270,7 @@ generate_surface <- function(file){
 }
 ```
 
-As this function's name indicates, we're using this to generate the surface (satellite image) for each globe object. 90% of this function is the same as what we did in the previous section, with some minor tweaks to the red, green, and blue data frames that are needed to accommodate for the parameter. Note that we're setting rgb\_earth and earth\_colorscale as global variables using `<<-` so that they can be accessed outside of our function.
+As this function's name indicates, we're using this to generate the surface (satellite image) for each globe object. 90% of this function is the same as what we did in the previous section, with some minor tweaks to the red, green, and blue data frames that are needed to accommodate for the parameter. Note that we're setting `rgb_earth` and `earth_colorscale` as global variables using `<<-` so that they can be accessed outside of our function.
 
 Next, we'll make a function for generating the globe:
 
@@ -344,7 +344,7 @@ We'll also initialize an image\_index variable to easily name our images in orde
 image_index <- 1
 ```
 
-Before we start, we need to install orca, which is the package we'll be using to save the plotly files. This can be done by following the instructions on [GitHub](https://github.com/plotly/orca). After that, we need to install "processx" (but no need to call the library function), if we don't already have it.
+Before we start, we need to install `orca`, which is the package we'll be using to save the `plotly` files. This can be done by following the instructions on [GitHub](https://github.com/plotly/orca). After that, we need to install "processx" (but no need to call the library function), if we don't already have it.
 
 ```r
 for(i in 1:length(dates)){
@@ -364,23 +364,23 @@ for(i in 1:length(dates)){
   }
 ```
 
-The for loop cycles through all the valid dates. The first part of our loop prints the current date and frame we're at so that we can keep track of our progress. Then, we get the file using yday, which calculates the what day number a given date is (2024-01-01 is 1, 2024-01-02 is 2, etc.) and fit that number to have 3 digits to match the name format of the png. We'll supply that file number to our generate\_surface function.
+The for loop cycles through all the valid dates. The first part of our loop prints the current date and frame we're at so that we can keep track of our progress. Then, we get the file using yday, which calculates the what day number a given date is (2024-01-01 is 1, 2024-01-02 is 2, etc.) and fit that number to have 3 digits to match the name format of the PNG. We'll supply that file number to our `generate_surface` function.
 
-We then filter to get a data frame that only contains the animals for that specific date, and give that information, as well as the index number we're on, to the generate\_globe function, which will make our globe.&#x20;
+We then filter to get a data frame that only contains the animals for that specific date, and give that information, as well as the index number we're on, to the `generate_globe` function, which will make our globe.&#x20;
 
-Then, using orca, we'll render out our plot to a new folder, with 3 digits so that R can correctly order our frames, and increase the image\_index by 1.&#x20;
+Then, using orca, we'll render out our plot to a new folder, with 3 digits so that R can correctly order our frames, and increase the `image_index` by 1.&#x20;
 
 Running this for loop should take about 20 minutes.
 
 &#x20;
 
-Once we have our files properly rendered, we can turn our png sequence into a GIF. First, we'll load in the png files:
+Once we have our files properly rendered, we can turn our PNG sequence into a GIF. First, we'll load in the PNG files:
 
 ```r
 png_files <- sort(list.files("image_sequence", pattern = "*.png", full.names = TRUE))
 ```
 
-Then, we'll add a pause to the end of our gif by appending the last frame repeatedly:
+Then, we'll add a pause to the end of our GIF by appending the last frame repeatedly:
 
 ```
 for(i in 1:10){
@@ -392,9 +392,9 @@ for(i in 1:10){
 gifski::gifski(png_files, gif_file = "final.gif", width = 1400, height = 1400, delay = 30/length(png_files))
 ```
 
-Make sure to match the width and height of the gif with the width and height of the png files (which we defined when calling orca in the for loop). The delay being 30/length(png\_files) ensures that our animation takes 30 seconds.
+Make sure to match the width and height of the gif with the width and height of the PNG files (which we defined when calling `orca` in the for loop). The delay being `30/length(png_files)` ensures that our animation takes 30 seconds.
 
-That's all! We've now made a movie tracking animal migration patters exclusively in R.
+That's all! We've now made a movie tracking animal migration patterns exclusively in R.
 
 {% hint style="info" %}
 [Click here to view the raw file used to make this plot.](../appendix/advanced-animations/animated-3d-maps.r.md)

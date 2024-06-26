@@ -122,7 +122,7 @@ Another extension we can do is making the plot interactive. We can do this throu
 library(plotly)
 ```
 
-There's a few line changes we need to make before we can export the interactive animation, since plotly has different syntax. First, we'll need to add `aes(frame=year`) to the `ggplot` call. This is essentially plotly's version of `transition_time(year)`. Next, we'll add `ids=country` to our `geom_point` call. As you can probably guess, this is plotly's version of `group=country`.
+There's a few line changes we need to make before we can export the interactive animation, since `plotly` has different syntax. First, we'll need to add `aes(frame=year`) to the `ggplot` call. This is essentially `plotly`'s version of `transition_time(year)`. Next, we'll add `ids=country` to our `geom_point` call. As you can probably guess, this is `plotly`'s version of `group=country`.
 
 ```r
 animation <- ggplot(gapminder_data, aes(frame=year))+ #changed line
