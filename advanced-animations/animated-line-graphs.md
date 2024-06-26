@@ -11,7 +11,7 @@ At the end of this chapter, we'll have made this plot:
 
 <figure><img src="../.gitbook/assets/final (14).gif" alt="" width="563"><figcaption></figcaption></figure>
 
-The data can be obtained from [here](https://ourworldindata.org/covid-cases).
+The data can be obtained from [here](https://ourworldindata.org/covid-cases) (Download the complete _Our World in Data_ COVID-19 dataset).
 
 ***
 
@@ -31,7 +31,7 @@ covid <- readxl::read_excel("covid.xlsx") #requires 'readxl' is installed
 
 <figure><img src="../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-Since we're going to be working with dates, we need to convert the date column to Date objects.
+Since we're going to be working with dates, we need to convert the date column to `Date` objects.
 
 ```r
 covid$date <- as.Date(covid$date)
@@ -53,7 +53,7 @@ Essentially, we're filtering to only look at world-wide cases (rather than on a 
 
 With our data frame in place, we can start to add the annotations, which is the most difficult part of making this plot. Each annotation has the text (i.e. the words that are displayed on screen) and the date (i.e. where and when the text should be displayed). The combination of this data can best be represented by a 'dictionary'-esque data frame.&#x20;
 
-We'll initializeOmicron it with:
+We'll initialize it with:
 
 ```r
 annotations <- data.frame(keys=list(), values=list())
@@ -81,17 +81,17 @@ bullet_effect <- function(dates_to_slow, strength){
 }
 ```
 
-Essentially, this function takes in a list of dates\_to\_slow, and the strength (how much will the plot be slowed at each point - higher is longer). We then add a column to our data frame that quantifies how long each date should be shown: if the date is to be slowed, then the length should be the strength that we provide, else, it should just be one.&#x20;
+Essentially, this function takes in a list of `dates_to_slow`, and the strength (how much will the plot be slowed at each point - higher is longer). We then add a column to our data frame that quantifies how long each date should be shown: if the date is to be slowed, then the length should be the strength that we provide, else, it should just be one.&#x20;
 
-Then, we make a new column with the cumulative sum of the show\_time column. This is the column that we will provide to the transition\_reveal call later.&#x20;
+Then, we make a new column with the cumulative sum of the `show_time` column. This is the column that we will provide to the `transition_reveal` call later.&#x20;
 
-Since transition\_reveal is a continuous animation function, it must go through all the values in the reveal\_time column. That means that if the reveal\_time suddenly jumps up from 1 to 101, say (if show time is 100 for a row), then the plot would have to go through 1 to 101 for that date, slowing down in the process.&#x20;
+Since `transition_reveal` is a continuous animation function, it must go through all the values in the `reveal_time` column. That means that if the `reveal_time` suddenly jumps up from 1 to 101, say (if show time is 100 for a row), then the plot would have to go through 1 to 101 for that date, slowing down in the process.&#x20;
 
 ```r
 world <- bullet_effect(annotations$values, 100)
 ```
 
-We'll use the bullet\_effect function we just defined to add to our world data frame with a strength of 100, which I find is good for this specific plot. We're supplying the values of the annotation dictionary, which corresponds to a list of dates, which is exactly what we need (dates\_to\_slow).
+We'll use the `bullet_effect` function we just defined to add to our world data frame with a strength of 100, which I find is good for this specific plot. We're supplying the values of the annotation dictionary, which corresponds to a list of dates, which is exactly what we need (`dates_to_slow`).
 
 <figure><img src="../.gitbook/assets/image (4) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -115,9 +115,9 @@ find_y_value <- function(data_value, y_lim, index){
 
 This function takes in a data\_value, which corresponds to the number of new deaths (smoothed) for a given date, the upper limit for the Y axis on our plot, and the index of our annotation (i.e. what number annotation it is).&#x20;
 
-If the annotation number is odd, then we'll start by trying to put the annotation above the line. We check if it is valid by seeing if the data\_value plus the vertical offset (as y\_lim/5) will still fit within the plot. If it is, then we use that as our Y value. If not, then we put the annotation below by the same vertical offset.
+If the annotation number is odd, then we'll start by trying to put the annotation above the line. We check if it is valid by seeing if the `data_value` plus the vertical offset (as y\_lim/5) will still fit within the plot. If it is, then we use that as our Y value. If not, then we put the annotation below by the same vertical offset.
 
-To try and minimize overlaps in the simplest way possible, we repeat the same process (but inverted) for annotation numbers that are even. Note that the > 1000 is just so that we don't have annotations that are covering the X-axis. Together, these two conditionals make it such that if we had two annotations with close enough dates, they wouldn't overlap since one would be on top and the other on the bottom.
+To try and minimize overlaps in the simplest way possible, we repeat the same process (but inverted) for annotation numbers that are even. Note that the "> 1000" is just so that we don't have annotations that are covering the X-axis. Together, these two conditionals make it such that if we had two annotations with close enough dates, they wouldn't overlap since one would be on top and the other on the bottom.
 
 Now that we can calculate the y\_value of any given annotation, we can work on actually generating them. We'll start by defining two functions that we're going to call for every frame in our animation.
 
@@ -136,9 +136,9 @@ plot_text_annotation <- function(){
 }
 ```
 
-This function is what we'll use to plot each of the texts. We start by initializing a list of geom\_label objects, the first of which is empty. Then, for every value to be displayed, we cycle through and find the appropriate y\_value, calling the function we just defined. While seemingly daunting at first, the first parameter we supply is just the number of deaths for the current date we're looking to plot. Next, we give the ylimit we defined earlier, and the index value of this annotation, i.
+This function is what we'll use to plot each of the texts. We start by initializing a list of `geom_label` objects, the first of which is empty. Then, for every value to be displayed, we cycle through and find the appropriate `y_value`, calling the function we just defined. While seemingly daunting at first, the first parameter we supply is just the number of deaths for the current date we're looking to plot. Next, we give the `ylimit` we defined earlier, and the index value of this annotation, `i`.
 
-After we've found the y\_value, we then append to our list a geom\_label object. The label has our annotation for the given i value, and we're using scales::alpha (since geom\_labels can't directly modify the alpha value). The alpha value changes based on the current date being displayed: if the date displayed is after (or on) the date that the current annotation corresponds to, then we should have the alpha equal to 1. Otherwise, it would be 0. The X value should be the date of the annotation, so that it is placed directly above or below the corresponding point on the line.
+After we've found the `y_value`, we then append to our list a `geom_label` object. The label has our annotation for the given `i` value, and we're using `scales::alpha` (since `geom_labels` can't directly modify the alpha value). The alpha value changes based on the current date being displayed: if the date displayed is after (or on) the date that the current annotation corresponds to, then we should have the alpha equal to 1. Otherwise, it would be 0. The X value should be the date of the annotation, so that it is placed directly above or below the corresponding point on the line.
 
 Essentially, this function, after implementation, will plot all the annotations for each frame, and change the alpha value to reveal the annotations at their respective dates.
 
@@ -159,7 +159,7 @@ plot_segment_annotation <- function(){
 }
 ```
 
-Aside from some minor changes to syntax, the bulk of this function is the same as the above. The one important change is the yend being set to the value of the line, meaning the line is drawn up or down from the line to the annotation.
+Aside from some minor changes to syntax, the bulk of this function is the same as the above. The one important change is the `yend` being set to the value of the line, meaning the line is drawn up or down from the line to the annotation.
 
 With these functions now defined, we can move on to actually generating the plot.
 
@@ -173,7 +173,7 @@ world |>
   transition_reveal(reveal_time)
 ```
 
-We're doing some basic setups for the plot, with the ylim defined by the number we set earlier. Note the order in which our functions are called. We're putting the line segment on the back-most layer, the geom\_line in the middle, and then the geom\_label for our annotations on top. Since we're using transition\_reveal, our functions are called for every frame.
+We're doing some basic setups for the plot, with the ylim defined by the number we set earlier. Note the order in which our functions are called. We're putting the line segment on the back-most layer, the `geom_line` in the middle, and then the `geom_label` for our annotations on top. Since we're using `transition_reveal`, our functions are called for every frame.
 
 <figure><img src="../.gitbook/assets/rough1 (1).gif" alt=""><figcaption></figcaption></figure>
 
@@ -198,11 +198,11 @@ animation <- world |>
   transition_reveal(reveal_time)
 ```
 
-Though the subtitle looks a little complicated, all it does is calculates the lowest index where the reveal time (frame\_along) is less than or equal to the reveal time in our data frame, world, and returns the date for that current time. This concept just ensures that the date is properly displayed during pauses. Take, for instance:
+Though the subtitle looks a little complicated, all it does is calculates the lowest index where the reveal time (`frame_along`) is less than or equal to the reveal time in our data frame, world, and returns the date for that current time. This concept just ensures that the date is properly displayed during pauses. Take, for instance:
 
 <figure><img src="../.gitbook/assets/image (11) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-As the frame\_along goes from 32 to 132, it will reach, say, 35. The formula we used for our subtitle will find all the rows where the reveal\_time column is greater than or equal to the frame\_along (i.e. rows 33, 34, 35, ...). Then, we'll choose the lowest value of the bunch (33) and return the date that corresponds to that row (2020-02-06), which is the date we're currently slowing.&#x20;
+As the frame\_along goes from 32 to 132, it will reach, say, 35. The formula we used for our subtitle will find all the rows where the `reveal_time` column is greater than or equal to the frame\_along (i.e. rows 33, 34, 35, ...). Then, we'll choose the lowest value of the bunch (33) and return the date that corresponds to that row (2020-02-06), which is the date we're currently slowing.&#x20;
 
 We'll now animate this with the animate function, with some appropriate parameters.
 

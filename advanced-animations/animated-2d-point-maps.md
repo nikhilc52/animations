@@ -48,11 +48,11 @@ Since the data is divided into hours, and each file has a label that corresponds
 
 While the syntax might look a bit daunting, all the first line in the function is doing is reading the data at a location given by two hour numbers that are always 2 digits (with leading zeros if needed).&#x20;
 
-Now that our data is loaded in for the hour, we can move on to conversions, to get things done all at once. We'll start by converting the time given for all the data in each hour to a readable time for R, using as\_datetime.&#x20;
+Now that our data is loaded in for the hour, we can move on to conversions, to get things done all at once. We'll start by converting the time given for all the data in each hour to a readable time for R, using `as_datetime`.&#x20;
 
 Next, we'll take the floor of every time present within the dataset. The original data has a record of every flight every 10 seconds, which is very powerful data, but a bit too much for our plotting methods within R. So, we're decreasing things 60-fold, by only choosing one data point for every hour.&#x20;
 
-Once the time column is representing data to an hour precision, we then filter so that all the characteristics we care about are present. Next, we group by icao24, or each plane's 'serial number', arrange the column in descending order so it's easier to view, and choose the first (arbitrary) logged location for the plane, so that for every hour, we have exactly one location for all planes that were flying at some point during that time.
+Once the time column is representing data to an hour precision, we then filter so that all the characteristics we care about are present. Next, we group by `icao24`, or each plane's 'serial number', arrange the column in descending order so it's easier to view, and choose the first (arbitrary) logged location for the plane, so that for every hour, we have exactly one location for all planes that were flying at some point during that time.
 
 All together, this function reads in an hour, and gives a formatted data frame with a single location for all the planes logged during that hour, which will decrease our plotting time drastically, without sacrificing too much detail.
 
@@ -89,7 +89,7 @@ hourly_flights_AAL_point <- hourly_flights_AAL |>
   st_set_crs(4326)
 ```
 
-We just convert the data frame's latitude and longitude points into a sf object using st\_as\_sf, and set the Coordinate Reference System to the standard 4326.
+We just convert the data frame's latitude and longitude points into a sf object using `st_as_sf`, and set the Coordinate Reference System to the standard 4326.
 
 The latter part of each aircraft is a bit more complicated to create:
 
@@ -106,11 +106,11 @@ Essentially, we're just adding a longitude and latitude pair to act as an end po
 
 <figure><img src="../.gitbook/assets/rough1 (1).svg" alt=""><figcaption></figcaption></figure>
 
-Since the heading is measure as the distance from the vertical line (clock-wise), we manipulate it as described in the image above to align it within our triangle. From here, it's simple to see how our formula is generated. Since cosine and sine are in radians, we multiply the 90-heading by pi/180 to convert it. Then, we're dividing the result by 100 to scale it down, otherwise the tails would be too long, and subtracting it from the original lon and lat points to put our tail behind the point.
+Since the heading is measure as the distance from the vertical line (clock-wise), we manipulate it as described in the image above to align it within our triangle. From here, it's simple to see how our formula is generated. Since cosine and sine are in radians, we multiply the `90-heading` by `pi/180` to convert it. Then, we're dividing the result by 100 to scale it down, otherwise the tails would be too long, and subtracting it from the original lon and lat points to put our tail behind the point.
 
-With these newly created columns, we can convert our two points into a linestring using the sprintf and st\_as\_sf functions. The sprintf call makes a linestring character string with each of our floating-point coordinates (referenced by a %f). Then, we indicate to R that we want to convert the data held within the "geom" column to an sf object. As always, we then set our Coordinate Reference System to the standard 4326.
+With these newly created columns, we can convert our two points into a linestring using the `sprintf` and `st_as_sf` functions. The `sprintf` call makes a linestring character string with each of our floating-point coordinates (referenced by a `%f`). Then, we indicate to R that we want to convert the data held within the "geom" column to an sf object. As always, we then set our Coordinate Reference System to the standard 4326.
 
-With all our data in place, we'll now get the data for the plot of the U.S. underneath the planes, with a standard call to the maps package, then converting that call to a plottable sf object.
+With all our data in place, we'll now get the data for the plot of the U.S. underneath the planes, with a standard call to the maps package, then converting that call to a plottable `sf` object.
 
 ```r
 usa <- st_as_sf(maps::map("state", fill=TRUE, plot=FALSE)) #requires 'maps' package is installed
@@ -139,9 +139,9 @@ animation <- ggplot(usa) +
   exit_fade(alpha = 0)
 ```
 
-The geom\_sf calls are all fairly standard: remember that we're including the group attribute to indicate we want each plane to animate over its own locations. The alpha isn't equal to one so that we can see the underlying map.&#x20;
+The `geom_sf` calls are all fairly standard: remember that we're including the group attribute to indicate we want each plane to animate over its own locations. The alpha isn't equal to one so that we can see the underlying map.&#x20;
 
-We'll use theme\_void to get rid of the background axes and format our frame\_time variable to the XX:XX AM/PM format, using %I:%M %p. Next, we'll limit our plot to only display the continental U.S., with limits at the vertical and horizontal end points of the country. Since we're not displaying the axes, we're also not going to label the X and Y axes. After we format the title and subtitle, we call transition\_time to indicate we're cycling through different times continuously. Finally, we're calling enter\_fade and exit\_fade with alphas of 0 to make planes appear and disappear in a more smooth fashion (planes will fade in and out).
+We'll use `theme_void` to get rid of the background axes and format our `frame_time` variable to the XX:XX AM/PM format, using `%I:%M %p`. Next, we'll limit our plot to only display the continental U.S., with limits at the vertical and horizontal end points of the country. Since we're not displaying the axes, we're also not going to label the X and Y axes. After we format the title and subtitle, we call `transition_time` to indicate we're cycling through different times continuously. Finally, we're calling `enter_fade` and `exit_fade` with alphas of 0 to make planes appear and disappear in a more smooth fashion (planes will fade in and out).
 
 We can now animate our animation.&#x20;
 

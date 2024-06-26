@@ -25,7 +25,7 @@ library(sf) #converting the data to plottable objects
 library(rnaturalearth) #loading the background map
 ```
 
-We'll now load in a map of the world. Perviously, we did this with the maps package, but I'm now using rnaturalearth. There's no big difference between the two for this type of plot, so we'll explore the other option for now.
+We'll now load in a map of the world. Perviously, we did this with the `maps` package, but I'm now using `rnaturalearth`. There's no big difference between the two for this type of plot, so we'll explore the other option for now.
 
 ```r
 world <- ne_countries(scale = "medium", returnclass = "sf")
@@ -57,7 +57,7 @@ Now that we've adjusted, we can do a left join on the world data frame, which co
 world_temperatures <- left_join(world, temperatures, by=c("admin"="Country"))
 ```
 
-Since we're going to be iterating over dates, we need to make sure that R interprets the date column as Date objects.
+Since we're going to be iterating over dates, we need to make sure that R interprets the date column as `Date` objects.
 
 ```
 world_temperatures$dt <- as.Date(world_temperatures$dt)
@@ -93,7 +93,7 @@ average_20th <- temperatures |>
 
 We're doing a very similar manipulation of the data here, making a new column for the year, then filtering to only include 20th century values. After that, we group by every country, then find the average surface temperature in the 20th century for that country.&#x20;
 
-With this in place, we can then join average\_20th back with the world\_plot data, to have all the data in one place.
+With this in place, we can then join `average_20th` back with the `world_plot` data, to have all the data in one place.
 
 ```r
 world_plot <- left_join(world_plot, average_20th, by=c("admin"="Country"))
@@ -129,7 +129,7 @@ ggplot(world_plot)+
   transition_time(year, range=c(1985L,2013L))
 ```
 
-With this basic structure, we're supplying our world\_plot data frame to the ggplot object, then accessing the difference column to fill each country. Finally, we're transitioning through time for the years 1985 through 2013, so we give the range (as an integer) as well as the year variable to the transition\_time method.
+With this basic structure, we're supplying our `world_plot` data frame to the `ggplot` object, then accessing the difference column to fill each country. Finally, we're transitioning through time for the years 1985 through 2013, so we give the range (as an integer) as well as the year variable to the `transition_time` method.
 
 After a few minutes, you'll get this plot:
 
