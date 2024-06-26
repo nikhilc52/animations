@@ -52,7 +52,7 @@ nyt_headlines$Date <- as.Date(as.character(nyt_headlines$Date), format="%Y%m%d")
 
 Though we've narrowed our dataset down to around 500,000 rows, we still have to compress our data. Right now, there's too much variability in our data: headlines change too frequently between each day. To counter this while not losing any data, we can simply group our data by month.
 
-We have to be careful, though, since we still want to iterate over our data as if it were "standard" dates, so its easier to get information from later. So, we can group by every month, and as a placeholder, make each month the first:&#x20;
+We have to be careful, though, since we still want to iterate over our data as if it were "standard" dates, so it's easier to get information from later. So, we can group by every month, and as a placeholder, make each month the first:&#x20;
 
 ```r
 nyt_headlines <- nyt_headlines |> 
@@ -90,7 +90,7 @@ Now that we've tokenized, we can get rid of the Headlines column, which will spe
 nyt_headlines <- nyt_headlines[-2]
 ```
 
-We now have to group up our data to count the number of occurences of each word in each month (in each year).
+We now have to group up our data to count the number of occurrences of each word in each month (in each year).
 
 ```r
 word_count <- nyt_headlines |> 
@@ -102,7 +102,7 @@ word_count <- nyt_headlines |>
 
 <figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-This peek in our dataset forshadows our next move, which is to filter out certain unneeded or artifically boosted words. Unneeded words include numbers or special characters, and artificially boosted words like "new", "york", and "times", for instance.
+This peek in our dataset foreshadows our next move, which is to filter out certain unneeded or artificially boosted words. Unneeded words include numbers or special characters, and artificially boosted words like "new", "york", and "times", for instance.
 
 ```r
 word_count_five <- word_count |> 
@@ -121,7 +121,7 @@ word_count_five <- word_count |>
 
 The first two filters take out "boosted" words, the next one is to ensure all characters are non-special, and the next two after that are to select words that are non-empty.
 
-Next, we group by each month in each year, order by the number of apperances of each word, and take the top five words for each group.
+Next, we group by each month in each year, order by the number of appearances of each word, and take the top five words for each group.
 
 <figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -142,16 +142,16 @@ word_cloud <- word_count_five |>
   transition_time(Year_Month)
 ```
 
-Here, we're just making a word cloud through ggplot, setting each label to be a word, and the size to be the number of occurences it has for each month in each year. Standard stuff.&#x20;
+Here, we're just making a word cloud through `ggplot`, setting each label to be a word, and the size to be the number of occurrences it has for each month in each year. Standard stuff.&#x20;
 
-We'll use theme minimal as a baseline, and scale\_size\_area to increase the overall size of words in the cloud. Then we transition along the time variable we created, with one frame per month in each year (to not arbitrarily shuffle words, since words change position each frame). To make sure we're getting the frames right, we need to animate it manually.
+We'll use `theme_minimal` as a baseline, and to increase the overall size of words in the cloud. Then we transition along the time variable we created, with one frame per month in each year (to not arbitrarily shuffle words, since words change position each frame). To make sure we're getting the frames right, we need to animate it manually.
 
 ```r
 animate(word_cloud, fps = 4, duration = 48, height = 7,
         width = 7, units = "in", res = 150)
 ```
 
-We have 16 years worth of data, with 12 months per year, meaning we have 192 frames to get through. To get through all the data with one frame per month, we can set the `duration` to `48` and the `fps` to `4` (since 4\*48 = 192).&#x20;
+We have 16 years worth of data, with 12 months per year, meaning we have 192 frames to get through. To get through all the data with one frame per month, we can set the `duration` to 48 and the `fps` to 4 (since 4\*48 = 192).&#x20;
 
 <figure><img src="../.gitbook/assets/rough1 (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
@@ -184,7 +184,7 @@ word_cloud <- word_count_five |>
 
 While this is a good standalone resource, it might be a bit difficult for the viewer to remember which words were seen when. To combat this, we can add a "log", or a table of past number one words.&#x20;
 
-To do this, we'll have to combine our word cloud with an animated table. Combining two animations can be done through the magick library, which has a unique way of parsing animations. As we move on to make the table, we'll save the word cloud using a magick function, to use later on.
+To do this, we'll have to combine our word cloud with an animated table. Combining two animations can be done through the `magick` library, which has a unique way of parsing animations. As we move on to make the table, we'll save the word cloud using a magick function, to use later on.
 
 ```r
 mgif_word_cloud <- magick::image_read(animate(word_cloud, fps = 4, duration = 48, height = 7,
@@ -210,7 +210,7 @@ word_count_one <- word_count |>
 
 This is the same exact syntax as before (where we took the top five for each month), but the `slice_head` function is now only take the top one word for each month.
 
-We're now going to ramp up a bit and use a few functions to plot the frames of the table. The way that magick combines images to make animations allows us to fairly easily convert stills to nice animations. Essentially, magick overlays images on top of one another to make an animation, which means that if we have a transparent background for our plot, we only need to display one word per frame, but it'll appear as if there are more than one on screen. Without this overlay feature, if we were to do the table animation, we would need 192 geom\_text calls, but with it, just one does the trick.
+We're now going to ramp up a bit and use a few functions to plot the frames of the table. The way that `magick` combines images to make animations allows us to fairly easily convert stills to nice animations. Essentially, `magick` overlays images on top of one another to make an animation, which means that if we have a transparent background for our plot, we only need to display one word per frame, but it'll appear as if there are more than one on screen. Without this overlay feature, if we were to do the table animation, we would need 192 `geom_text` calls, but with it, just one does the trick.
 
 Essentially:
 
@@ -246,25 +246,25 @@ year_log <- function(date, index){
 }
 ```
 
-This function takes in a given date and index value for the png output, and plots a geom\_text word at an X that corresponds to the year, and Y that corresponds to the month (inverted so that later months are below), so that the total animation will form into a table.&#x20;
+This function takes in a given date and index value for the png output, and plots a `geom_text` word at an X that corresponds to the year, and Y that corresponds to the month (inverted so that later months are below), so that the total animation will form into a table.&#x20;
 
-The actual word that gets plotted is a bit complicated to decipher, but essentially, we find the Year\_Month that equals the date given to the function, and fund the Words that corresponds to that date.
+The actual word that gets plotted is a bit complicated to decipher, but essentially, we find the `Year_Month` that equals the date given to the function, and fund the Words that corresponds to that date.
 
-For formatting, we limit the x and the y axes to appropriate values, and save the plot to a file path specified by a number with three digits (that could be filled with leading zeros), as given by the formatC function.
+For formatting, we limit the x and the y axes to appropriate values, and save the plot to a file path specified by a number with three digits (that could be filled with leading zeros), as given by the `formatC` function.
 
 Ensure that the height is the same value we supplied to our word cloud animation, so that when we combine the plots, the charts are aligned. Really, we have to make sure that DPI\*height of this plot is equal to the res\*height of the word cloud, but since the DPI is the same as the res, we just make sure the heights are equal.
 
-When we run this function for the first month in our dataset (with an abritrary index, for now), we get this image:
+When we run this function for the first month in our dataset (with an arbitrary index, for now), we get this image:
 
 <figure><img src="../.gitbook/assets/rough3.png" alt="" width="563"><figcaption></figcaption></figure>
 
-While the word is in the right place, there ins't any information about what month or year it corresponds to. To fix this, we can make some new functions for axes and add those to our original year\_log function.
+While the word is in the right place, there ins't any information about what month or year it corresponds to. To fix this, we can make some new functions for axes and add those to our original `year_log` function.
 
 Remember that the images are being overlayed over one another, so we don't want any unnecessary overlaps. This means that each of the values on the axis should only be displayed once. Let's have each month and year label appear on the first time a word is displayed within that category. This means that the first time "March" is displayed on the Y axis is 2007-03-01 and the first time "2010" is displayed on the X axis is 2010-01-01.&#x20;
 
-So, for every date that our year\_log function takes in, we should plot (if needed) the appropriate axis label.
+So, for every date that our `year_log` function takes in, we should plot (if needed) the appropriate axis label.
 
-With those specifications in mind, we can implement the table\_axis function:
+With those specifications in mind, we can implement the `table_axis` function:
 
 ```r
 table_axis <- function(date){
@@ -283,11 +283,11 @@ This function takes in a date, and initializes a label object. If it's 2007, the
 
 If it's January, then we also need to plot the year, since January will be the first time all years will need to be displayed (i.e. January 2010 is the first 2010 we're showing). We then combine this with the first label (which is either showing the month or showing nothing) and return it.
 
-If the label is for the Y axis (months), then its Y position corresponds to the appropriate month positon and its X is to the left of all year values (since dates start at 2007). The same concept applies for the X axis labels (years), which are placed above all the data (since the January position, or the highest Y value is 12-1=11).
+If the label is for the Y axis (months), then its Y position corresponds to the appropriate month position and its X is to the left of all year values (since dates start at 2007). The same concept applies for the X axis labels (years), which are placed above all the data (since the January position, or the highest Y value is 12-1=11).
 
 The grey color is used to differentiate that axes labels from the data, which is colored black by default.
 
-We can now put this function back in our year\_log method, and since we're returning a geom\_text call, it can just be placed within the ggplot block:
+We can now put this function back in our `year_log` method, and since we're returning a `geom_text` call, it can just be placed within the `ggplot` block:
 
 ```r
 year_log <- function(date, index){
@@ -302,7 +302,7 @@ year_log <- function(date, index){
 }
 ```
 
-We can add a title via geom\_text in a very similar fashion.&#x20;
+We can add a title via `geom_text` in a very similar fashion.&#x20;
 
 ```r
 table_titles <- function(date){
@@ -314,7 +314,7 @@ table_titles <- function(date){
 
 Since we only want the title to be shown on one frame (to prevent overlaps), but be visible to all later frames, we'll only show it on the first date.&#x20;
 
-Let's now add this function back to our year\_log:
+Let's now add this function back to our `year_log`:
 
 ```r
 year_log <- function(date, index){
@@ -361,9 +361,9 @@ combined_year_log <- function(start_date){
 }
 ```
 
-This function takes in the start date and goes up to the last month in our data, which is December 2022. We'll use a very standard set up for cycling through data, which is to set a curr\_date as our variable to be incremented, initialized to the start date. The index is just to give to our year\_log function, so that we control the naming of our files.&#x20;
+This function takes in the start date and goes up to the last month in our data, which is December 2022. We'll use a very standard set up for cycling through data, which is to set a `curr_date` as our variable to be incremented, initialized to the start date. The index is just to give to our `year_log` function, so that we control the naming of our files.&#x20;
 
-While the current date is less than or equal to our ending date, we call year\_log to plot and save each frame, then incrememnt the index by one and the curr\_date by one month.
+While the current date is less than or equal to our ending date, we call `year_log` to plot and save each frame, then increment the index by one and the `curr_date` by one month.
 
 We're now ready to finally get all the frames for the table animation.
 
@@ -375,13 +375,13 @@ We can call our looping function to start the process, and watch as the dates co
 
 <figure><img src="../.gitbook/assets/image (5) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-We're now on the home strech. Although we just rendered the image sequence as pngs, we have to do some formatting to allow magick to read it properly. We're going to convert the files to a gif, then feed that gif into magick like we did for the word cloud.
+We're now on the home stretch. Although we just rendered the image sequence as pngs, we have to do some formatting to allow `magick` to read it properly. We're going to convert the files to a gif, then feed that gif into magick like we did for the word cloud.
 
 ```r
 png_files <- sort(list.files("image_sequence", pattern = ".*png$", full.names = TRUE))
 ```
 
-We start with reading all the png files into a vector through list.files. We supply the directory, the ending file format, and tell R that we want to prepend the "image\_sequence" directory to each of our file names via full.names.
+We start with reading all the png files into a vector through `list.files`. We supply the directory, the ending file format, and tell R that we want to prepend the "image\_sequence" directory to each of our file names via `full.names`.
 
 ```r
 gifski::gifski(png_files, gif_file = "animation.gif", width = 15*150, height = 7*150, delay = 1)
@@ -389,27 +389,27 @@ gifski::gifski(png_files, gif_file = "animation.gif", width = 15*150, height = 7
 
 
 
-Next, with the gifski package installed, we can convert that png sequence to a gif. Make sure that the height and width parameters Are equal to the height and width we supplied to the ggsave call in the year\_log function, but multiplied by the DPI (so that we don't mess up the scale of our plot).
+Next, with the `gifski` package installed, we can convert that png sequence to a gif. Make sure that the height and width parameters Are equal to the height and width we supplied to the `ggsave` call in the `year_log` function, but multiplied by the DPI (so that we don't mess up the scale of our plot).
 
-In our working directory, we should now see a file titled animation.gif. Note that the layering effect isn't present to us, but when we give this to magick, it will layer each image.
+In our working directory, we should now see a file titled animation.gif. Note that the layering effect isn't present to us, but when we give this to `magick`, it will layer each image.
 
 <figure><img src="../.gitbook/assets/rough7 (2).gif" alt=""><figcaption></figcaption></figure>
 
-Finally, we need to convert this into a magick object.
+Finally, we need to convert this into a `magick` object.
 
 ```r
 mgif_word_log <- magick::image_read("animation.gif")
 ```
 
-Recall that we saved the word cloud under the name wgif\_word\_cloud, so now, we have two magick elements ready to be combined.
+Recall that we saved the word cloud under the name `wgif_word_cloud`, so now, we have two magick elements ready to be combined.
 
-We'll use image\_append to combine the plots, with the right argument on the right and the left argument on the left.
+We'll use `image_append` to combine the plots, with the right argument on the right and the left argument on the left.
 
 ```r
 new_gif <- magick::image_append(c(mgif_word_cloud[1], mgif_word_log[1]))
 ```
 
-With new\_gif initilized, we can now cycle through it with a for loop. Since there's exactly one frame per month, and 192 frames, we can just call:
+With `new_gif` initialized, we can now cycle through it with a for loop. Since there's exactly one frame per month, and 192 frames, we can just call:
 
 ```r
 for(i in 2:192){
@@ -418,7 +418,7 @@ for(i in 2:192){
 }
 ```
 
-To combine the images and then append that frame to the new\_gif object.
+To combine the images and then append that frame to the `new_gif` object.
 
 Once we've gone through every frame, we should add an end pause. This is very simple to do, we just cycle through and combine and append only the end frame of each animation.
 
@@ -435,11 +435,11 @@ The last call we'll make is to write the gif to a file path:
 magick::image_write(new_gif, path = "final.gif", format = "gif")
 ```
 
-Here, the parameters are self-explinatory: new\_gif is the file, the path is the name of the file/path it will be written to, and the format is a .gif. This call should take about a minute or so to complete (unlike gganimate, there is no progress bar).
+Here, the parameters are self-explanatory: `new_gif` is the file, the path is the name of the file/path it will be written to, and the format is a .gif. This call should take about a minute or so to complete (unlike `gganimate`, there is no progress bar).
 
 That's it! We've now made a really nice word cloud animation with a corresponding table.
 
-Note that if you desire to change the FPS from the standard (which is 3.5 in this case), we have to do a little workaround. We need to render each image on top of one another, but converting new\_gif to an animation object to change its FPS will stop that feature from occuring: images will be replaced instead of layered. So, to workaround this, we can first write the image, then read it, animate it, and finally write it again to preserve the desired layering effect.
+Note that if you desire to change the FPS from the standard (which is 3.5 in this case), we have to do a little workaround. We need to render each image on top of one another, but converting new\_gif to an animation object to change its FPS will stop that feature from occurring: images will be replaced instead of layered. So, to workaround this, we can first write the image, then read it, animate it, and finally write it again to preserve the desired layering effect.
 
 This works since we're animating the already-layered animation, so the layering effect can't be changed.
 

@@ -5,7 +5,7 @@ coverY: 0
 
 # Animated Heat Maps
 
-The NBA and other sports leagues are full of interesting data and trends. We can visualize how professional basketball has changed with heatmaps that track shot location.
+The NBA and other sports leagues are full of interesting data and trends. We can visualize how professional basketball has changed with heat maps that track shot location.
 
 The animation we make will look like this:
 
@@ -156,14 +156,14 @@ shots <- read_csv("nba_shots.csv")
 
 <figure><img src="../.gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-Once we have all the shots, we can filter them based on location. We only want shots that are within half-court, so we'll only take those whose LOC\_Y is below 40.
+Once we have all the shots, we can filter them based on location. We only want shots that are within half-court, so we'll only take those whose `LOC_Y` is below 40.
 
 ```r
 shots_plot <- shots |> 
   filter(LOC_Y<=40)
 ```
 
-For simplicity and to allow the plot to look good, let's round each LOC\_X and LOC\_Y location to the next lowest integer. This is effectively making "bins" for our data to be grouped into, which makes the heatmap look more readable (and easier to render - there's less points to plot). Without this, each shot location would be tiny points instead of easy-to-read large squares.
+For simplicity and to allow the plot to look good, let's round each `LOC_X` and `LOC_Y` location to the next lowest integer. This is effectively making "bins" for our data to be grouped into, which makes the heat map look more readable (and easier to render - there's less points to plot). Without this, each shot location would be tiny points instead of easy-to-read large squares.
 
 ```r
 shots_plot$LOC_X <- as.integer(shots_plot$LOC_X)
@@ -192,7 +192,7 @@ plot_court() +
   geom_tile(data=shots_plot, aes(x=LOC_X, y=LOC_Y, fill=Count, group=interaction(LOC_Y, LOC_X)), alpha=0.8)
 ```
 
-`geom_tile` is a heatmap syntax in ggplot, which makes a tile at each given location. In this case, its making a tile at each `LOC_X` and `LOC_Y` for each shot. The `fill=Count` tells R that we want the tiles to be filled according to how many shots were taken at that location. The `group=interaction(LOC_Y, LOC_X)` is a bit tricky to understand, but it essentially means that every group/tile is a unique shot with a unique `LOC_X` and `LOC_Y`. Finally, the `alpha` of `0.8` is given to make the background court visible behind our data.
+`geom_tile` is a heat map syntax in ggplot, which makes a tile at each given location. In this case, it's making a tile at each `LOC_X` and `LOC_Y` for each shot. The `fill=Count` tells R that we want the tiles to be filled according to how many shots were taken at that location. The `group=interaction(LOC_Y, LOC_X)` is a bit tricky to understand, but it essentially means that every group/tile is a unique shot with a unique `LOC_X` and `LOC_Y`. Finally, the `alpha` of `0.8` is given to make the background court visible behind our data.
 
 <figure><img src="../.gitbook/assets/rough2.png" alt="" width="562"><figcaption></figcaption></figure>
 
@@ -216,7 +216,7 @@ plot_court() +
 
 <figure><img src="../.gitbook/assets/rough3 (1).png" alt="" width="562"><figcaption></figcaption></figure>
 
-We're now ready to animate. Again, we're going to use `transition_time` for our animation, cycling over the year of the season. The new range synatax is way of avoiding using as.integer in our subtitle. All it does is tell R that our animation is using integers (`L`) from 2004 to 2024.&#x20;
+We're now ready to animate. Again, we're going to use `transition_time` for our animation, cycling over the year of the season. The new range syntax is way of avoiding using as.integer in our subtitle. All it does is tell R that our animation is using integers (`L`) from 2004 to 2024.&#x20;
 
 Since we're doing this, we can just use `{frame_time}` in our plot, without any class conversions.&#x20;
 

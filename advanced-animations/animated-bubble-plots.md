@@ -67,7 +67,7 @@ ggplot(gapminder_data)+
 
 <figure><img src="../.gitbook/assets/rough2 (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
-This looks much better and we're now ready to animate. We'll use `transition_time` to cycle through the data, meaning that each frame will show only the points available for that point in time. Since time is continous, R will automatically smoothly transition points between stages of data.&#x20;
+This looks much better and we're now ready to animate. We'll use `transition_time` to cycle through the data, meaning that each frame will show only the points available for that point in time. Since time is continuous, R will automatically smoothly transition points between stages of data.&#x20;
 
 We'll also add a subtitle with `{frame_time}` to illustrate the year currently being displayed.
 
@@ -122,7 +122,7 @@ Another extension we can do is making the plot interactive. We can do this throu
 library(plotly)
 ```
 
-There's a few line changes we need to make before we can export the interative animation, since plotly has different syntax. First, we'll need to add `aes(frame=year`) to the `ggplot` call. This is essentially plotly's version of `transition_time(year)`. Next, we'll add `ids=country` to our `geom_point` call. As you can probably guess, this is plotly's version of `group=country`.
+There's a few line changes we need to make before we can export the interactive animation, since plotly has different syntax. First, we'll need to add `aes(frame=year`) to the `ggplot` call. This is essentially plotly's version of `transition_time(year)`. Next, we'll add `ids=country` to our `geom_point` call. As you can probably guess, this is plotly's version of `group=country`.
 
 ```r
 animation <- ggplot(gapminder_data, aes(frame=year))+ #changed line
@@ -151,7 +151,7 @@ Now we can just call:
 ggplotly(animation)
 ```
 
-And we get a nice interactive, with hoverable data points, exportable as an HTML.
+And we get a nice interactive, with hover-able data points, exportable as an HTML.
 
 <figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 

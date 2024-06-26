@@ -51,7 +51,7 @@ temperatures$Country[which(temperatures$Country == "Congo")] <- "Republic of the
 temperatures$Country[which(temperatures$Country == "Côte D'Ivoire")] <- "Ivory Coast"
 ```
 
-Now that we've adjusted, we can do a left join on the world dataframe, which contains the geometry.
+Now that we've adjusted, we can do a left join on the world data frame, which contains the geometry.
 
 ```
 world_temperatures <- left_join(world, temperatures, by=c("admin"="Country"))
@@ -91,7 +91,7 @@ average_20th <- temperatures |>
 
 <figure><img src="../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-We're doing a very similar manipulation of the data here, making a new column for the year, then filtering to only include 20th century values. After that, we group by every country, then find the average surface termperature in the 20th century for that country.&#x20;
+We're doing a very similar manipulation of the data here, making a new column for the year, then filtering to only include 20th century values. After that, we group by every country, then find the average surface temperature in the 20th century for that country.&#x20;
 
 With this in place, we can then join average\_20th back with the world\_plot data, to have all the data in one place.
 
@@ -117,7 +117,7 @@ world_plot <- world_plot |>
 
 We're just filtering for actual values, then grouping by country and year, and formatting the data accordingly. We're taking the first value for all the columns where the data doesn't change, and the mean for the average temperature (which changes per month). Then, we find the difference between the average temperature of that year and the average 20th century value.
 
-After that, we'll have a dataframe with each country, the year, the surface temperature for that year, and the 20th century average.
+After that, we'll have a data frame with each country, the year, the surface temperature for that year, and the 20th century average.
 
 <figure><img src="../.gitbook/assets/image (5) (1) (1).png" alt=""><figcaption></figcaption></figure>
 

@@ -79,7 +79,7 @@ ggplot(txhousing_data)+
 
 <figure><img src="../.gitbook/assets/rough2 (1) (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
-We're almost there. To convert this into an animation we have to add `transition_reveal(date)` to the end of our code. `transition_reveal` is somewhat self-explainatory:  we want to reveal more and more of the line as animation goes on. Here, `date` is what is actually moving the animation. Essentially, we're telling the computer to reveal more and more of each line as the `date` increases.
+We're almost there. To convert this into an animation we have to add `transition_reveal(date)` to the end of our code. `transition_reveal` is somewhat self-explanatory:  we want to reveal more and more of the line as animation goes on. Here, `date` is what is actually moving the animation. Essentially, we're telling the computer to reveal more and more of each line as the `date` increases.
 
 <pre class="language-r"><code class="lang-r">ggplot(txhousing_data)+
   geom_line(aes(x=date, y=sales, color="Sales"))+
@@ -99,7 +99,7 @@ We're almost there. To convert this into an animation we have to add `transition
 
 <figure><img src="../.gitbook/assets/rough3 (2).gif" alt=""><figcaption></figcaption></figure>
 
-The animation is now in place, but the text is cut off and the resolution isn't ideal. To fix this we put our animation into an object using the pipe operation (`<-`)  and then call `animate()` on that object, with some self-explainatory parameters.
+The animation is now in place, but the text is cut off and the resolution isn't ideal. To fix this we put our animation into an object using the pipe operation (`<-`)  and then call `animate()` on that object, with some self-explanatory parameters.
 
 ```r
 animation <- ggplot(txhousing_data)+ #added the pipe into 'animation'

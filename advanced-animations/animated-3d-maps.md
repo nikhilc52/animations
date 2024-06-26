@@ -1,3 +1,8 @@
+---
+cover: ../.gitbook/assets/final 13.gif
+coverY: 0
+---
+
 # Animated 3D Maps
 
 We can build upon the concepts we used in the previous module to unlock the world of animation in 3D. This section relies on the template provided by [Carson Sievert](https://github.com/plotly/plotly.R/blob/master/demo/sf-plotly-3D-globe.R).
@@ -65,13 +70,13 @@ shearwaters <- shearwaters |>
 
 <figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
-This next part is a bit tricky. Since our data is precise to the minute, and is artibrarily tracked, it is unlikely for more than one organism to have its location known at the exact same time as another. This creates a problem for our plot, since for each frame, we can only show the data that is available at a given time, meaning we're probably going to just be showing one point per frame for our whole animation, which won't illustrate the idea that there's multiple organisms here.&#x20;
+This next part is a bit tricky. Since our data is precise to the minute, and is arbitrarily tracked, it is unlikely for more than one organism to have its location known at the exact same time as another. This creates a problem for our plot, since for each frame, we can only show the data that is available at a given time, meaning we're probably going to just be showing one point per frame for our whole animation, which won't illustrate the idea that there's multiple organisms here.&#x20;
 
 To solve this problem, we're going to try and log the location of every organism for every day:
 
 <figure><img src="../.gitbook/assets/rough1 (1).png" alt="" width="341"><figcaption></figcaption></figure>
 
-Thus, for every point in time, we're going to display as many points as there are animals, even if there isn't necesarily data recorded for that specific day (we'll use data that is as close as possible to the actual day, so we'll only be using data from a few hours before or after).
+Thus, for every point in time, we're going to display as many points as there are animals, even if there isn't necessarily data recorded for that specific day (we'll use data that is as close as possible to the actual day, so we'll only be using data from a few hours before or after).
 
 We can get started on our data by first generating a list of all the unique date values.
 
@@ -160,7 +165,7 @@ Finally, plotly can only animated smoothly over characters, so after we've done 
 shearwaters_full$Time <- as.character(shearwaters_full$Time)
 ```
 
-The next steps should be familar. We're doing the same concepts as before:
+The next steps should be familiar. We're doing the same concepts as before:
 
 ```r
 x_size <- 1000
@@ -265,7 +270,7 @@ generate_surface <- function(file){
 }
 ```
 
-As this function's name indicates, we're using this to generate the surface (satellite image) for each globe object. 90% of this function is the same as what we did in the previous section, with some minor tweaks to the red, green, and blue data frames that are needed to accomodate for the parameter. Note that we're setting rgb\_earth and earth\_colorscale as global variables using `<<-` so that they can be accessed outside of our function.
+As this function's name indicates, we're using this to generate the surface (satellite image) for each globe object. 90% of this function is the same as what we did in the previous section, with some minor tweaks to the red, green, and blue data frames that are needed to accommodate for the parameter. Note that we're setting rgb\_earth and earth\_colorscale as global variables using `<<-` so that they can be accessed outside of our function.
 
 Next, we'll make a function for generating the globe:
 
@@ -333,7 +338,7 @@ We're now ready to plot. We'll start by indicating how many frames we want, whic
 dates <- unique(shearwaters_full$Time)
 ```
 
-We'll also initilize an image\_index variable to easily name our images in order.
+We'll also initialize an image\_index variable to easily name our images in order.
 
 ```r
 image_index <- 1
@@ -359,7 +364,7 @@ for(i in 1:length(dates)){
   }
 ```
 
-The for loop cycles through all the valid dates. The first part of our loop prints the current date and frame we're at so that we can keep track of our progress. Then, we get the file using yday, which calulates the what day number a given date is (2024-01-01 is 1, 2024-01-02 is 2, etc.) and fit that number to have 3 digits to match the name format of the png. We'll supply that file number to our generate\_surface function.
+The for loop cycles through all the valid dates. The first part of our loop prints the current date and frame we're at so that we can keep track of our progress. Then, we get the file using yday, which calculates the what day number a given date is (2024-01-01 is 1, 2024-01-02 is 2, etc.) and fit that number to have 3 digits to match the name format of the png. We'll supply that file number to our generate\_surface function.
 
 We then filter to get a data frame that only contains the animals for that specific date, and give that information, as well as the index number we're on, to the generate\_globe function, which will make our globe.&#x20;
 

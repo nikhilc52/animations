@@ -34,7 +34,7 @@ earthquakes <- read_csv("earthquakes.csv")
 
 <figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-Since we're going to be mapping the longitude and latitude of each earthquake to a three dimentional space, it'll be efficient and useful if we define a simple function that converts degrees to radians, so that we can more easily call trigonometric functions.
+Since we're going to be mapping the longitude and latitude of each earthquake to a three dimensional space, it'll be efficient and useful if we define a simple function that converts degrees to radians, so that we can more easily call trigonometric functions.
 
 ```r
 degrees2radians <- function(degree) degree * pi / 180 
@@ -49,9 +49,9 @@ earthquakes <- earthquakes |>
   mutate(z=1.01 * sin(degrees2radians(latitude)))
 ```
 
-The formulas are a little complicated, and explainations can be found [here](https://tutorial.math.lamar.edu/Classes/CalcII/SphericalCoords.aspx), but are at a Calculus II level, so I won't go into too much depth. For now, just trust that they work, and we'll be refering back to them frequently. Note that the radius in this formula is 1.01, which means that our points will be in the layer above the sphere, allowing them to be more visible.
+The formulas are a little complicated, and explanations can be found [here](https://tutorial.math.lamar.edu/Classes/CalcII/SphericalCoords.aspx), but are at a Calculus II level, so I won't go into too much depth. For now, just trust that they work, and we'll be referringnot back to them frequently. Note that the radius in this formula is 1.01, which means that our points will be in the layer above the sphere, allowing them to be more visible.
 
-We'll add a very simple color scale for our data points here (which will later be mapped to the significance variable). While having a scale like this is typically no encouraged, when the backing image features earth tones, it's a bit difficult to make our points stand out, so we'll stick with red.
+We'll add a very simple color scale for our data points here (which will later be mapped to the significance variable). While having a scale like this is typically not encouraged, when the backing image features earth tones, it's a bit difficult to make our points stand out, so we'll stick with red.
 
 The first vector gives percentiles for each corresponding color defined in the second vector.
 
@@ -61,7 +61,7 @@ manual_colorscale <- list(c(0,0.2,0.4,0.6,0.8,1),
                             "#fb4b1e","#c61a09")) 
 ```
 
-That's all the work we have to do for our earthquake data frame, so we can now move on to making the satallite image surface. The image we're going to be using can be found [here](https://raw.githubusercontent.com/nikhilc52/animation\_links/main/surface.png).
+That's all the work we have to do for our earthquake data frame, so we can now move on to making the satellite image surface. The image we're going to be using can be found [here](https://raw.githubusercontent.com/nikhilc52/animation\_links/main/surface.png).
 
 To make things easier to interpret, we're going to set an x and y size variable to limit the quality of our image and ensure that every data frame has the corresponding size.&#x20;
 
@@ -89,7 +89,7 @@ df_tif <- as.data.frame(raw_tif)
 
 <figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
-There are three values in the band column (1, 2, 3), each representing a color (red, green, blue). To map an actual RGB value to each location, we need to combine the data so that each x and y has a corresponding red, green, and blue column with appriopriate color values. We can do this with a series of left joins, but we need to format our data first.
+There are three values in the band column (1, 2, 3), each representing a color (red, green, blue). To map an actual RGB value to each location, we need to combine the data so that each x and y has a corresponding red, green, and blue column with appropriate color values. We can do this with a series of left joins, but we need to format our data first.
 
 ```r
 red <- df_tif |> 
@@ -136,19 +136,19 @@ rgb$color <- rgb(rgb$red/255,rgb$green/255,rgb$blue/255)
 rgb$color_int <- 256 * 256 * rgb$red + 256 * rgb$green + rgb$blue 
 ```
 
-The color column is self explainatory - we just supply the red, green, and blue value divided by 255 since the rgb function only uses numbers from 0-1 for its parameters, and there are 255 values for a possible red/green/blue band.&#x20;
+The color column is self explanatory - we just supply the red, green, and blue value divided by 255 since the rgb function only uses numbers from 0-1 for its parameters, and there are 255 values for a possible red/green/blue band.&#x20;
 
-The color\_int column is a bit more complicated, but generates a unique value for any color's RGB values. We'll need this in orer to find an appropriate order to give R for the scale we'll eventually set up.
+The color\_int column is a bit more complicated, but generates a unique value for any color's RGB values. We'll need this in order to find an appropriate order to give R for the scale we'll eventually set up.
 
 <figure><img src="../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
 
-The way that plotly interprets surface colors is through a matrix object. Since our data is currently in a data frame format, we need to convert it. We need to be careful here, though, since this conversion can cause a lot of errors if its wrong. The resulting matrix should essentially be a pixelated version of the original png file we supplied.
+The way that plotly interprets surface colors is through a matrix object. Since our data is currently in a data frame format, we need to convert it. We need to be careful here, though, since this conversion can cause a lot of errors if it's wrong. The resulting matrix should essentially be a pixelated version of the original png file we supplied.
 
 ```r
 rgb_earth <- matrix(data=rgb$color_int, nrow=y_size, ncol = x_size, byrow=TRUE)
 ```
 
-The matrix function uses the data within the color\_int column to fill in its cells. Since the matrix should be a mirror of the image we supplied, there should be as many rows as there are y values in our image and as many columns as there are x values in our image (using the variables defined earlier). Since the data in the rgb dataframe is ordered by x values, we're filling in our data by rows (meaning we put in all the data for the first row, then the second, then the third, etc).&#x20;
+The matrix function uses the data within the color\_int column to fill in its cells. Since the matrix should be a mirror of the image we supplied, there should be as many rows as there are y values in our image and as many columns as there are x values in our image (using the variables defined earlier). Since the data in the rgb data frame is ordered by x values, we're filling in our data by rows (meaning we put in all the data for the first row, then the second, then the third, etc).&#x20;
 
 <figure><img src="../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -169,7 +169,7 @@ lat <- matrix(rep(lat, x_size), nrow = y_size)
 lon <- matrix(rep(lon, each = y_size), nrow = y_size)
 ```
 
-All we're doing here is making two new matricies (one for the latitude values and one for the longitiude values), that follow the same dimensions as our rgb\_earth matrix, so that when fed into plotly, each color will map to the correct location.
+All we're doing here is making two new matrices (one for the latitude values and one for the longitude values), that follow the same dimensions as our rgb\_earth matrix, so that when fed into plotly, each color will map to the correct location.
 
 <figure><img src="../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 
@@ -183,7 +183,7 @@ As it stands, if we were to plot our surface right now, we'd get a monochrome co
 
 In this example, the integer values clearly correspond to a percentile for the scale, so that when R reads the numeric integer, it can directly map its value to the appropriate color given by its percentile.
 
-The object on the left is what we start out with, and through some maniulation, we end up with the object on the right.
+The object on the left is what we start out with, and through some manipulation, we end up with the object on the right.
 
 ```
 earth_colorscale <- distinct(data.frame(rgb$color_int, rgb$color))
@@ -193,7 +193,7 @@ earth_colorscale <- distinct(data.frame(rgb$color_int, rgb$color))
 
 Here, we're just finding all the unique color values and integers, so that we don't have to do any duplicate mapping.
 
-Now, we'll arange our rgb.color\_int column in ascending order:
+Now, we'll arrange our rgb.color\_int column in ascending order:
 
 ```r
 earth_colorscale <- earth_colorscale |> arrange(rgb.color_int)
@@ -248,7 +248,7 @@ It might be a bit difficult to understand what we did, but essentially, any colo
 
 Obviously, mapping down more than 65 thousand colors down to just 128 will cause some discoloration, but for the most part, our plot should be accurate.
 
-We'll now work on setting up the plotting enviornment. Since we just want the globe to be shown, we'll create an empty axis variable to feed into plotly:
+We'll now work on setting up the plotting environment. Since we just want the globe to be shown, we'll create an empty axis variable to feed into plotly:
 
 ```r
 empty_axis <- list(
@@ -337,11 +337,11 @@ We can now add the satellite image surface background.
   )
 ```
 
-Here, we using our reference matricies for longitude and latitude to convert each pixel to its appropriate x, y, and z location. Note that the z is inverted - we're doing this conversion here since it's easier than flipping a matrix.
+Here, we using our reference matrices for longitude and latitude to convert each pixel to its appropriate x, y, and z location. Note that the z is inverted - we're doing this conversion here since it's easier than flipping a matrix.
 
-We're supplying basic informtion like the surfacecolor to map to our rgb\_earth matrix and the color scale to the one we defined for earth's color pallete. We're not going to show the scale for our colors, and we're not going to have any info revealed on hover.&#x20;
+We're supplying basic information like the surfacecolor to map to our rgb\_earth matrix and the color scale to the one we defined for earth's color palette. We're not going to show the scale for our colors, and we're not going to have any info revealed on hover.&#x20;
 
-We'll add the light in at any arbitrary postion decently far from our globe to light the scene and make sure that there aren't any contours (slices through the plot) displayed when we're hovering.
+We'll add the light in at any arbitrary position decently far from our globe to light the scene and make sure that there aren't any contours (slices through the plot) displayed when we're hovering.
 
 <figure><img src="../.gitbook/assets/image (20).png" alt="" width="563"><figcaption></figcaption></figure>
 
@@ -363,11 +363,11 @@ We're almost done. We just need to tidy up our environment.&#x20;
   config(displayModeBar=FALSE)
 ```
 
-Here, we're generating and formatting our title and indicating that we don't want to show a legend for the traces (i.e. the trace0, trace1 in the top right corner, not the Magnitude colorbar). We're also clearing the axes with the list we initialized above. Finally, we lock the aspect ratio to something readible, and hide the small Plotly.js tag line at the top right of the plot.
+Here, we're generating and formatting our title and indicating that we don't want to show a legend for the traces (i.e. the trace0, trace1 in the top right corner, not the Magnitude colorbar). We're also clearing the axes with the list we initialized above. Finally, we lock the aspect ratio to something readable, and hide the small Plotly.js tag line at the top right of the plot.
 
 <figure><img src="../.gitbook/assets/image (21).png" alt="" width="563"><figcaption></figcaption></figure>
 
-We still need to add our manual size legend, though. To do that, we can either link a https link or use a base64 enoder to give the image to plotly. To keep things as customizable as possible, I'll go over the base64 encoder, which allows you to place any png in the plot. The png we'll be referencing is visible [here](https://raw.githubusercontent.com/nikhilc52/animation\_links/main/size\_scale.png). For our purposes, we don't have to worry too much about how this function works.
+We still need to add our manual size legend, though. To do that, we can either link a https link or use a base64 encoder to give the image to plotly. To keep things as customizable as possible, I'll go over the base64 encoder, which allows you to place any png in the plot. The png we'll be referencing is visible [here](https://raw.githubusercontent.com/nikhilc52/animation\_links/main/size\_scale.png). For our purposes, we don't have to worry too much about how this function works.
 
 To load the png into R, we'll call:
 
@@ -389,7 +389,7 @@ images=list(list(source=paste('data:image/png;base64', image, sep=','),
                      yanchor="center"))
 ```
 
-"paper" makes the text anchored to the area of the plot (not the axes within the plot), so we can have our image be near the position of the colorbar. The rest of the parameters are self-explainatory and should be simple to tweak if needed. Note that if you wanted to use the https link to the image, we could forgo the above initilization of image and just paste the link into the source parameter:
+"paper" makes the text anchored to the area of the plot (not the axes within the plot), so we can have our image be near the position of the colorbar. The rest of the parameters are self-explanatory and should be simple to tweak if needed. Note that if you wanted to use the https link to the image, we could forgo the above initialization of image and just paste the link into the source parameter:
 
 ```r
 source='https://raw.githubusercontent.com/nikhilc52/animation_links/main/size_scale.png'
@@ -462,7 +462,7 @@ globe <- plot_ly(width=800,height=800) |>
   config(displayModeBar=FALSE)
 ```
 
-That's all! We've now made a cutting-edge interactive model with 3D mapping exclusively within R. If you want to have the camera move to generate a movie within the R enviornment, see the next section for how to get smooth camera movement.
+That's all! We've now made a cutting-edge interactive model with 3D mapping exclusively within R. If you want to have the camera move to generate a movie within the R environment, see the next section for how to get smooth camera movement.
 
 {% hint style="info" %}
 [Click here to view the raw file used to make this animation.](../appendix/advanced-animations/interactive-3d-maps.r.md)

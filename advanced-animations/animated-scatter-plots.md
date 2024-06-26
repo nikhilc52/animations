@@ -5,7 +5,7 @@ coverY: 0
 
 # Animated Scatter Plots
 
-Are athletes actually getting bigger, faster, and stronger? We can look at the heights and weights of hundreds of thousands of Olympic athletes to find out. This section is loosley inspired by this [article](https://www.randigriffin.com/2018/06/08/olympic-history-7-size.html) by Randi Griffin.
+Are athletes actually getting bigger, faster, and stronger? We can look at the heights and weights of hundreds of thousands of Olympic athletes to find out. This section is loosely inspired by this [article](https://www.randigriffin.com/2018/06/08/olympic-history-7-size.html) by Randi Griffin.
 
 Our goal is to make this plot:
 
@@ -34,7 +34,7 @@ athletes <- read_csv("athletes.csv")
 
 We're going to need to do some cleaning if we want to have a single height and weight for swimming event in every Olympic year. We can easily do this cleaning with a few lines.&#x20;
 
-First, we'll filter out athletes without given heights and weights and any non-swimming events. Then, we'll group together every athelete under their event, year, and sex. Finally, we'll only select Olympic games past 1960, since before this year, the data is very limited.
+First, we'll filter out athletes without given heights and weights and any non-swimming events. Then, we'll group together every athlete under their event, year, and sex. Finally, we'll only select Olympic games past 1960, since before this year, the data is very limited.
 
 ```r
 height_weight <- athletes |> 
@@ -99,7 +99,7 @@ If we run this code as is, we're going to get point movement that is linear.  Wh
 +ease_aes("cubic-in-out")
 ```
 
-This tells R to ease the transition both in and out of states using a cubic function. The change is slight but noticable. On the left is the default animation, on the right is cubic in and out.
+This tells R to ease the transition both in and out of states using a cubic function. The change is slight but noticeable. On the left is the default animation, on the right is cubic in and out.
 
 <div>
 
@@ -151,15 +151,15 @@ animate(animation, fps=10, duration=18, end_pause=30, height = 7,
         width = 11, units = "in", res = 200)
 ```
 
-For `transition_stages`, it's good practice to have a specified number of frames for each stage, otherwise the animation might be a bit choppy. In our case, we have 15 Olypmic games, at 10 FPS, meaning we want 150 frames for the transitions. A 30 frame end pause means we need 30 extra frames at the end to still have 150 frames for transitions, meaning we need 180 frames or 18 seconds for the animation.
+For `transition_stages`, it's good practice to have a specified number of frames for each stage, otherwise the animation might be a bit choppy. In our case, we have 15 Olympic games, at 10 FPS, meaning we want 150 frames for the transitions. A 30 frame end pause means we need 30 extra frames at the end to still have 150 frames for transitions, meaning we need 180 frames or 18 seconds for the animation.
 
 Here's that explained visually:
 
 <figure><img src="../.gitbook/assets/graphic1 (1).svg" alt=""><figcaption></figcaption></figure>
 
-If we didn't have an integer value for the number of frames per stage/Olypmic games, we'd end up with an animation that isn't quite as visually appealing, as rounding on the backend of R messes up the precsion of each frame.
+If we didn't have an integer value for the number of frames per stage/Olympic games, we'd end up with an animation that isn't quite as visually appealing, as rounding on the backend of R messes up the precision of each frame.
 
-Note that this type of math is present in all the types of animations (like `transition_time` or `transition_reveal`), but just much less noticeable (as the number of states is a lot higher), so its not a necessity to figure it out. For `transition_states`, though, its best if you do.
+Note that this type of math is present in all the types of animations (like `transition_time` or `transition_reveal`), but just much less noticeable (as the number of states is a lot higher), so its not a necessity to figure it out. For `transition_states`, though, it's best if you do.
 
 {% hint style="info" %}
 [Click here to view the raw file used to make this animation.](../appendix/advanced-animations/animated-scatter-plot.r.md)

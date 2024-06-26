@@ -31,7 +31,7 @@ With our libraries in place, we get the dataset in the same way we've been doing
 txhousing_data <- txhousing
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The first five rows of the txhousing_data dataframe.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Now that we have our data, we need to format it to make a suitable word cloud. We'll take the `volume` column, which is the number of house sales multiplied by their price (i.e. how much money was spent), and use it as an indicator for size.&#x20;
 
@@ -60,7 +60,7 @@ Since word clouds are built by shuffling the words around the biggest one, it mi
 set.seed(52)
 ```
 
-We're now using `geom_text_wordcloud` to make our plot, with the `label` being the city name and the `size` being the volume of houses (for a given month). We scale up the `max_size` of the city with the largest volume to 30 (`scale_size_area`), which is a somewhat arbitrary size, but I've found it works well to show large, readible words, without having points that are too big to fit inside the plot.
+We're now using `geom_text_wordcloud` to make our plot, with the `label` being the city name and the `size` being the volume of houses (for a given month). We scale up the `max_size` of the city with the largest volume to 30 (`scale_size_area`), which is a somewhat arbitrary size, but I've found it works well to show large, readable words, without having points that are too big to fit inside the plot.
 
 Finally, we'll add the `transition_time(date)` to tell R to only show the words for a given date, cycling through dates.
 
@@ -90,7 +90,7 @@ ggplot(txhousing_data)+
   transition_time(date)
 ```
 
-As we finalize the plot with frames, its important to note that words will jump around in each frame. So, it's important that we keep the FPS low to accommodate for this, since, unfortunately, there is no way to stop words from switching from frame to frame. By keeping our FPS low, we minimize the number of switches per second, improving readibility. With a lower FPS we still have to show all the frames/data we have, so we have to increase the duration of the animation.
+As we finalize the plot with frames, it's important to note that words will jump around in each frame. So, it's important that we keep the FPS low to accommodate for this, since, unfortunately, there is no way to stop words from switching from frame to frame. By keeping our FPS low, we minimize the number of switches per second, improving readability. With a lower FPS we still have to show all the frames/data we have, so we have to increase the duration of the animation.
 
 ```r
 animation <- ggplot(txhousing_data)+

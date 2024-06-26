@@ -50,12 +50,12 @@ To plot the data on a map, we'll need each city to correspond to a point with an
 
 ```r
 cities <- data.frame(unique(txhousing_data$city)) #df of unique cities
-names(cities)[names(cities) == 'unique.txhousing_data.city.'] <- 'city' #rename column name for simplcity
+names(cities)[names(cities) == 'unique.txhousing_data.city.'] <- 'city' #rename column name for simplicitydataframe
 ```
 
 <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-Essentially, we're taking all the unique city names and making them a dataframe, then renaming the column name to save some typing later on.
+Essentially, we're taking all the unique city names and making them a data frame, then renaming the column name to save some typing later on.
 
 We're now going to take each of the cities, and find both the latitude and longitude using the `geo_osm` function in the `tidygeocoder` package. The `geo_osm` function returns a tibble with the name, latitude, and longitude, so taking just one attribute and putting it into the corresponding `cities` column is simple. I've concatenated ", Texas" to the end of the cities to make it easier for the function to identify certain ambiguous names (i.e. "Paris", which is a city in both Texas and France).
 
@@ -84,7 +84,7 @@ sf_txhousing_data <- txhousing_data |>
   st_set_crs(4326) #set a standard coordinate system
 ```
 
-For each coordinate pair, we use the `st_as_sf` function to convert the "regular" lat and long numbers into actual geometric points. Then, to make sure alignment is proper, we set a Coordinate Reference System using st\_set\_crs, since there are a number of ways to align latitude and longtiude along a 2D plane. For most situations, 4326 (World Geodetic System) is your go-to.
+For each coordinate pair, we use the `st_as_sf` function to convert the "regular" lat and long numbers into actual geometric points. Then, to make sure alignment is proper, we set a Coordinate Reference System using st\_set\_crs, since there are a number of ways to align latitude and longitude along a 2D plane. For most situations, 4326 (World Geodetic System) is your go-to.
 
 <figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -121,7 +121,7 @@ ggplot()+
 
 <figure><img src="../.gitbook/assets/rough2 (2).png" alt="" width="563"><figcaption></figcaption></figure>
 
-Having all of America here isn't really necessary as all our data is within Texas, so we can cut off the coordinates of our graph with a self-explaimatory `coord_sf` call.
+Having all of America here isn't really necessary as all our data is within Texas, so we can cut off the coordinates of our graph with a self-explanatory `coord_sf` call.
 
 ```r
 +coord_sf(xlim = c(-107, -90), ylim = c(25, 37))
@@ -129,7 +129,7 @@ Having all of America here isn't really necessary as all our data is within Texa
 
 Here, the X (longitude) goes from -107 to -90 (or 107 W to 90 W) and Y (latitude) goes from 25 to 37 (or 25 N to 37 N).&#x20;
 
-Finally, we can add `transition_time(date)` as usual, to tell R that each frame we see are cycling/seeing data points from different points of time, as specified by the `date` (and smoothing the in-between areas). We'll also add the same `{as.integer(frame_time)}` as before, to update the viewer on the current data their seeing.
+Finally, we can add `transition_time(date)` as usual, to tell R that each frame we see are cycling/seeing data points from different points of time, as specified by the `date` (and smoothing the in-between areas). We'll also add the same `{as.integer(frame_time)}` as before, to update the viewer on the current data they're seeing.
 
 ```r
 ggplot()+

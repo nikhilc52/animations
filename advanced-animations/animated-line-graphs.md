@@ -51,9 +51,9 @@ Essentially, we're filtering to only look at world-wide cases (rather than on a 
 
 <figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-With our data frame in place, we can start to add the annotations, which is the most difficult part of making this plot. Each annotation has the text (i.e. the words that are displayed on screen) and the date (i.e. where and when the text should be displayed). The combination of this data can best be respresented by a 'dictionary'-esque dataframe.&#x20;
+With our data frame in place, we can start to add the annotations, which is the most difficult part of making this plot. Each annotation has the text (i.e. the words that are displayed on screen) and the date (i.e. where and when the text should be displayed). The combination of this data can best be represented by a 'dictionary'-esque data frame.&#x20;
 
-We'll initilize it with:
+We'll initializeOmicron it with:
 
 ```r
 annotations <- data.frame(keys=list(), values=list())
@@ -66,7 +66,7 @@ annotations <- data.frame(keys='First U.S. Death', values='2020-02-06')
 annotations <- add_row(annotations, keys='CDC Mask Recommendation', values='2020-04-03')
 annotations <- add_row(annotations, keys='Vaccines Released in the U.S.', values='2020-12-14')
 annotations <- add_row(annotations, keys='FDA Authorizes Booster Shots', values='2021-11-19')
-annotations <- add_row(annotations, keys='WHO Declares Omnicron Variant of Concern', values='2021-11-26')
+annotations <- add_row(annotations, keys='WHO Declares Omicron Variant of Concern', values='2021-11-26')
 ```
 
 <figure><img src="../.gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
@@ -81,11 +81,11 @@ bullet_effect <- function(dates_to_slow, strength){
 }
 ```
 
-Essentially, this function takes in a list of dates\_to\_slow, and the strength (how much will the plot be slowed at each point - higher is longer). We then add a column to our dataframe that quantifies how long each date should be shown: if the date is to be slowed, then the length should be the strength that we provide, else, it should just be one.&#x20;
+Essentially, this function takes in a list of dates\_to\_slow, and the strength (how much will the plot be slowed at each point - higher is longer). We then add a column to our data frame that quantifies how long each date should be shown: if the date is to be slowed, then the length should be the strength that we provide, else, it should just be one.&#x20;
 
 Then, we make a new column with the cumulative sum of the show\_time column. This is the column that we will provide to the transition\_reveal call later.&#x20;
 
-Since transition\_reveal is a continuous animation function, it must go through all the values in the reveal\_time column. That means that if the reveal\_time suddently jumps up from 1 to 101, say (if show time is 100 for a row), then the plot would have to go through 1 to 101 for that date, slowing down in the process.&#x20;
+Since transition\_reveal is a continuous animation function, it must go through all the values in the reveal\_time column. That means that if the reveal\_time suddenly jumps up from 1 to 101, say (if show time is 100 for a row), then the plot would have to go through 1 to 101 for that date, slowing down in the process.&#x20;
 
 ```r
 world <- bullet_effect(annotations$values, 100)
@@ -136,7 +136,7 @@ plot_text_annotation <- function(){
 }
 ```
 
-This function is what we'll use to plot each of the texts. We start by initilizing a list of geom\_label objects, the first of which is empty. Then, for every value to be displayed, we cycle through and find the appropriate y\_value, calling the function we just defined. While seemingly daunting at first, the first parameter we supply is just the number of deaths for the current date we're looking to plot. Next, we give the ylimit we defined earlier, and the index value of this annotation, i.
+This function is what we'll use to plot each of the texts. We start by initializing a list of geom\_label objects, the first of which is empty. Then, for every value to be displayed, we cycle through and find the appropriate y\_value, calling the function we just defined. While seemingly daunting at first, the first parameter we supply is just the number of deaths for the current date we're looking to plot. Next, we give the ylimit we defined earlier, and the index value of this annotation, i.
 
 After we've found the y\_value, we then append to our list a geom\_label object. The label has our annotation for the given i value, and we're using scales::alpha (since geom\_labels can't directly modify the alpha value). The alpha value changes based on the current date being displayed: if the date displayed is after (or on) the date that the current annotation corresponds to, then we should have the alpha equal to 1. Otherwise, it would be 0. The X value should be the date of the annotation, so that it is placed directly above or below the corresponding point on the line.
 
@@ -177,7 +177,7 @@ We're doing some basic setups for the plot, with the ylim defined by the number 
 
 <figure><img src="../.gitbook/assets/rough1 (1).gif" alt=""><figcaption></figcaption></figure>
 
-The major elements are in place, but our plot doesn't look to nice. We'll pretty it up and then save it.
+The major elements are in place, but our plot doesn't look too nice. We'll pretty it up and then save it.
 
 ```r
 animation <- world |> 
