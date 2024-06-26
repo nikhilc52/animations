@@ -55,5 +55,3 @@ Below are some of the charts that are possible to make exclusively within the R 
 <figure><img src=".gitbook/assets/final 6 (2).gif" alt=""><figcaption></figcaption></figure>
 
 </div>
-
-This book was created by Nikhil Chinchalkar during 2024 under the guidance of Carolina Roe-Raymond for the Princeton University Research Computing department.
