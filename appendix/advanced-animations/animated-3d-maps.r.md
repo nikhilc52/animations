@@ -4,7 +4,7 @@ description: Code used to make the graph found within "Animated 3D Maps"
 
 # animated-3d-maps.R
 
-
+<figure><img src="../../.gitbook/assets/final 13.gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ```r
 library(plotly)

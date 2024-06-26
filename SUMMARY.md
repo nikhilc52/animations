@@ -38,3 +38,7 @@
   * [animated-2d-point-maps.R](appendix/advanced-animations/animated-2d-point-maps.r.md)
   * [interactive-3d-maps.R](appendix/advanced-animations/interactive-3d-maps.r.md)
   * [animated-3d-maps.R](appendix/advanced-animations/animated-3d-maps.r.md)
+
+***
+
+* [About](about.md)
