@@ -90,27 +90,13 @@ camera_z_positions <- predict(spline_fit)$y
 generate_surface <- function(file){
   raw_tif <- read_stars(paste0("surfaces/", file, ".png"), RasterIO = list(nBufXSize=x_size, nBufYSize=y_size))
   
-  df_tif <- as.data.frame(raw_tif)
-  df_tif <- df_tif |>
-    mutate(x = x-180) |>
-    mutate(y = y-90)
+  rgb <- as.data.frame(raw_tif) |> 
+    tidyr::pivot_wider(names_from = band, values_from = paste0("X",file,".png"))
   
-  red <- df_tif |> 
-    filter(band == 1)
-  names(red)[names(red) == paste0("X",file,".png")] <- 'red'
-  red <- red[-3]
+  colnames(rgb)[3] <- "red"
+  colnames(rgb)[4] <- "green"
+  colnames(rgb)[5] <- "blue"
   
-  green <- df_tif |> 
-    filter(band == 2)
-  names(green)[names(green) == paste0("X",file,".png")] <- 'green'
-  green <- green[-3]
-  
-  blue <- df_tif |> 
-    filter(band == 3)
-  names(blue)[names(blue) == paste0("X",file,".png")] <- 'blue'
-  blue <- blue[-3]
-  
-  rgb <- left_join(left_join(red, green),blue)
   rgb$color <- rgb(rgb$red/255,rgb$green/255,rgb$blue/255)
   rgb$color_int <- bitwShiftL(rgb$red, 16) + bitwShiftL(rgb$green, 8) + rgb$blue 
   
@@ -207,9 +193,8 @@ system.time(
 )
 
 png_files <- sort(list.files("image_sequence", pattern = "*.png", full.names = TRUE))
-for(i in 1:length(png_files)/6){
+for(i in 1:10){
   png_files <- append(png_files, png_files[length(png_files)])
 }
 gifski::gifski(png_files, gif_file = "final.gif", width = 7*200, height = 7*200, delay = 30/length(png_files))
-
 ```

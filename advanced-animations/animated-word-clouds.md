@@ -48,7 +48,7 @@ Before we do any more changes, we'll need to fix up the `Date` column in our dat
 nyt_headlines$Date <- as.Date(as.character(nyt_headlines$Date), format="%Y%m%d")
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Though we've narrowed our dataset down to around 500,000 rows, we still have to compress our data. Right now, there's too much variability in our data: headlines change too frequently between each day. To counter this while not losing any data, we can simply group our data by month.
 
@@ -82,7 +82,7 @@ The `unlist` function just separates this list into rows, so that each row has a
 
 Our data now looks like this (it might take a few seconds to load):
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Now that we've tokenized, we can get rid of the Headlines column, which will speed up our work.
 

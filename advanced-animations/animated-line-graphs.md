@@ -49,7 +49,7 @@ world <- covid |>
 
 Essentially, we're filtering to only look at world-wide cases (rather than on a country-by-country basis), making sure the data is available, and restricting our data to 2022 or earlier, where the majority of the concentration of deaths will be. Finally, we select only the data that we need, to make our data frame easier to work with.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 With our data frame in place, we can start to add the annotations, which is the most difficult part of making this plot. Each annotation has the text (i.e. the words that are displayed on screen) and the date (i.e. where and when the text should be displayed). The combination of this data can best be represented by a 'dictionary'-esque data frame.&#x20;
 

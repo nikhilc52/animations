@@ -183,7 +183,7 @@ shots_plot <- shots_plot |>
   )
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Nice. Now we're on to the plot. Let's start with a static version. Note that we call `plot_court()` first, since it creates the background which we'll plot over.
 

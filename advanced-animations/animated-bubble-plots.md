@@ -30,7 +30,7 @@ The dataset that Rosling uses can actually be found within an R library: `gapmin
 gapminder_data <- gapminder
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Our data is already cleaned for us, so we can get started plotting. First, let's make a simple static graph. Looking ahead, we know that we are going to want each point to represent a country, so we can assign `group=country` to our plot (even though it technically doesn't do anything right now).
 

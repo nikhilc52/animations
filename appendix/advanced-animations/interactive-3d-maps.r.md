@@ -22,32 +22,21 @@ earthquakes <- earthquakes |>
   mutate(z=1.01 * sin(degrees2radians(latitude)))
 
 manual_colorscale <- list(c(0,0.2,0.4,0.6,0.8,1),
-                          c("white","#ffa590","#ff8164","#ff6242",
-                            "#fb4b1e","#c61a09")) 
+                          c("white","#ffa590","#ff8164", "#ff6242","#fb4b1e","#c61a09"))
+
 
 x_size <- 1000
 y_size <- 500
-raw_tif <- read_stars("surface.png",
-                      RasterIO = list(nBufXSize=x_size, nBufYSize=y_size))
 
-df_tif <- as.data.frame(raw_tif)
+raw_tif <- read_stars("surface.png",RasterIO = list(nBufXSize=x_size,nBufYSize=y_size))
 
-red <- df_tif |> 
-  filter(band == 1) |> 
-  mutate(red = surface.png)
-red <- red[-c(3,4)]
+rgb <- as.data.frame(raw_tif) |> 
+  tidyr::pivot_wider(names_from = band, values_from = surface.png)
 
-green <- df_tif |> 
-  filter(band == 2) |> 
-  mutate(green = surface.png)
-green <- green[-c(3,4)]
+colnames(rgb)[3] <- "red"
+colnames(rgb)[4] <- "green"
+colnames(rgb)[5] <- "blue"
 
-blue <- df_tif |> 
-  filter(band == 3) |> 
-  mutate(blue = surface.png)
-blue <- blue[-c(3,4)]
-
-rgb <- left_join(left_join(red, green),blue)
 rgb$color <- rgb(rgb$red/255,rgb$green/255,rgb$blue/255)
 rgb$color_int <- 256 * 256 * rgb$red + rgb$green * 256 + rgb$blue 
 
@@ -147,5 +136,4 @@ globe <- plot_ly(width=800,height=800) |>
   config(displayModeBar=FALSE)
 
 globe
-
 ```

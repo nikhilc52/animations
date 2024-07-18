@@ -39,7 +39,7 @@ We'll also read in our data.
 temperatures <- read_csv("temperatures.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 When we eventually plot, we need to join together the two datasets. Unfortunately, some of the names of countries are not equal between the two datasets, so we'll need to manually adjust those now.
 
@@ -72,7 +72,7 @@ world_plot <- world_temperatures |>
   select(admin, AverageTemperature, year)
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 In this code segment, we're just making a new column for the year of every data point, and filtering to the years 1985 and greater. Then, to make the data easier to handle, we're only selecting the three most important columns, which we'll soon use in our plot.
 

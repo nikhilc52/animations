@@ -32,7 +32,7 @@ Next, we'll load in the data.
 earthquakes <- read_csv("earthquakes.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Since we're going to be mapping the longitude and latitude of each earthquake to a three dimensional space, it'll be efficient and useful if we define a simple function that converts degrees to radians, so that we can more easily call trigonometric functions.
 
@@ -83,53 +83,35 @@ The syntax here just tells R how large the image should be on the X and on the Y
 
 We'll now convert the tif to a data frame for us to use.
 
-```r
-df_tif <- as.data.frame(raw_tif)
-```
+<pre class="language-r"><code class="lang-r"><strong>rgb &#x3C;- as.data.frame(raw_tif)
+</strong></code></pre>
 
 <figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
-There are three values in the band column (1, 2, 3), each representing a color (red, green, blue). To map an actual RGB value to each location, we need to combine the data so that each x and y has a corresponding red, green, and blue column with appropriate color values. We can do this with a series of left joins, but we need to format our data first.
+There are three values in the band column (1, 2, 3), each representing a color (red, green, blue). To map an actual RGB value to each location, we need to combine the data so that each x and y has a corresponding red, green, and blue column with appropriate color values. We can do this with through the `pivot_wider` function from `tidyr`, modifying our previous call:
 
 ```r
-red <- df_tif |> 
-  filter(band == 1) |> 
-  mutate(red = surface.png)
+rgb <- as.data.frame(raw_tif) |> 
+  tidyr::pivot_wider(names_from = band, values_from = surface.png) #requires tidyr in installed
 ```
 
-<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
+We're telling R to add three columns (corresponding to the three "names" found within the `band` column) and populate them with the values stored in each of the rows `surface.png` column. Our call yeilds this dataframe:
 
-All we're doing with this block is filtering to make a data frame to hold just the red values. We'll drop the columns we don't need anymore.
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+To make it easier for us to work with the data, it's best if we change the column names to a descriptive string value:
 
 ```r
-red <- red[-c(3,4)]
+colnames(rgb)[3] <- "red"
+colnames(rgb)[4] <- "green"
+colnames(rgb)[5] <- "blue"
 ```
 
-<figure><img src="../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
-
-We can repeat this process for the green and blue color bands as well.
-
-```r
-green <- df_tif |> 
-  filter(band == 2) |> 
-  mutate(green = surface.png)
-green <- green[-c(3,4)]
-
-blue <- df_tif |> 
-  filter(band == 3) |> 
-  mutate(blue = surface.png)
-blue <- blue[-c(3,4)]
-```
-
-Once that's done, we can join our data all together, to get our desired format.&#x20;
-
-```r
-rgb <- left_join(left_join(red, green),blue)
-```
+This gives us exactly what we need: a red, green, and blue value for each X and Y location. There's some more manipulation we have to do to finish mapping the surface correctly.&#x20;
 
 <figure><img src="../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
-This is exactly what we need: a red, green, and blue value for each X and Y location. There's some more manipulation we have to do to finish mapping the surface correctly. This includes setting up a column with a hex value for R to interpret (in our scale), and another column with an integer that uniquely represents a color for R to interpret (in the actual surface).
+This includes setting up a column with a hex value for R to interpret (in our scale), and another column with an integer that uniquely represents a color for R to interpret (in the actual surface).
 
 ```r
 rgb$color <- rgb(rgb$red/255,rgb$green/255,rgb$blue/255)

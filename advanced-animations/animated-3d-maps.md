@@ -37,7 +37,7 @@ Then, we'll read in our data.
 shearwaters <- read.csv("occurrence.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 There's 223 variables in this data frame, but we only need a few of them.
 
@@ -45,7 +45,7 @@ There's 223 variables in this data frame, but we only need a few of them.
 shearwaters <- shearwaters[,names(shearwaters) %in% c("organismID", "verbatimEventDate", "decimalLatitude","decimalLongitude")]
 ```
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 Notice how certain rows of `organismID` have multiple values (separated by a semi colon). We need to split those up:
 
@@ -227,27 +227,13 @@ We're going to be using a moving background image to show the snow melting and t
 generate_surface <- function(file){
   raw_tif <- read_stars(paste0("surfaces/", file, ".png"), RasterIO = list(nBufXSize=x_size, nBufYSize=y_size))
   
-  df_tif <- as.data.frame(raw_tif)
-  df_tif <- df_tif |>
-    mutate(x = x-180) |>
-    mutate(y = y-90)
+  rgb <- as.data.frame(raw_tif) |> 
+    tidyr::pivot_wider(names_from = band, values_from = paste0("X",file,".png"))
   
-  red <- df_tif |> 
-    filter(band == 1)
-  names(red)[names(red) == paste0("X",file,".png")] <- 'red'
-  red <- red[-3]
+  colnames(rgb)[3] <- "red"
+  colnames(rgb)[4] <- "green"
+  colnames(rgb)[5] <- "blue"
   
-  green <- df_tif |> 
-    filter(band == 2)
-  names(green)[names(green) == paste0("X",file,".png")] <- 'green'
-  green <- green[-3]
-  
-  blue <- df_tif |> 
-    filter(band == 3)
-  names(blue)[names(blue) == paste0("X",file,".png")] <- 'blue'
-  blue <- blue[-3]
-  
-  rgb <- left_join(left_join(red, green),blue)
   rgb$color <- rgb(rgb$red/255,rgb$green/255,rgb$blue/255)
   rgb$color_int <- bitwShiftL(rgb$red, 16) + bitwShiftL(rgb$green, 8) + rgb$blue 
   
@@ -270,7 +256,7 @@ generate_surface <- function(file){
 }
 ```
 
-As this function's name indicates, we're using this to generate the surface (satellite image) for each globe object. 90% of this function is the same as what we did in the previous section, with some minor tweaks to the red, green, and blue data frames that are needed to accommodate for the parameter. Note that we're setting `rgb_earth` and `earth_colorscale` as global variables using `<<-` so that they can be accessed outside of our function.
+As this function's name indicates, we're using this to generate the surface (satellite image) for each globe object. 90% of this function is the same as what we did in the previous section, with some minor tweaks to the `values_from` parameter in the `pivot_wider` function, which is needed to accommodate for the "file" parameter. Note that we're setting `rgb_earth` and `earth_colorscale` as global variables using `<<-` so that they can be accessed outside of our function.
 
 Next, we'll make a function for generating the globe:
 

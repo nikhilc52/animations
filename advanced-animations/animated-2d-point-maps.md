@@ -153,5 +153,5 @@ animate(animation, fps=15, duration=48, end_pause = 75, height = 7,
 After a few minutes, we'll get our finished animation.
 
 {% hint style="info" %}
-Click here to view the raw file used to make this animation.
+[Click here to view the raw file used to make this animation.](../appendix/advanced-animations/animated-2d-point-maps.r.md)
 {% endhint %}

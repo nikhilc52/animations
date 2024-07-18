@@ -32,7 +32,7 @@ txhousing_data <- txhousing
 
 For this plot, we need to have a data point (dot) for each city for all time frames. This point needs to have both the median sale price and the sales. Lucky for us, the dataset is already in this format:
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can go straight to plotting. The syntax is very similar to the line graph, but note that we now use `geom_point` instead of `geom_line`. We're also going to add a new parameter: group. All this does is tell R that we'd like each point to represent one city
 

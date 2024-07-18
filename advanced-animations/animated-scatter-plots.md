@@ -30,7 +30,7 @@ Let's load in the csv.
 athletes <- read_csv("athletes.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We're going to need to do some cleaning if we want to have a single height and weight for swimming event in every Olympic year. We can easily do this cleaning with a few lines.&#x20;
 
@@ -51,7 +51,7 @@ height_weight <- athletes |>
   filter(Year >= 1960)
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Perfect. We're now ready to plot. We'll start with a static one for reference, before we go into animation.
 

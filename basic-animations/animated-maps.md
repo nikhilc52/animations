@@ -53,7 +53,7 @@ cities <- data.frame(unique(txhousing_data$city)) #df of unique cities
 names(cities)[names(cities) == 'unique.txhousing_data.city.'] <- 'city' #rename column name for simplicitydataframe
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Essentially, we're taking all the unique city names and making them a data frame, then renaming the column name to save some typing later on.
 
