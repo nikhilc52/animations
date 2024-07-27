@@ -126,7 +126,7 @@ animation <- animate(animation, fps=10, duration=15, end_pause=9, height = 8,
 anim_save('animation.gif', animation)
 ```
 
-Essentially, we're giving the animation its own specifications for animating, so that it can export seamlessly.
+Essentially, we're giving the animation its own specifications for animating, so that it can export seamlessly. If you're having trouble exporting or saving your chart, make sure that the package "gifski" is installed.
 
 That's it! You've now successfully made an animated line chart.&#x20;
 
