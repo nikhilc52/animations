@@ -99,7 +99,7 @@ We're almost there. To convert this into an animation we have to add `transition
 
 <figure><img src="../.gitbook/assets/rough3 (2).gif" alt=""><figcaption></figcaption></figure>
 
-The animation is now in place, but the text is cut off and the resolution isn't ideal. To fix this we put our animation into an object using the pipe operation (`<-`)  and then call `animate()` on that object, with some self-explanatory parameters.
+The animation is now in place, but the text is cut off and the resolution isn't ideal. To fix this we put our animation into an object using the assignment operation (`<-`)  and then call `animate()` on that object, with some self-explanatory parameters.
 
 ```r
 animation <- ggplot(txhousing_data)+ #added the pipe into 'animation'
@@ -115,7 +115,7 @@ animate(animation, fps=10, duration=15, end_pause=9, width = 9, height = 8,
 
 We're animating our animation, with 10 frames per second for 15 seconds. The animation's last 9 frames will pause before it wraps back around (`end_pause`). The width and height are 9 and 8 inches each and the resolution (`res`) or how many pixels will be in each inch, is 200 (i.e. the final animation will be 1800x1600 pixels).&#x20;
 
-When you run the animation() function, it should automatically pop up in the "Viewer" tab in R. From there, you can open it in a new window and save it as a GIF from there. However, if you want to easily save it to your local directory within R, simple change some syntax:
+When you run the `animation()` function, it should automatically pop up in the "Viewer" tab in R. From there, you can open it in a new window and save it as a GIF from there. However, if you want to easily save it to your local directory within R, simple change some syntax:
 
 ```r
 animation <- animate(animation, fps=10, duration=15, end_pause=9, height = 8,

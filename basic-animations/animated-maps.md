@@ -57,22 +57,29 @@ names(cities)[names(cities) == 'unique.txhousing_data.city.'] <- 'city' #rename 
 
 Essentially, we're taking all the unique city names and making them a data frame, then renaming the column name to save some typing later on.
 
-We're now going to take each of the cities, and find both the latitude and longitude using the `geo_osm` function in the `tidygeocoder` package. The `geo_osm` function returns a tibble with the name, latitude, and longitude, so taking just one attribute and putting it into the corresponding `cities` column is simple. I've concatenated ", Texas" to the end of the cities to make it easier for the function to identify certain ambiguous names (i.e. "Paris", which is a city in both Texas and France).
+We're now going to take each of the cities, and find both the latitude and longitude using the `geo_osm` function in the `tidygeocoder` package. The `geo_osm` function returns a tibble with the name, latitude, and longitude, so putting it into the corresponding `cities` dataframe is simple. I've concatenated ", Texas" to the end of the cities to make it easier for the function to identify certain ambiguous names (i.e. "Paris", which is a city in both Texas and France).
 
 ```r
-cities$lat <- geo_osm(paste0(cities$city, ", Texas"))$lat #take each city's lat and put it into a lat column
-cities$long <- geo_osm(paste0(cities$city, ", Texas"))$long #take each city's long and put it into a long column
+cities <- geo_osm(paste0(cities$city, ", Texas"))
 ```
 
-<figure><img src="../.gitbook/assets/Screenshot 2024-06-13 at 4.31.24 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (23).png" alt="" width="325"><figcaption></figcaption></figure>
 
-Let's join this data frame back with the original.
+Let's join this data frame back with the original. First, we'll need to rename the `cities` column in the `txhousing_data` to match the change we made to our `geo_osm` call:
 
 ```r
-txhousing_data <- left_join(txhousing_data, cities)
+txhousing_data$city <- paste0(txhousing_data$city,", Texas")
 ```
 
-<figure><img src="../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (24).png" alt="" width="563"><figcaption></figcaption></figure>
+
+We'll then join the data together, connecting our `city` column to the `address` column:
+
+```r
+txhousing_data <- left_join(txhousing_data, cities, by=join_by('city'=='address'))
+```
+
+<figure><img src="../.gitbook/assets/image (25).png" alt=""><figcaption></figcaption></figure>
 
 Now that we have the latitude and longitude points for each city in our original data frame, we can convert these points to geometry in R.
 
@@ -84,9 +91,9 @@ sf_txhousing_data <- txhousing_data |>
   st_set_crs(4326) #set a standard coordinate system
 ```
 
-For each coordinate pair, we use the `st_as_sf` function to convert the "regular" lat and long numbers into actual geometric points. Then, to make sure alignment is proper, we set a Coordinate Reference System using st\_set\_crs, since there are a number of ways to align latitude and longitude along a 2D plane. For most situations, 4326 (World Geodetic System) is your go-to.
+For each coordinate pair, we use the `st_as_sf` function to convert the "regular" lat and long numbers into actual geometric points. Then, to make sure alignment is proper, we set a Coordinate Reference System using `st_set_crs`, since there are a number of ways to align latitude and longitude along a 2D plane. For most situations, 4326 (World Geodetic System) is your go-to.
 
-<figure><img src="../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (26).png" alt=""><figcaption></figcaption></figure>
 
 Now that we've got all our data in order, we can start to plot. We're now using `geom_sf()` to plot "simple features" using `ggplot`. We have a few specifications: the `color` of the inner circle should be the median sale price, and both the inner and outer circle should have `size`s that reflect the number of listings/sales for that city. Obviously, there are always at least as many listings as there are sales, so listings will be the outer circle and sales the inner.
 

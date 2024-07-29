@@ -21,10 +21,10 @@ txhousing_data <- txhousing
 cities <- data.frame(unique(txhousing_data$city))
 names(cities)[names(cities) == 'unique.txhousing_data.city.'] <- 'city'
 
-cities$lat <- geo_osm(paste0(cities$city, ", Texas"))$lat
-cities$long <- geo_osm(paste0(cities$city, ", Texas"))$long
+cities <- geo_osm(paste0(cities$city, ", Texas"))
 
-txhousing_data <- left_join(txhousing_data, cities)
+txhousing_data$city <- paste0(txhousing_data$city,", Texas")
+txhousing_data <- left_join(txhousing_data, cities, by=join_by('city'=='address'))
 
 sf_txhousing_data <- txhousing_data |> 
   filter(!is.na(long)) |> 
@@ -52,4 +52,5 @@ animation <- ggplot()+
 
 animate(animation, fps=10, duration=15, end_pause=30, height = 8,
         width = 9, units = "in", res = 200)
+
 ```
