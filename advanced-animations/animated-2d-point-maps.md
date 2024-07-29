@@ -11,7 +11,7 @@ In this module, we'll be making this animation:
 
 <figure><img src="../.gitbook/assets/final (18).gif" alt="" width="563"><figcaption></figcaption></figure>
 
-The data is available [here](https://opensky-network.org/datasets/states/2022-06-27/). Download all the folders into one folder, then click on the .tar file to generate the csv for each hour. Note that the files total to around 14 GB in size.
+The data is available [here](https://opensky-network.org/datasets/states/2022-06-27/). Download all the folders into one folder, then click on the .tar file to generate the csv for each hour. Note that the files total to around 14 GB in size. If you want to work with smaller size files, consider following the tutorial below, but using this file as a reference instead (only requires about 400 MB of space).
 
 ***
 
