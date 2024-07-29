@@ -49,7 +49,8 @@ plot_text_annotation <- function(){
     text_list <- c(text_list,geom_label(label=as.character(annotations$keys[i]),
                                         color=scales::alpha('black',ifelse(world$date>=as.Date(annotations$values[i]), 1, 0)),
                                         x=as.Date(annotations$values[i]),
-                                        y=y_value))
+                                        y=y_value,
+                                        fill = alpha(c("white"),ifelse(world$date>=as.Date(annotations$values[i]), 1, 0))))
   }
   return(text_list)
 }
@@ -87,4 +88,3 @@ animation <- world |>
 
 animate(animation, fps = 15, duration = 30, end_pause=75, height = 7,
         width = 9, units = "in", res = 200)
-
