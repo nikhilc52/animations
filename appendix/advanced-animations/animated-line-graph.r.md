@@ -56,9 +56,10 @@ plot_text_annotation <- function(){
     y_value <- find_y_value(world$new_deaths_smoothed[world$date==as.Date(annotations$values[i])], ylimit, i)
     
     text_list <- c(text_list,geom_label(label=as.character(annotations$keys[i]),
-                                       color=scales::alpha('black',ifelse(world$date>=as.Date(annotations$values[i]), 1, 0)),
-                                       x=as.Date(annotations$values[i]),
-                                       y=y_value))
+                                        color=scales::alpha('black',ifelse(world$date>=as.Date(annotations$values[i]), 1, 0)),
+                                        x=as.Date(annotations$values[i]),
+                                        y=y_value,
+                                        fill = alpha(c("white"),ifelse(world$date>=as.Date(annotations$values[i]), 1, 0))))
   }
   return(text_list)
 }
@@ -68,10 +69,10 @@ plot_segment_annotation <- function(){
   for(i in 1:length(annotations$values)){
     y_value <- find_y_value(world$new_deaths_smoothed[world$date==as.Date(annotations$values[i])], ylimit, i)
     segment_list <- c(segment_list, geom_segment(xend=as.Date(annotations$values[i]),
-                 yend=world$new_deaths_smoothed[world$date==as.Date(annotations$values[i])],
-                 x=as.Date(annotations$values[i]),y=y_value,
-                 alpha=ifelse(world$date>=as.Date(annotations$values[i]), 1, 0),
-                 linetype="dashed"))
+                                                 yend=world$new_deaths_smoothed[world$date==as.Date(annotations$values[i])],
+                                                 x=as.Date(annotations$values[i]),y=y_value,
+                                                 alpha=ifelse(world$date>=as.Date(annotations$values[i]), 1, 0),
+                                                 linetype="dashed"))
   }
   return(segment_list)
 }
@@ -96,4 +97,5 @@ animation <- world |>
 
 animate(animation, fps = 15, duration = 30, end_pause=75, height = 7,
         width = 9, units = "in", res = 200)
+
 ```
