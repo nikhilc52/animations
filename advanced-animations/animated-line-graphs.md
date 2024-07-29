@@ -128,9 +128,10 @@ plot_text_annotation <- function(){
     y_value <- find_y_value(world$new_deaths_smoothed[world$date==as.Date(annotations$values[i])], ylimit, i)
     
     text_list <- c(text_list,geom_label(label=as.character(annotations$keys[i]),
-                                       color=scales::alpha('black',ifelse(world$date>=as.Date(annotations$values[i]), 1, 0)),
-                                       x=as.Date(annotations$values[i]),
-                                       y=y_value))
+                                        color=scales::alpha('black',ifelse(world$date>=as.Date(annotations$values[i]), 1, 0)),
+                                        x=as.Date(annotations$values[i]),
+                                        y=y_value,
+                                        fill = alpha(c("white"),ifelse(world$date>=as.Date(annotations$values[i]), 1, 0))))
   }
   return(text_list)
 }
@@ -138,7 +139,9 @@ plot_text_annotation <- function(){
 
 This function is what we'll use to plot each of the texts. We start by initializing a list of `geom_label` objects, the first of which is empty. Then, for every value to be displayed, we cycle through and find the appropriate `y_value`, calling the function we just defined. While seemingly daunting at first, the first parameter we supply is just the number of deaths for the current date we're looking to plot. Next, we give the `ylimit` we defined earlier, and the index value of this annotation, `i`.
 
-After we've found the `y_value`, we then append to our list a `geom_label` object. The label has our annotation for the given `i` value, and we're using `scales::alpha` (since `geom_labels` can't directly modify the alpha value). The alpha value changes based on the current date being displayed: if the date displayed is after (or on) the date that the current annotation corresponds to, then we should have the alpha equal to 1. Otherwise, it would be 0. The X value should be the date of the annotation, so that it is placed directly above or below the corresponding point on the line.
+After we've found the `y_value`, we then append to our list a `geom_label` object. The label has our annotation for the given `i` value, and we're using `scales::alpha` (since `geom_labels` can't directly modify the alpha value of a color). The color alpha value changes based on the current date being displayed: if the date displayed is after (or on) the date that the current annotation corresponds to, then we should have the alpha equal to 1. Otherwise, it would be 0. This same concept is repeated for the fill color of the background of each label, to have the background match the animation of the text.
+
+The X value should be the date of the annotation, so that it is placed directly above or below the corresponding point on the line.
 
 Essentially, this function, after implementation, will plot all the annotations for each frame, and change the alpha value to reveal the annotations at their respective dates.
 
