@@ -32,7 +32,7 @@ Next, we'll load in the data.
 earthquakes <- read_csv("earthquakes.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Since we're going to be mapping the longitude and latitude of each earthquake to a three dimensional space, it'll be efficient and useful if we define a simple function that converts degrees to radians, so that we can more easily call trigonometric functions.
 
@@ -97,7 +97,7 @@ rgb <- as.data.frame(raw_tif) |>
 
 We're telling R to add three columns (corresponding to the three "names" found within the `band` column) and populate them with the values stored in each of the rows `surface.png` column. Our call yeilds this dataframe:
 
-<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 To make it easier for us to work with the data, it's best if we change the column names to a descriptive string value:
 

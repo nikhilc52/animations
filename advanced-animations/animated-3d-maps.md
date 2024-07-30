@@ -37,7 +37,7 @@ Then, we'll read in our data.
 shearwaters <- read.csv("occurrence.csv")
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 There's 223 variables in this data frame, but we only need a few of them.
 

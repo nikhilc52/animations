@@ -42,4 +42,5 @@
 
 ***
 
+* [FAQ](faq.md)
 * [About](about.md)

@@ -51,7 +51,7 @@ height_weight <- athletes |>
   filter(Year >= 1960)
 ```
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Perfect. We're now ready to plot. We'll start with a static one for reference, before we go into animation.
 
