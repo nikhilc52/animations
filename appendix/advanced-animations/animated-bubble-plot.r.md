@@ -4,7 +4,7 @@ description: Code used to make the graph found within "Animated Bubble Plots"
 
 # animated-bubble-plot.R
 
-<figure><img src="../../.gitbook/assets/final (3) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/final (3) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ```r
 library(ggplot2)

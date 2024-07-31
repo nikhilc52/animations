@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 Our goal is to reproduce this plot:
 
-<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 

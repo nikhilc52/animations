@@ -1,5 +1,5 @@
 ---
-cover: ../.gitbook/assets/final (1).gif
+cover: ../.gitbook/assets/final (1) (1).gif
 coverY: 0
 ---
 
@@ -11,7 +11,7 @@ While making something as smooth and interactive as Rosling's is beyond the scop
 
 The final product will look something like this:
 
-<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 
