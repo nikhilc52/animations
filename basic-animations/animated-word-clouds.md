@@ -37,7 +37,7 @@ Now that we have our data, we need to format it to make a suitable word cloud. W
 
 Our data is already formatted in this manner, but there's too many data points/cities. If we were to plot a word cloud with the data set as is, it would look like this:
 
-<figure><img src="../.gitbook/assets/rough1 (1) (1) (1) (1).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1) (1) (1) (1) (1).gif" alt=""><figcaption></figcaption></figure>
 
 There's just too much going on for the viewer to properly understand - we need to cut down how many cities we're showing per frame. Let's only show the top five cities by housing market volume, for every date. We can format our dataset to this specification by using the `slice_head` function:
 

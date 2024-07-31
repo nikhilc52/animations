@@ -16,7 +16,7 @@ Below are some of the charts that are possible to make exclusively within the R 
 
  
 
-<figure><img src=".gitbook/assets/final 12.gif" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/final (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 </div>
 

@@ -1,5 +1,5 @@
 ---
-cover: ../.gitbook/assets/final (3).gif
+cover: ../.gitbook/assets/final (3) (1).gif
 coverY: 0
 ---
 
@@ -9,7 +9,7 @@ Looking into past news cycles can be a time capsule for how people viewed certai
 
 In this section, we'll be making this plot:
 
-<figure><img src="../.gitbook/assets/final (2) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (2) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 The dataset is available for download [here](https://www.kaggle.com/datasets/jordankrishnayah/45m-headlines-from-2007-2022-10-largest-sites).
 
@@ -153,7 +153,7 @@ animate(word_cloud, fps = 4, duration = 48, height = 7,
 
 We have 16 years worth of data, with 12 months per year, meaning we have 192 frames to get through. To get through all the data with one frame per month, we can set the `duration` to 48 and the `fps` to 4 (since 4\*48 = 192).&#x20;
 
-<figure><img src="../.gitbook/assets/rough1 (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 We're still missing some information in our chart: a title and a subtitle showing the current month and year being displayed.
 

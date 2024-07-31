@@ -2,7 +2,7 @@
 description: >-
   Line graphs can be very useful indicators of data. Animating them draws your
   viewer in and grabs their attention.
-cover: ../.gitbook/assets/final (2) (1) (1) (1) (1).gif
+cover: ../.gitbook/assets/final (2) (1) (1) (1) (1) (1).gif
 coverY: 0
 ---
 
@@ -12,7 +12,7 @@ For all of the basic animations, we'll use the `txhousing` dataset within the `g
 
 In a few minutes, we'll make this graph:
 
-<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (1) (1) (1) (1) (1) (1) (1) (1) (1).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ***
 

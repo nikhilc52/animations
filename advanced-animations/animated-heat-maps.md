@@ -1,5 +1,5 @@
 ---
-cover: ../.gitbook/assets/final (2).gif
+cover: ../.gitbook/assets/final (2) (1).gif
 coverY: 0
 ---
 

@@ -1,5 +1,5 @@
 ---
-cover: ../.gitbook/assets/final (4).gif
+cover: ../.gitbook/assets/final.gif
 coverY: 0
 ---
 
@@ -9,7 +9,7 @@ COVID-19 data is somewhat of a standard for modern data sources, since the pande
 
 At the end of this chapter, we'll have made this plot:
 
-<figure><img src="../.gitbook/assets/final (14).gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final.gif" alt="" width="563"><figcaption></figcaption></figure>
 
 The data can be obtained from [here](https://ourworldindata.org/covid-cases) (Download the complete _Our World in Data_ COVID-19 dataset).
 
@@ -178,7 +178,7 @@ world |>
 
 We're doing some basic setups for the plot, with the ylim defined by the number we set earlier. Note the order in which our functions are called. We're putting the line segment on the back-most layer, the `geom_line` in the middle, and then the `geom_label` for our annotations on top. Since we're using `transition_reveal`, our functions are called for every frame.
 
-<figure><img src="../.gitbook/assets/rough1 (1).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1.gif" alt="" width="360"><figcaption></figcaption></figure>
 
 The major elements are in place, but our plot doesn't look too nice. We'll pretty it up and then save it.
 

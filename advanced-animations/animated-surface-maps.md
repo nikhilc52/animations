@@ -133,7 +133,7 @@ With this basic structure, we're supplying our `world_plot` data frame to the `g
 
 After a few minutes, you'll get this plot:
 
-<figure><img src="../.gitbook/assets/rough1.gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/rough1 (1).gif" alt=""><figcaption></figcaption></figure>
 
 We have all the data in the right place, but we can make this look better.
 

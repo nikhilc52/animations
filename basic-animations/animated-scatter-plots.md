@@ -2,7 +2,7 @@
 description: >-
   Scatter plots are useful for conveying information about a number of points.
   By animating, we can add a new dimension to the graph.
-cover: ../.gitbook/assets/final (3) (1) (1) (1).gif
+cover: ../.gitbook/assets/final (3) (1) (1) (1) (1).gif
 coverY: 0
 ---
 

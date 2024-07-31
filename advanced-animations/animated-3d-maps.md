@@ -9,7 +9,7 @@ We can build upon the concepts we used in the previous module to unlock the worl
 
 Our goal is to make this movie:
 
-<figure><img src="../.gitbook/assets/final.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (3).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 The data can be accessed from [here](https://www.gbif.org/dataset/00d636a3-e132-44b6-ae77-0b1cadb3e59e).
 
