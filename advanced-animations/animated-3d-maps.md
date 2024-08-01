@@ -207,17 +207,23 @@ Here's an image to illustrate what I mean:
 The smoothed line is in red, and the average X, Y, and Z are in black. As you can see, if we were to follow just the means, there would be too much camera movement as the line jumps up and down in all dimensions. However, following the spline, we get a much smoother animation, and our camera will move across the three dimensions easier.&#x20;
 
 ```r
-spline_fit <- smooth.spline(average_positions$average_x, spar = .8)
-camera_x_positions <- predict(spline_fit)$y
-spline_fit <- smooth.spline(average_positions$average_y, spar = .8)
-camera_y_positions <- predict(spline_fit)$y
-spline_fit <- smooth.spline(average_positions$average_z, spar = .8)
-camera_z_positions <- predict(spline_fit)$y
+spline_fit_x <- smooth.spline(average_positions$average_x, spar = .8)
+spline_fit_y <- smooth.spline(average_positions$average_y, spar = .8)
+spline_fit_z <- smooth.spline(average_positions$average_z, spar = .8)
+
+camera_positions <- data.frame(x = predict(spline_fit_x, x=seq(1,nrow(average_positions), by=nrow(average_positions)/(30*15)))$y)
+camera_positions <- camera_positions |> 
+  mutate(y = predict(spline_fit_y, x=seq(1,nrow(average_positions), by=nrow(average_positions)/(30*15)))$y) |> 
+  mutate(z = predict(spline_fit_z, x=seq(1,nrow(average_positions), by=nrow(average_positions)/(30*15)))$y)
 ```
 
-Above is the code to apply the splines. The first parameter provides the data we want to look at, and the spar is the strength of the smoothing.&#x20;
+Above is the code to apply the splines. The first parameter in the `smooth.spline` call provides the data we want to look at, and the `spar` is the strength of the smoothing.&#x20;
 
-We're holding these positions in three separate lists, one for each dimension, and telling R we want to predict the Y values for each of the corresponding variables.
+We're holding these positions in three separate columns in one data frame, one for each dimension, and telling R we want to predict the Y values for each of the corresponding variables. We initialize our `camera_positions` data frame with an X column containing the spline predictions for the X coordinate. The complex syntax behind this call is to have our `camera_positions` columns contain around 450 rows, so that when we iterate over the `camera_positions` to render our 30-second animation, it'll run at a (relatively) smooth 15 fps (since we'll have 450/30 = 15 camera positions a second).
+
+Within the `predict` call, we specify that we want to predict values according to our `spline_fit_x` variable, with the inputs (`x`) defined by a sequence from 1 to the total number of point positions we have. This is to make sure we're generating a camera path for the range only where we have valid inputs. To turn the 112 (the number of average\_position values) point locations into 450 camera positions, we need to interpolate to find areas in between the `average_position` inputs to smooth camera movement.&#x20;
+
+So, we specify that we're incrementing by the value given by `nrows(average_positions)/30*15`, which results in around 450 total increments. We then add `$y` to the end to indicate we only want to take the results of our predictions, as supposed to the inputs (`$x`). We'll use the same concept for the y and z columns within our `camera_positions` data frame.
 
 Once that's done we can work on building some functions for plotting.
 
@@ -261,7 +267,7 @@ As this function's name indicates, we're using this to generate the surface (sat
 Next, we'll make a function for generating the globe:
 
 ```r
-generate_globe <- function(curr_shearwaters, camera_index){
+generate_globe <- function(curr_shearwaters, camera_index, dates_index){
   globe <<- curr_shearwaters |>  
     plot_ly(height = 600) |> 
     add_sf(
@@ -300,7 +306,7 @@ generate_globe <- function(curr_shearwaters, camera_index){
     ) |> 
     layout(
       showlegend = FALSE,
-      annotations=list(list(text=paste0("Day: ", dates[camera_index]),
+      annotations=list(list(text=paste0("Day: ", dates[dates_index], "<br>Nikhil Chinchalkar For Princeton University | Migration and foraging ecology of Greater Shearwater | 2024"),
                             showarrow=FALSE, font=list(family="Arial", size=28), y=0, bgcolor="white", opacity=0.85), 
                        list(text="<br><b>Greater Shearwater Migration</b>",font=list(family="Arial", size=48), bgcolor="white", opacity=0.85, y=.9)),
       scene = list(
@@ -308,57 +314,55 @@ generate_globe <- function(curr_shearwaters, camera_index){
         yaxis = empty_axis,
         zaxis = empty_axis,
         aspectratio = list(x = 1, y = 1, z = 1),
-        camera = list(eye=list(x=camera_x_positions[camera_index]*2,
-                               y=camera_y_positions[camera_index],
-                               z=camera_z_positions[camera_index]))
+        camera = list(eye=list(x=camera_positions$x[camera_index]*2,
+                               y=camera_positions$y[camera_index],
+                               z=camera_positions$z[camera_index]))
       )
     )
 }
 ```
 
-Again, this is 90% the same as the previous section, aside from some small changes to point aesthetics, title, and camera. For the title, note that we're creating it using an annotation so that we can make its background white. The same goes for the day counter, which is given a parameter that corresponds to the index value of the date we're plotting (`i` in the for loop). A similar structure is used to move the camera to the correct spot -  a parameter that corresponds to the appropriate place in the list. We're multiplying the X by 2 in order to move the camera back, else it would be too close to the earth's surface.
+Again, this is 90% the same as the previous section, aside from some small changes to point aesthetics, title, and camera. For the title, note that we're creating it using an annotation so that we can make its background white. The same goes for the day counter, which is given a parameter that corresponds to the index value of the date we're plotting (which we'll set in a for loop later). A similar structure is used to move the camera to the correct spot -  a parameter that corresponds to the appropriate place in the data frame. We're multiplying the X by 2 in order to move the camera back, else it would be too close to the earth's surface.
 
-We're now ready to plot. We'll start by indicating how many frames we want, which is just the number of dates that we have available. Here, we're make a list of all the unique dates we have (the length of the list is the length of our animation).
+We're now ready to plot. We'll start by making a list of all the unique dates we have, so we can easily transition through them during our for loop.
 
 ```r
 dates <- unique(shearwaters_full$Time)
 ```
 
-We'll also initialize an image\_index variable to easily name our images in order.
-
-```r
-image_index <- 1
-```
-
 Before we start, we need to install `orca`, which is the package we'll be using to save the `plotly` files. This can be done by following the instructions on [GitHub](https://github.com/plotly/orca). After that, we need to install "processx" (but no need to call the library function), if we don't already have it.
 
 ```r
-for(i in 1:length(dates)){
-    print(paste("Date:",dates[i]))
-    print(paste("Frame #:", image_index))
+install.packages("processx")
+```
+
+```r
+for(i in 1:nrow(camera_positions)){
+    dates_index <- as.integer((i+3) * length(dates)/nrow(camera_positions))
+    print(paste("Date:",dates[dates_index]))
+    print(paste("Frame #:", i))
     
-    file = formatC(yday(as.Date(dates[i])), width = 3, format = "d", flag = "0")
+    file = formatC(yday(as.Date(dates[dates_index])), width = 3, format = "d", flag = "0")
     generate_surface(file)
     
     curr_shearwaters <- shearwaters_full |> 
-      filter(Time == dates[i])
+      filter(Time == dates[dates_index])
     
-    generate_globe(curr_shearwaters, i)
+    generate_globe(curr_shearwaters, i, dates_index)
     
-    orca(globe, paste0("image_sequence/",formatC(image_index, width = 3, format = "d", flag = "0"),".png"), width = 1400, height = 1400)
-    image_index <- image_index + 1
+    orca(globe, paste0("image_sequence/",formatC(i, width = 3, format = "d", flag = "0"),".png"), width = 7*200, height = 7*200)
   }
 ```
 
-The for loop cycles through all the valid dates. The first part of our loop prints the current date and frame we're at so that we can keep track of our progress. Then, we get the file using yday, which calculates the what day number a given date is (2024-01-01 is 1, 2024-01-02 is 2, etc.) and fit that number to have 3 digits to match the name format of the PNG. We'll supply that file number to our `generate_surface` function.
+The for loop cycles through all the camera positions. The first part our our loop sets a `dates_index` variable that we'll use to refer to the values within the `dates` list we just initialized, so we can filter the points accordingly. Here, the syntax converts the `i` index to its corresponding value along the `dates` list using some math and integer conversion. We're specifying `i+2` so that our first `dates_index` value isn't 0, which would give an error.
 
-We then filter to get a data frame that only contains the animals for that specific date, and give that information, as well as the index number we're on, to the `generate_globe` function, which will make our globe.&#x20;
+The next part of our loop prints the current date and frame we're at so that we can keep track of our progress. Then, we get the file using yday, which calculates the what day number a given date is (2024-01-01 is 1, 2024-01-02 is 2, etc.) and fit that number to have 3 digits to match the name format of the PNG. We'll supply that file number to our `generate_surface` function.
 
-Then, using orca, we'll render out our plot to a new folder, with 3 digits so that R can correctly order our frames, and increase the `image_index` by 1.&#x20;
+We then filter to get a data frame that only contains the animals for that specific date, and give that information, as well as the camera index number we're on and the `dates_index`, to the `generate_globe` function, which will make our globe.&#x20;
 
-Running this for loop should take about 20 minutes.
+Then, using orca, we'll render out our plot to a new folder, with 3 digits so that R can correctly order our frames.
 
-&#x20;
+Running this loop should take about an hour.
 
 Once we have our files properly rendered, we can turn our PNG sequence into a GIF. First, we'll load in the PNG files:
 
@@ -366,15 +370,15 @@ Once we have our files properly rendered, we can turn our PNG sequence into a GI
 png_files <- sort(list.files("image_sequence", pattern = "*.png", full.names = TRUE))
 ```
 
-Then, we'll add a pause to the end of our GIF by appending the last frame repeatedly:
+Then, we'll add a pause to the end of our GIF by appending the last frame repeatedly (for 120 frames, or 4 seconds):
 
-```
-for(i in 1:10){
+```r
+for(i in 1:120){
   png_files <- append(png_files, png_files[length(png_files)])
 }
 ```
 
-```
+```r
 gifski::gifski(png_files, gif_file = "final.gif", width = 1400, height = 1400, delay = 30/length(png_files))
 ```
 
