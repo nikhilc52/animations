@@ -48,7 +48,7 @@ Below are some of the charts that are possible to make exclusively within the R 
 
 <div data-full-width="true">
 
-<figure><img src=".gitbook/assets/final 13 (1).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/final_optimized.gif" alt=""><figcaption></figcaption></figure>
 
  
 
