@@ -9,7 +9,7 @@ The NBA and other sports leagues are full of interesting data and trends. We can
 
 The animation we make will look like this:
 
-<figure><img src="../.gitbook/assets/final (13).gif" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/final (13).gif" alt="" width="563"><figcaption></figcaption></figure>
 
 The dataset is available for download [here](https://drive.google.com/file/d/1\_7YIYr4kasLzHMTQzyaQ9-lMUrK6n5Dm/view), and it is originally from [GitHub](https://github.com/DomSamangy/NBA\_Shots\_04\_24?tab=readme-ov-file).
 
