@@ -4,7 +4,7 @@ description: Code used to make the graph found within "Animated 3D Maps"
 
 # animated-3d-maps.R
 
-<figure><img src="../../.gitbook/assets/final 13.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/final_optimized.gif" alt="" width="563"><figcaption></figcaption></figure>
 
 ```r
 library(plotly)
@@ -76,15 +76,14 @@ average_positions <- shearwaters_full |>
     average_z = mean(z)
   )
 
+spline_fit_x <- smooth.spline(average_positions$average_x, spar = .8)
+spline_fit_y <- smooth.spline(average_positions$average_y, spar = .8)
+spline_fit_z <- smooth.spline(average_positions$average_z, spar = .8)
 
-spline_fit <- smooth.spline(average_positions$average_x, spar = .8)
-camera_x_positions <- predict(spline_fit)$y
-spline_fit <- smooth.spline(average_positions$average_y, spar = .8)
-camera_y_positions <- predict(spline_fit)$y
-spline_fit <- smooth.spline(average_positions$average_z, spar = .8)
-camera_z_positions <- predict(spline_fit)$y
-
-#if (!require("processx")) install.packages("processx")
+camera_positions <- data.frame(x = predict(spline_fit_x, x=seq(1,nrow(average_positions), by=nrow(average_positions)/(30*15)))$y)
+camera_positions <- camera_positions |> 
+  mutate(y = predict(spline_fit_y, x=seq(1,nrow(average_positions), by=nrow(average_positions)/(30*15)))$y) |> 
+  mutate(z = predict(spline_fit_z, x=seq(1,nrow(average_positions), by=nrow(average_positions)/(30*15)))$y)
 
 ###########
 generate_surface <- function(file){
@@ -118,7 +117,7 @@ generate_surface <- function(file){
   earth_colorscale <<- earth_colorscale
 }
 
-generate_globe <- function(curr_shearwaters, camera_index){
+generate_globe <- function(curr_shearwaters, camera_index, dates_index){
   globe <<- curr_shearwaters |>  
     plot_ly(height = 600) |> 
     add_sf(
@@ -157,7 +156,7 @@ generate_globe <- function(curr_shearwaters, camera_index){
     ) |> 
     layout(
       showlegend = FALSE,
-      annotations=list(list(text=paste0("Day: ", dates[i], "<br>Nikhil Chinchalkar For Princeton University | Migration and foraging ecology of Greater Shearwater | 2024"),
+      annotations=list(list(text=paste0("Day: ", dates[dates_index], "<br>Nikhil Chinchalkar For Princeton University | Migration and foraging ecology of Greater Shearwater | 2024"),
                             showarrow=FALSE, font=list(family="Arial", size=28), y=0, bgcolor="white", opacity=0.85), 
                        list(text="<br><b>Greater Shearwater Migration</b>",font=list(family="Arial", size=48), bgcolor="white", opacity=0.85, y=.9)),
       scene = list(
@@ -165,36 +164,38 @@ generate_globe <- function(curr_shearwaters, camera_index){
         yaxis = empty_axis,
         zaxis = empty_axis,
         aspectratio = list(x = 1, y = 1, z = 1),
-        camera = list(eye=list(x=camera_x_positions[camera_index]*2,
-                               y=camera_y_positions[camera_index],
-                               z=camera_z_positions[camera_index]))
+        camera = list(eye=list(x=camera_positions$x[camera_index]*2,
+                               y=camera_positions$y[camera_index],
+                               z=camera_positions$z[camera_index]))
       )
     )
 }
 
+#install.packages("processx")
 dates <- unique(shearwaters_full$Time)
-image_index <- 1
 system.time(
-  for(i in 1:length(dates)){
-    print(paste("Date:",dates[i]))
-    print(paste("Frame #:", image_index))
+  for(i in 1:nrow(camera_positions)){
+    dates_index <- as.integer((i+3) * length(dates)/nrow(camera_positions))
+    print(paste("Date:",dates[dates_index]))
+    print(paste("Frame #:", i))
     
-    file = formatC(yday(as.Date(dates[i])), width = 3, format = "d", flag = "0")
+    file = formatC(yday(as.Date(dates[dates_index])), width = 3, format = "d", flag = "0")
     generate_surface(file)
     
     curr_shearwaters <- shearwaters_full |> 
-      filter(Time == dates[i])
+      filter(Time == dates[dates_index])
     
-    generate_globe(curr_shearwaters, i)
+    generate_globe(curr_shearwaters, i, dates_index)
     
-    orca(globe, paste0("image_sequence/",formatC(image_index, width = 3, format = "d", flag = "0"),".png"), width = 7*200, height = 7*200)
-    image_index <- image_index + 1
+    orca(globe, paste0("image_sequence/",formatC(i, width = 3, format = "d", flag = "0"),".png"), width = 7*200, height = 7*200)
   }
 )
 
 png_files <- sort(list.files("image_sequence", pattern = "*.png", full.names = TRUE))
-for(i in 1:10){
+for(i in 1:120){
   png_files <- append(png_files, png_files[length(png_files)])
 }
+
 gifski::gifski(png_files, gif_file = "final.gif", width = 7*200, height = 7*200, delay = 30/length(png_files))
+
 ```
