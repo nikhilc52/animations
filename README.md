@@ -12,7 +12,7 @@ Below are some of the charts that are possible to make exclusively within the R 
 
 <div data-full-width="true">
 
-<figure><img src=".gitbook/assets/final 11.gif" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/final (26).gif" alt="" width="563"><figcaption></figcaption></figure>
 
  
 
@@ -32,7 +32,7 @@ Below are some of the charts that are possible to make exclusively within the R 
 
 <div data-full-width="true">
 
-<figure><img src=".gitbook/assets/final 5.gif" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/final (27).gif" alt=""><figcaption></figcaption></figure>
 
  
 
